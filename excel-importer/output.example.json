@@ -1,0 +1,184 @@
+{
+  "county": "Philadelphia",
+  "state_route": "0095",
+  "section": "GR4",
+  "work_order_number": "999",
+  "contract": "79827",
+  "item_number": "9999-9999",
+  "prime_contractor": "James J. Anderson Construction Co., Inc.",
+  "statement_of_cost": "Some Force Account Work",
+  "material": {
+    "default_sales_tax_rate": 0.08,
+    "data": [
+      {
+        "description": "item 1",
+        "quantity": 5.25,
+        "unit": "EA",
+        "unit_price": 15.45,
+        "invoice_number": "123456789",
+        "sales_tax_rate": 0.08
+      },
+      {
+        "description": "item 2",
+        "quantity": 120,
+        "unit": "LF",
+        "unit_price": 0.54,
+        "invoice_number": "987654321",
+        "sales_tax_rate": 0.06
+      }
+    ]
+  },
+  "labor": {
+    "social_security_tax_rate": 0.062,
+    "medicare_tax_rate": 0.0145,
+    "unemployment_tax_rate": 0.0183,
+    "workers_compensation_insurance_rate": 0.01781,
+    "liability_insurance_rate": 0.17167,
+    "data": [
+      {
+        "classification": "Laborer",
+        "name": "Jose Calvente",
+        "base_rate": 32.15,
+        "hw_pension_rate": 26.05,
+        "daily_hours": [
+          {
+            "date": "2019-11-26",
+            "st": 8,
+            "ot": 1
+          },
+          {
+            "date": "2020-05-01",
+            "st": 4,
+            "ot": 0
+          }
+        ]
+      },
+      {
+        "classification": "Operator",
+        "name": "William Camp, Jr.",
+        "base_rate": 45.62,
+        "hw_pension_rate": 26.05,
+        "daily_hours": [
+          {
+            "date": "2019-11-26",
+            "st": 8,
+            "ot": 1
+          },
+          {
+            "date": "2020-05-01",
+            "st": 4,
+            "ot": 0
+          }
+        ]
+      }
+    ]
+  },
+  "equipment": {
+    "data": [
+      {
+        "description": "Volvo ECR235 Excavator",
+        "year": 2011,
+        "h-yr": "online",
+        "sec-pg": "bluebook",
+        "monthly_rate": 860,
+        "equipment_adjustment": 0.951,
+        "area_adjustment": 1.049,
+        "operating_cost": 17.32,
+        "daily_hours": [
+          {
+            "date": "2020-01-25",
+            "ot": 5,
+            "sb": 3
+          },
+          {
+            "date": "2020-04-27",
+            "ot": 3,
+            "sb": 4
+          }
+        ]
+      },
+      {
+        "description": "Volvo ECR235 Excavator",
+        "year": 2011,
+        "h-yr": "online",
+        "sec-pg": "bluebook",
+        "monthly_rate": 860,
+        "equipment_adjustment": 0.951,
+        "area_adjustment": 1.049,
+        "operating_cost": 17.32,
+        "daily_hours": [
+          {
+            "date": "2020-01-25",
+            "ot": 5,
+            "sb": 3
+          },
+          {
+            "date": "2020-04-27",
+            "ot": 3,
+            "sb": 4
+          }
+        ]
+      }
+    ]
+  },
+  "rentals": {
+    "data": [
+      {
+        "description": "Flow diversion pumps and accessories",
+        "invoice_number": "456522122",
+        "amount": 4500
+      },
+      {
+        "description": "Another rental",
+        "invoice_number": "655852",
+        "amount": 45
+      }
+    ]
+  },
+  "services": {
+    "data": [
+      {
+        "description": "Some service",
+        "invoice_number": "ie98wweofj",
+        "amount": 456
+      },
+      {
+        "description": "Some other service",
+        "invoice_number": "ie98wweofj",
+        "amount": 4560
+      }
+    ]
+  },
+  "purchased_consumables": {
+    "data": [
+      {
+        "description": "the description",
+        "quantity": 65,
+        "unit_price": 0.95,
+        "invoice_number": "sldjflsd"
+      },
+      {
+        "description": "the other description",
+        "quantity": 650,
+        "unit_price": 0.94,
+        "invoice_number": "sdfsdf"
+      }
+    ]
+  },
+  "stock_consumables": {
+    "data": [
+      {
+        "description": "this is the description",
+        "invoice_value": 456,
+        "percent_reimbursed": 0.54,
+        "invoice_number": "456666"
+      },
+      {
+        "description": "this is the other description",
+        "invoice_value": 789,
+        "percent_reimbursed": 0.19,
+        "invoice_number": "sdfsdfs"
+      }
+    ]
+  }
+}
