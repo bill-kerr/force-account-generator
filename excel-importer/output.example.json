@@ -78,8 +78,8 @@
       {
         "description": "Volvo ECR235 Excavator",
         "year": 2011,
-        "h-yr": "online",
-        "sec-pg": "bluebook",
+        "h_yr": "online",
+        "sec_pg": "bluebook",
         "monthly_rate": 860,
         "equipment_adjustment": 0.951,
         "area_adjustment": 1.049,
@@ -100,8 +100,8 @@
       {
         "description": "Volvo ECR235 Excavator",
         "year": 2011,
-        "h-yr": "online",
-        "sec-pg": "bluebook",
+        "h_yr": "online",
+        "sec_pg": "bluebook",
         "monthly_rate": 860,
         "equipment_adjustment": 0.951,
         "area_adjustment": 1.049,

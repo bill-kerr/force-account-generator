@@ -1,4 +1,5 @@
 from config import config
+from util import get_dates, get_hours
 
 # COLUMNS
 CHECK = 0
@@ -29,14 +30,7 @@ def process_labor_sheet(worksheet):
             employee = create_employee_from_rows(row, rows[i + 1], dates)
             labor['data'].append(employee)
 
-    return labor
-
-
-def get_dates(row):
-    dates = []
-    for value in row:
-        dates.append(value.strftime('%Y-%m-%d') if value is not None else None)
-    return dates
+    return labor if len(labor['data']) > 0 else {}
 
 
 def create_employee_from_rows(st_row, ot_row, dates):
@@ -48,21 +42,3 @@ def create_employee_from_rows(st_row, ot_row, dates):
     employee['daily_hours'] = get_hours(st_row[DATE_START:], ot_row[DATE_START:], dates)
     if len(employee.get('daily_hours')) > 0:
         return employee
-
-
-def get_hours(st_row, ot_row, dates):
-    daily_hours = []
-    for st, ot, date in zip(st_row, ot_row, dates):
-        if date is None or (st is None and ot is None):
-            continue
-
-        hours = {
-            'date': date
-        }
-        if st is not None:
-            hours['st'] = st
-        if ot is not None:
-            hours['ot'] = ot
-        daily_hours.append(hours)
-
-    return daily_hours

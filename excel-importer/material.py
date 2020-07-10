@@ -23,7 +23,7 @@ def process_material_sheet(worksheet):
     return {
         'default_sales_tax_rate': default_sales_tax,
         'data': materials
-    }
+    } if len(materials) > 0 else {}
 
 
 def create_material_from_row(row, default_sales_tax):
