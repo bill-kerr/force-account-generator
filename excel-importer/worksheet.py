@@ -1,3 +1,6 @@
+from config import config
+
+
 class Worksheet:
     def __init__(self, worksheet, defined_cells):
         self.__worksheet = worksheet
@@ -11,7 +14,7 @@ class Worksheet:
     def __load_rows(self):
         self.__rows = []
         for row in self.__worksheet.rows:
-            if row[0].value == 'Y':
+            if row[config['check_column']].value != 'N':
                 self.__rows.append([])
                 self.__load_cells(row)
 

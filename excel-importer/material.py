@@ -1,5 +1,14 @@
 from config import config
 
+# COLUMNS
+CHECK = 0
+DESCRIPTION = 1
+QUANTITY = 2
+UNIT = 3
+UNIT_PRICE = 4
+INVOICE_NUMBER = 5
+SALES_TAX_RATE = 7
+
 
 def process_material_sheet(worksheet):
     rows = worksheet.get_rows()
@@ -18,11 +27,12 @@ def process_material_sheet(worksheet):
 
 
 def create_material_from_row(row, default_sales_tax):
-    return {
-        'description': row[1],
-        'quantity': row[2],
-        'unit': row[3],
-        'unit_price': row[4],
-        'invoice_number': row[5],
-        'sales_tax_rate': row[7] if row[7] is not None else default_sales_tax
-    }
+    if row[0] == 'Y':
+        return {
+            'description': row[DESCRIPTION],
+            'quantity': row[QUANTITY],
+            'unit': row[UNIT],
+            'unit_price': row[UNIT_PRICE],
+            'invoice_number': row[INVOICE_NUMBER],
+            'sales_tax_rate': row[SALES_TAX_RATE] if row[SALES_TAX_RATE] is not None else default_sales_tax
+        }

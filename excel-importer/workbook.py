@@ -27,15 +27,15 @@ class Workbook:
                 worksheet = self.__workbook[worksheet_name]
                 defined_cells[worksheet_name][cell_name] = worksheet[cell_coordinates].value
 
-    return defined_cells
+        return defined_cells
 
     def __generate_worksheets(self):
         sheet_names = config['worksheet_names']
         self.worksheets = {}
 
-    for name in sheet_names:
-        sheet_name = sheet_names[name]
-        self.worksheets[name] = Worksheet(self.__workbook[sheet_name], self.defined_cells[sheet_name])
+        for name in sheet_names:
+            sheet_name = sheet_names[name]
+            self.worksheets[name] = Worksheet(self.__workbook[sheet_name], self.defined_cells[sheet_name])
 
     def get_named_cell_value(self, cell_name):
         for worksheet_name, cell_coordinates in self.__workbook.defined_names[cell_name].destinations:

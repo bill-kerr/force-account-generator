@@ -7,5 +7,3 @@ wb = Workbook('./files/test.xlsx')
 
 material = process_material_sheet(wb.worksheets['material'])
 labor = process_labor_sheet(wb.worksheets['labor'])
-
-print(material)
