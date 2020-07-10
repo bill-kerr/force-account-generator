@@ -17,8 +17,9 @@ def process_material_sheet(worksheet):
     default_sales_tax = worksheet.defined_cells[cell_name]
 
     for row in rows:
-        material = create_material_from_row(row, default_sales_tax)
-        materials.append(material)
+        if row[CHECK] == 'Y':
+            material = create_material_from_row(row, default_sales_tax)
+            materials.append(material)
 
     return {
         'default_sales_tax_rate': default_sales_tax,
@@ -27,12 +28,11 @@ def process_material_sheet(worksheet):
 
 
 def create_material_from_row(row, default_sales_tax):
-    if row[0] == 'Y':
-        return {
-            'description': row[DESCRIPTION],
-            'quantity': row[QUANTITY],
-            'unit': row[UNIT],
-            'unit_price': row[UNIT_PRICE],
-            'invoice_number': row[INVOICE_NUMBER],
-            'sales_tax_rate': row[SALES_TAX_RATE] if row[SALES_TAX_RATE] is not None else default_sales_tax
-        }
+    return {
+        'description': row[DESCRIPTION],
+        'quantity': row[QUANTITY],
+        'unit': row[UNIT],
+        'unit_price': row[UNIT_PRICE],
+        'invoice_number': row[INVOICE_NUMBER],
+        'sales_tax_rate': row[SALES_TAX_RATE] if row[SALES_TAX_RATE] is not None else default_sales_tax
+    }
