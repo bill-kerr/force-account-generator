@@ -1,8 +1,8 @@
-from config import config
+from config import Config
 from util import get_dates, get_hours
 
 # COLUMNS
-CHECK = 0
+CHECK = Config.check_columns.get('labor') or 0
 CLASSIFICATION = 1
 NAME = 2
 BASE_RATE = 3
@@ -12,7 +12,7 @@ DATE_START = 10
 
 def process_labor_sheet(worksheet):
     rows = worksheet.get_rows()
-    defined_cell_names = config['defined_cells']
+    defined_cell_names = Config.defined_cells
     labor = {}
     labor['social_security_tax_rate'] = worksheet.defined_cells[defined_cell_names['social_security_tax_rate']]
     labor['medicare_tax_rate'] = worksheet.defined_cells[defined_cell_names['medicare_tax_rate']]

@@ -1,12 +1,14 @@
-config = {
-    'worksheet_names': {
+class Config:
+    worksheet_names = {
+        'summary': 'FINAL SUMMARY',
         'material': 'MATERIAL BD',
         'labor': 'LABOR',
         'equipment': 'EQUIPMENT',
         'rentals_and_service_by_others': 'RENTALS & SBO',
         'consumables': 'CONSUMABLES'
-    },
-    'defined_cells': {
+    }
+
+    defined_cells = {
         'county': 'COUNTY',
         'state_route': 'SR',
         'section': 'SEC',
@@ -21,6 +23,14 @@ config = {
         'unemployment_tax_rate': 'UNEMPLOYMENT_TAX',
         'workers_comp_insurance_rate': 'WORKERS_COMP',
         'liability_insurance_rate': 'LIABILITY_INSURANCE'
-    },
-    'check_column': 0
-}
+    }
+
+    check_columns = {
+        'material': 0,
+        'labor': 0,
+        'equipment': 0,
+        'rentals': 0,
+        'services': 1,
+        'purchased_consumables': 0,
+        'stock_consumables': 1
+    }

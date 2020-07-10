@@ -1,8 +1,8 @@
-from config import config
+from config import Config
 from util import get_dates, get_hours
 
 # COLUMNS
-CHECK = 0
+CHECK = Config.check_columns.get('equipment') or 0
 DESCRIPTION = 2
 YEAR = 3
 H_YR_SEC_PG = 4

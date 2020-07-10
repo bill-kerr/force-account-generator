@@ -1,7 +1,7 @@
-from config import config
+from config import Config
 
 # COLUMNS
-CHECK = 0
+CHECK = Config.check_columns.get('rentals') or 0
 DESCRIPTION = 3
 INVOICE_NUMBER = 4
 AMOUNT = 5

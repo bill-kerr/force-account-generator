@@ -1,7 +1,7 @@
-from config import config
+from config import Config
 
 # COLUMNS
-CHECK = 0
+CHECK = Config.check_columns.get('material') or 0
 DESCRIPTION = 1
 QUANTITY = 2
 UNIT = 3
@@ -13,7 +13,7 @@ SALES_TAX_RATE = 7
 def process_material_sheet(worksheet):
     rows = worksheet.get_rows()
     materials = []
-    cell_name = config['defined_cells']['sales_tax']
+    cell_name = Config.defined_cells['sales_tax']
     default_sales_tax = worksheet.defined_cells[cell_name]
 
     for row in rows:
