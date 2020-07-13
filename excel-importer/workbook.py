@@ -1,41 +1,62 @@
 from openpyxl import load_workbook as load_wb
-from worksheet import Worksheet
+import openpyxl
 from config import Config
+from worksheet import Worksheet
+from materials import process_material
+from labor import process_labor
+from equipment import process_equipment
+from consumables import process_consumables
+from rentals_and_services import process_rentals_and_services
 
 
 class Workbook:
-    def __init__(self, excel_file_path):
+    def __init__(self, file_path):
+        self._load_workbook(file_path)
+        self._sheet_map = {name: key for key, name in Config.worksheet_names.items()}
+        self._defined_cell_map = {name: key for key, name in Config.defined_cells.items()}
+        self._generate_defined_cells()
+        self._generate_worksheets()
+
+    def _load_workbook(self, file_path):
         try:
-            self.__load_workbook(excel_file_path)
+            self._workbook = load_wb(file_path, read_only=True, data_only=True)
         except Exception:
-            raise Exception('Error loading workbook.')
+            raise Exception('Error loading workbook from ' + file_path)
 
-        self.__generate_defined_cells()
-        self.__generate_worksheets()
-
-    def __load_workbook(self, file_path):
-        self.__workbook = load_wb(file_path, read_only=True, data_only=True)
-
-    def __generate_defined_cells(self):
-        cell_names = Config.defined_cells['defined_cells'].values()
-        self.defined_cells = self.__get_defined_cells_from_workbook(cell_names)
-
-    def __get_defined_cells_from_workbook(self, cell_names):
-        defined_cells = {sheet_name: {} for sheet_name in self.__workbook.get_sheet_names()}
+    def _generate_defined_cells(self):
+        cell_names = Config.defined_cells.values()
+        self.defined_cells = {name: {} for name in Config.worksheet_names}
         for cell_name in cell_names:
-            for worksheet_name, cell_coordinates in self.__workbook.defined_names[cell_name].destinations:
-                worksheet = self.__workbook[worksheet_name]
-                defined_cells[worksheet_name][cell_name] = worksheet[cell_coordinates].value
+            for worksheet_name, cell_coordinates in self._workbook.defined_names[cell_name].destinations:
+                sheet_name = self._sheet_map[worksheet_name]
+                defined_cell = self._defined_cell_map[cell_name]
+                self.defined_cells[sheet_name][defined_cell] = self._workbook[worksheet_name][cell_coordinates].value
 
-        return defined_cells
-
-    def __generate_worksheets(self):
-        sheet_names = config['worksheet_names']
+    def _generate_worksheets(self):
         self.worksheets = {}
+        for name, org_name in Config.worksheet_names.items():
+            process_function = self._get_process_function(name)
+            worksheet = self._workbook[org_name]
+            defined_cells = self.defined_cells[name]
+            self.worksheets[name] = Worksheet(worksheet, defined_cells, process_function)
 
-        for name in sheet_names:
-            sheet_name = sheet_names[name]
-            self.worksheets[name] = Worksheet(self.__workbook[sheet_name], self.defined_cells[sheet_name])
+    def _get_process_function(self, sheet_name):
+        process_functions = {
+            'material': process_material,
+            'labor': process_labor,
+            'equipment': process_equipment,
+            'rentals_and_services': process_rentals_and_services,
+            'consumables': process_consumables
+        }
+        return process_functions.get(sheet_name)
 
-    def get_named_cell_values(self, cell_names=config['defined_cells']):
-        return [self.get_named_cell_value(cell_name) for cell_name in cell_names]
+    def _process_worksheets(self):
+        data = {}
+        for worksheet in self.worksheets.values():
+            data.update(worksheet.process())
+        return data
+
+    def process_workbook(self):
+        data = {}
+        data.update(self._process_worksheets())
+        return data

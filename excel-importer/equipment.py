@@ -2,7 +2,7 @@ from config import Config
 from util import get_dates, get_hours
 
 # COLUMNS
-CHECK = Config.check_columns.get('equipment') or 0
+CHECK = Config.check_columns.get('equipment')[0] or 0
 DESCRIPTION = 2
 YEAR = 3
 H_YR_SEC_PG = 4
@@ -13,7 +13,7 @@ OPERATING_COST = 8
 DATE_START = 14
 
 
-def process_equipment_sheet(worksheet):
+def process_equipment(worksheet):
     rows = worksheet.get_rows()
     equipment = {}
     equipment['data'] = []
@@ -27,7 +27,7 @@ def process_equipment_sheet(worksheet):
             equip = create_equip_from_rows(row, rows[i + 1], dates)
             equipment['data'].append(equip)
 
-    return equipment if len(equipment['data']) > 0 else {}
+    return {'equipment': equipment}
 
 
 def create_equip_from_rows(ot_row, sb_row, dates):

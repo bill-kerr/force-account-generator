@@ -4,7 +4,7 @@ class Config:
         'material': 'MATERIAL BD',
         'labor': 'LABOR',
         'equipment': 'EQUIPMENT',
-        'rentals_and_service_by_others': 'RENTALS & SBO',
+        'rentals_and_services': 'RENTALS & SBO',
         'consumables': 'CONSUMABLES'
     }
 
@@ -26,11 +26,9 @@ class Config:
     }
 
     check_columns = {
-        'material': 0,
-        'labor': 0,
-        'equipment': 0,
-        'rentals': 0,
-        'services': 1,
-        'purchased_consumables': 0,
-        'stock_consumables': 1
+        'material': [0],
+        'labor': [0],
+        'equipment': [0],
+        'rentals_and_services': [0, 1],
+        'consumables': [0, 1]
     }
