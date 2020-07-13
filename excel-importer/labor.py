@@ -13,12 +13,7 @@ DATE_START = Config.columns['labor']['date_start']
 def process_labor(worksheet):
     rows = worksheet.get_rows()
     defined_cell_names = Config.defined_cells
-    labor = {}
-    labor['social_security_tax_rate'] = worksheet.defined_cells['social_security_tax_rate']
-    labor['medicare_tax_rate'] = worksheet.defined_cells['medicare_tax_rate']
-    labor['unemployment_tax_rate'] = worksheet.defined_cells['unemployment_tax_rate']
-    labor['workers_comp_insurance_rate'] = worksheet.defined_cells['workers_comp_insurance_rate']
-    labor['liability_insurance_rate'] = worksheet.defined_cells['liability_insurance_rate']
+    labor = {key: value for key, value in worksheet.defined_cells.items()}
     labor['data'] = []
     dates = []
 
