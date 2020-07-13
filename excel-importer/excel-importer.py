@@ -9,7 +9,7 @@ if __name__ == '__main__':
     if len(sys.argv) < 2:
         raise Exception(usage_message)
     source = sys.argv[1]
-    dest = "./result.json"
+    dest = ''./result.json'
 
     if len(sys.argv) > 2:
         dest = sys.argv[2]
