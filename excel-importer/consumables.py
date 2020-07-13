@@ -1,17 +1,17 @@
 from config import Config
 
 # COLUMNS
-P_CHECK = Config.check_columns.get('consumables')[0] or 0
-P_DESCRIPTION = 3
-P_QUANTITY = 4
-P_UNIT_PRICE = 5
-P_INVOICE_NUMBER = 6
+P_CHECK = Config.columns['consumables']['check'][0]
+P_DESCRIPTION = Config.columns['consumables']['p_description']
+P_QUANTITY = Config.columns['consumables']['p_quantity']
+P_UNIT_PRICE = Config.columns['consumables']['p_unit_price']
+P_INVOICE_NUMBER = Config.columns['consumables']['p_invoice_number']
 
-S_CHECK = Config.check_columns.get('consumables')[1] or 1
-S_DESCRIPTION = 9
-S_INVOICE_VALUE = 10
-S_PERCENT_REIMBURSED = 11
-S_INVOICE_NUMBER = 12
+S_CHECK = Config.columns['consumables']['check'][1]
+S_DESCRIPTION = Config.columns['consumables']['s_description']
+S_INVOICE_VALUE = Config.columns['consumables']['s_invoice_number']
+S_PERCENT_REIMBURSED = Config.columns['consumables']['s_percent_reimbursed']
+S_INVOICE_NUMBER = Config.columns['consumables']['s_invoice_number']
 
 
 def process_consumables(worksheet):

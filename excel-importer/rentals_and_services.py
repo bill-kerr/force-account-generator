@@ -1,15 +1,15 @@
 from config import Config
 
 # COLUMNS
-R_CHECK = Config.check_columns.get('rentals_and_services')[0] or 0
-R_DESCRIPTION = 3
-R_INVOICE_NUMBER = 4
-R_AMOUNT = 5
+R_CHECK = Config.columns['rentals_and_services']['check'][0]
+R_DESCRIPTION = Config.columns['rentals_and_services']['r_description']
+R_INVOICE_NUMBER = Config.columns['rentals_and_services']['r_invoice_number']
+R_AMOUNT = Config.columns['rentals_and_services']['r_amount']
 
-S_CHECK = Config.check_columns.get('rentals_and_services')[1] or 0
-S_DESCRIPTION = 7
-S_INVOICE_NUMBER = 8
-S_AMOUNT = 9
+S_CHECK = Config.columns['rentals_and_services']['check'][1]
+S_DESCRIPTION = Config.columns['rentals_and_services']['s_description']
+S_INVOICE_NUMBER = Config.columns['rentals_and_services']['s_invoice_number']
+S_AMOUNT = Config.columns['rentals_and_services']['s_amount']
 
 
 def process_rentals_and_services(worksheet):

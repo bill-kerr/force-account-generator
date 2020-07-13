@@ -2,12 +2,12 @@ from config import Config
 from util import get_dates, get_hours
 
 # COLUMNS
-CHECK = Config.check_columns.get('labor')[0] or 0
-CLASSIFICATION = 1
-NAME = 2
-BASE_RATE = 3
-HW_PENSION_RATE = 4
-DATE_START = 10
+CHECK = Config.columns['labor']['check'][0]
+CLASSIFICATION = Config.columns['labor']['classification']
+NAME = Config.columns['labor']['name']
+BASE_RATE = Config.columns['labor']['base_rate']
+HW_PENSION_RATE = Config.columns['labor']['hw_pension_rate']
+DATE_START = Config.columns['labor']['date_start']
 
 
 def process_labor(worksheet):

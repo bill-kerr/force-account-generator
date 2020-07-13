@@ -2,15 +2,15 @@ from config import Config
 from util import get_dates, get_hours
 
 # COLUMNS
-CHECK = Config.check_columns.get('equipment')[0] or 0
-DESCRIPTION = 2
-YEAR = 3
-H_YR_SEC_PG = 4
-MONTHLY_RATE = 5
-EQUIP_ADJ = 6
-AREA_ADJ = 7
-OPERATING_COST = 8
-DATE_START = 14
+CHECK = Config.columns['equipment']['check'][0]
+DESCRIPTION = Config.columns['equipment']['description']
+YEAR = Config.columns['equipment']['year']
+H_YR_SEC_PG = Config.columns['equipment']['h_yr_sec_pg']
+MONTHLY_RATE = Config.columns['equipment']['monthly_rate']
+EQUIP_ADJ = Config.columns['equipment']['equip_adj']
+AREA_ADJ = Config.columns['equipment']['area_adj']
+OPERATING_COST = Config.columns['equipment']['operating_cost']
+DATE_START = Config.columns['equipment']['date_start']
 
 
 def process_equipment(worksheet):

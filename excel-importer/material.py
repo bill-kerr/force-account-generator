@@ -1,13 +1,13 @@
 from config import Config
 
 # COLUMNS
-CHECK = Config.check_columns.get('material')[0] or 0
-DESCRIPTION = 1
-QUANTITY = 2
-UNIT = 3
-UNIT_PRICE = 4
-INVOICE_NUMBER = 5
-SALES_TAX_RATE = 7
+CHECK = Config.columns['material']['check'][0]
+DESCRIPTION = Config.columns['material']['description']
+QUANTITY = Config.columns['material']['quantity']
+UNIT = Config.columns['material']['unit']
+UNIT_PRICE = Config.columns['material']['unit_price']
+INVOICE_NUMBER = Config.columns['material']['invoice_number']
+SALES_TAX_RATE = Config.columns['material']['sales_tax']
 
 
 def process_material(worksheet):

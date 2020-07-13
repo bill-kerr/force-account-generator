@@ -2,7 +2,7 @@ from openpyxl import load_workbook as load_wb
 import openpyxl
 from config import Config
 from worksheet import Worksheet
-from materials import process_material
+from material import process_material
 from labor import process_labor
 from equipment import process_equipment
 from consumables import process_consumables

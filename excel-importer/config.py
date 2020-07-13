@@ -25,10 +25,53 @@ class Config:
         'liability_insurance_rate': 'LIABILITY_INSURANCE'
     }
 
-    check_columns = {
-        'material': [0],
-        'labor': [0],
-        'equipment': [0],
-        'rentals_and_services': [0, 1],
-        'consumables': [0, 1]
+    columns = {
+        'material': {
+            'check': [0],
+            'description': 1,
+            'quantity': 2,
+            'unit': 3,
+            'unit_price': 4,
+            'invoice_number': 5,
+            'sales_tax': 7
+        },
+        'labor': {
+            'check': [0],
+            'classification': 1,
+            'name': 2,
+            'base_rate': 3,
+            'hw_pension_rate': 4,
+            'date_start': 10
+        },
+        'equipment': {
+            'check': [0],
+            'description': 2,
+            'year': 3,
+            'h_yr_sec_pg': 4,
+            'monthly_rate': 5,
+            'equip_adj': 6,
+            'area_adj': 7,
+            'operating_cost': 8,
+            'date_start': 14
+        },
+        'rentals_and_services': {
+            'check': [0, 1],
+            'r_description': 3,
+            'r_invoice_number': 4,
+            'r_amount': 5,
+            's_description': 7,
+            's_invoice_number': 8,
+            's_amount': 9
+        },
+        'consumables': {
+            'check': [0, 1],
+            'p_description': 3,
+            'p_quantity': 4,
+            'p_unit_price': 5,
+            'p_invoice_number': 6,
+            's_description': 9,
+            's_invoice_value': 10,
+            's_percent_reimbursed': 11,
+            's_invoice_number': 12
+        }
     }

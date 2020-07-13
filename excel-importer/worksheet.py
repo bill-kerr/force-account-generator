@@ -22,7 +22,8 @@ class Worksheet:
     def _load_rows(self):
         self._rows = []
         self.has_data = False
-        check_cols = Config.check_columns.get(self.name)
+        cols = Config.columns.get(self.name)
+        check_cols = cols['check'] if cols else None
         if not check_cols:
             return
 
