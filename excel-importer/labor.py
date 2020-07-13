@@ -12,7 +12,6 @@ DATE_START = Config.columns['labor']['date_start']
 
 def process_labor(worksheet):
     rows = worksheet.get_rows()
-    defined_cell_names = Config.defined_cells
     labor = {key: value for key, value in worksheet.defined_cells.items()}
     labor['data'] = []
     dates = []

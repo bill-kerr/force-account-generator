@@ -4,12 +4,12 @@ from workbook import Workbook
 
 
 if __name__ == '__main__':
-    usage_message = 'Usage: excel-importer.py <./source.xlsx> [./result.json]'
+    usage_message = 'Usage: excel_importer.py <./source.xlsx> [./result.json]'
 
     if len(sys.argv) < 2:
         raise Exception(usage_message)
     source = sys.argv[1]
-    dest = ''./result.json'
+    dest = './result.json'
 
     if len(sys.argv) > 2:
         dest = sys.argv[2]

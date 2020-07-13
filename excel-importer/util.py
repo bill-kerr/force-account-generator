@@ -1,4 +1,7 @@
 def get_dates(row):
+    """
+    Extract and format dates from row.
+    """
     dates = []
     for value in row:
         dates.append(value.strftime('%Y-%m-%d') if value is not None else None)

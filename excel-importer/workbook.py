@@ -1,5 +1,4 @@
 from openpyxl import load_workbook as load_wb
-import openpyxl
 from config import Config
 from worksheet import Worksheet
 from material import process_material
