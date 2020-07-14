@@ -4,6 +4,11 @@ from util import get_dates, get_hours
 # COLUMNS
 CHECK = Config.columns['equipment']['check'][0]
 DESCRIPTION = Config.columns['equipment']['description']
+TYPE = Config.columns['equipment']['type']
+CONFIGURATION = Config.columns['equipment']['configuration']
+MAKE = Config.columns['equipment']['make']
+MODEL = Config.columns['equipment']['model']
+EQUIPMENT_NUM = Config.columns['equipment']['equipment_number']
 YEAR = Config.columns['equipment']['year']
 H_YR_SEC_PG = Config.columns['equipment']['h_yr_sec_pg']
 MONTHLY_RATE = Config.columns['equipment']['monthly_rate']
@@ -34,6 +39,11 @@ def create_equip_from_rows(ot_row, sb_row, dates):
     equip = {}
     equip['description'] = ot_row[DESCRIPTION]
     equip['year'] = ot_row[YEAR]
+    equip['type'] = ot_row[TYPE]
+    equip['configuration'] = ot_row[CONFIGURATION]
+    equip['make'] = ot_row[MAKE]
+    equip['model'] = ot_row[MODEL]
+    equip['equipment_number'] = ot_row[EQUIPMENT_NUM]
     equip['h_yr'] = ot_row[H_YR_SEC_PG]
     equip['sec_pg'] = sb_row[H_YR_SEC_PG]
     equip['monthly_rate'] = ot_row[MONTHLY_RATE]

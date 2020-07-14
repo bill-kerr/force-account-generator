@@ -78,6 +78,11 @@
       {
         "description": "Volvo ECR235 Excavator",
         "year": 2011,
+        "type": "Excavator",
+        "configuration": "EROPS",
+        "make": "Volvo",
+        "model": "ECR235",
+        "equipment_number": "E-1442",
         "h_yr": "online",
         "sec_pg": "bluebook",
         "monthly_rate": 860,
@@ -100,6 +105,11 @@
       {
         "description": "Volvo ECR235 Excavator",
         "year": 2011,
+        "type": "Excavator",
+        "configuration": "EROPS",
+        "make": "Volvo",
+        "model": "ECR235",
+        "equipment_number": "E-1442",
         "h_yr": "online",
         "sec_pg": "bluebook",
         "monthly_rate": 860,

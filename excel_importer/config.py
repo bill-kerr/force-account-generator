@@ -45,14 +45,19 @@ class Config(object):
         },
         'equipment': {
             'check': [0],
-            'description': 2,
+            'description': 4,
             'year': 3,
-            'h_yr_sec_pg': 4,
-            'monthly_rate': 5,
-            'equip_adj': 6,
-            'area_adj': 7,
-            'operating_cost': 8,
-            'date_start': 14
+            'type': 5,
+            'configuration': 6,
+            'make': 7,
+            'model': 8,
+            'equipment_number': 9,
+            'h_yr_sec_pg': 10,
+            'monthly_rate': 11,
+            'equip_adj': 12,
+            'area_adj': 13,
+            'operating_cost': 14,
+            'date_start': 20
         },
         'rentals_and_services': {
             'check': [0, 1],
