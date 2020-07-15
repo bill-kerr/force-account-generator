@@ -35,23 +35,23 @@ def process_equipment(worksheet):
     return {'equipment': equipment}
 
 
-def create_equip_from_rows(ot_row, sb_row, dates):
+def create_equip_from_rows(op_row, sb_row, dates):
     equip = {}
-    equip['description'] = ot_row[DESCRIPTION]
-    equip['year'] = ot_row[YEAR]
-    equip['type'] = ot_row[TYPE]
-    equip['configuration'] = ot_row[CONFIGURATION]
-    equip['make'] = ot_row[MAKE]
-    equip['model'] = ot_row[MODEL]
-    equip['equipment_number'] = ot_row[EQUIPMENT_NUM]
-    equip['h_yr'] = ot_row[H_YR_SEC_PG]
+    equip['description'] = op_row[DESCRIPTION]
+    equip['year'] = op_row[YEAR]
+    equip['type'] = op_row[TYPE]
+    equip['configuration'] = op_row[CONFIGURATION]
+    equip['make'] = op_row[MAKE]
+    equip['model'] = op_row[MODEL]
+    equip['equipment_number'] = op_row[EQUIPMENT_NUM]
+    equip['h_yr'] = op_row[H_YR_SEC_PG]
     equip['sec_pg'] = sb_row[H_YR_SEC_PG]
-    equip['monthly_rate'] = ot_row[MONTHLY_RATE]
-    equip['equipment_adjustment'] = ot_row[EQUIP_ADJ]
-    equip['area_adjustment'] = ot_row[AREA_ADJ]
-    equip['operating_cost'] = ot_row[OPERATING_COST]
+    equip['monthly_rate'] = op_row[MONTHLY_RATE]
+    equip['equipment_adjustment'] = op_row[EQUIP_ADJ]
+    equip['area_adjustment'] = op_row[AREA_ADJ]
+    equip['operating_cost'] = op_row[OPERATING_COST]
     equip['daily_hours'] = get_hours(
-        ot_row[DATE_START:], sb_row[DATE_START:], dates, primary_label='ot', secondary_label='sb'
+        op_row[DATE_START:], sb_row[DATE_START:], dates, primary_label='op', secondary_label='sb'
     )
     if len(equip.get('daily_hours')) > 0:
         return equip
