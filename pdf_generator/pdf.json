@@ -1,0 +1,64 @@
+{
+  "daily": {
+    "template": "daily_page_1.pdf",
+    "date": "date",
+    "ecms_number": "ecms_no",
+    "sr_sec": "sr_sec",
+    "item_number": "item_no",
+    "authorization_number": "auth_no",
+    "contractor": "contractor",
+    "subcontractor": "subcontractor",
+    "inspector": "inspector",
+    "locations": "locations",
+    "description": "description",
+    "labor": {
+      "row_count": 7,
+      "fields": {
+        "name": "name",
+        "classification": "class",
+        "hours_st": "hours_st",
+        "hours_ot": "hours_ot"
+      }
+    },
+    "equipment": {
+      "row_count": 4,
+      "fields": {
+        "equipment_type": "type",
+        "configuration": "config",
+        "year": "year",
+        "make": "make",
+        "model": "model",
+        "hours_op": "hours_op",
+        "hours_sb": "hours_sb"
+      }
+    }
+  },
+  "material": {
+    "template": "material.pdf",
+    "row_count": 18,
+    "fields": {
+      "description": "description",
+      "quantity": "quantity",
+      "unit": "unit",
+      "unit_price": "unit_price",
+      "invoice_number": "invoice_no",
+      "amount": "amount",
+      "subtotal": "subtotal",
+      "sales_tax": "sales_tax",
+      "total": "total"
+    }
+  },
+  "material_supp": {
+    "template": "material_supp.pdf",
+    "row_count": 18,
+    "fields": {
+      "description": "description",
+      "quantity": "quantity",
+      "unit": "unit",
+      "unit_price": "unit_price",
+      "invoice_number": "invoice_no",
+      "amount": "amount",
+      "subtotal": "subtotal"
+    }
+  }
+}
