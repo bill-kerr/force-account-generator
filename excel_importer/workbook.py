@@ -49,6 +49,18 @@ class Workbook:
         }
         return process_functions.get(sheet_name)
 
+    def __get_summary_cells(self):
+        return {
+            'county': self.defined_cells['summary'].get('county'),
+            'state_route': self.defined_cells['summary'].get('state_route'),
+            'section': self.defined_cells['summary'].get('section'),
+            'work_order_number': self.defined_cells['summary'].get('work_order_number'),
+            'contract': self.defined_cells['summary'].get('contract'),
+            'item_number': self.defined_cells['summary'].get('item_number'),
+            'prime_contractor': self.defined_cells['summary'].get('prime_contractor'),
+            'statement_of_cost': self.defined_cells['summary'].get('statement_of_cost')
+        }
+
     def _process_worksheets(self):
         data = {}
         for worksheet in self.worksheets.values():
@@ -57,5 +69,6 @@ class Workbook:
 
     def process_workbook(self):
         data = {}
+        data.update(self.__get_summary_cells())
         data.update(self._process_worksheets())
         return data
