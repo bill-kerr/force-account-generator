@@ -5,7 +5,6 @@ class DailyConfig:
     def __init__(self, daily_config, daily_supp_config):
         self.__daily_config = daily_config
         self.__daily_supp_config = daily_supp_config
-        self.test = "ldjflsj"
 
     @property
     def template(self):

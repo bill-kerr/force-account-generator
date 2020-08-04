@@ -4,17 +4,21 @@ from PyPDF2 import PdfFileReader, PdfFileWriter
 
 def make_pdf(pages, output_file_path):
     pdf_writer = set_need_appearances_writer(PdfFileWriter())
+    streams = []
     for page in pages:
-        add_page(pdf_writer, page)
+        streams.append(add_page(pdf_writer, page))
     save_pdf(pdf_writer, output_file_path)
+    for stream in streams:
+        stream.close()
 
 
 def add_page(pdf_writer, page):
-    with open(page.template, "rb") as input_stream:
-        pdf_reader = get_pdf_reader(input_stream)
-        pdf_writer.addPage(pdf_reader.getPage(0))
-        pdf_writer.updatePageFormFieldValues(
-            pdf_writer.getPage(-1), page.fields)
+    input_stream = open(page.template, "rb")
+    pdf_reader = get_pdf_reader(input_stream)
+    pdf_writer.addPage(pdf_reader.getPage(0))
+    pdf_writer.updatePageFormFieldValues(
+        pdf_writer.getPage(-1), page.fields)
+    return input_stream
 
 
 def get_pdf_reader(input_stream):
