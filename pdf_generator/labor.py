@@ -7,7 +7,7 @@ class Labor:
         self.name = ""
         self.base_rate = 0
         self.hw_pension_rate = 0
-        self.__daily_hours = []
+        self.__daily_hours = {}
 
     @property
     def daily_hours(self):
@@ -15,4 +15,4 @@ class Labor:
 
     def add_daily_hours(self, date, straight_time, overtime):
         hours = Hours(date, straight_time, overtime)
-        self.__daily_hours.append(hours)
+        self.__daily_hours[date] = hours

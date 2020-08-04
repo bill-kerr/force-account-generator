@@ -147,9 +147,35 @@ class DailyConfig:
         return self.__daily_supp_config["locations"]
 
 
+class MaterialConfig:
+    def __init__(self, config, supp_config):
+        self.template = config["template"]
+        self.row_count = config["row_count"]
+        self.description = config["fields"]["description"]
+        self.quantity = config["fields"]["quantity"]
+        self.unit = config["fields"]["unit"]
+        self.unit_price = config["fields"]["unit_price"]
+        self.invoice_number = config["fields"]["invoice_number"]
+        self.amount = config["fields"]["amount"]
+        self.subtotal = config["fields"]["subtotal"]
+        self.sales_tax = config["fields"]["sales_tax"]
+        self.total = config["fields"]["total"]
+        self.template_supp = supp_config[""]
+        self.row_count_supp = supp_config["row_count"]
+        self.description_supp = supp_config["fields"]["description"]
+        self.quantity_supp = supp_config["fields"]["quantity"]
+        self.unit_supp = supp_config["fields"]["unit"]
+        self.unit_price_supp = supp_config["fields"]["unit_price"]
+        self.invoice_number_supp = supp_config["fields"]["invoice_number"]
+        self.amount_supp = supp_config["fields"]["amount"]
+        self.subtotal_supp = supp_config["fields"]["subtotal"]
+
+
 class PdfConfig:
-    def __init__(self):
-        with open('pdf_config.json') as config_file:
+    def __init__(self, pdf_config_path):
+        with open(pdf_config_path) as config_file:
             self.__config = json.load(config_file)
             self.daily_config = DailyConfig(
                 self.__config["daily"], self.__config["daily_supp"])
+            self.material = MaterialConfig(
+                self.__config["material"], self.__config["material_supp"])

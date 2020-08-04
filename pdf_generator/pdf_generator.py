@@ -4,11 +4,12 @@ JSON input data must be in the same format as input.example.json.
 """
 import argparse
 import json
-from util import create_dict
+from util import create_dict, paginate
 from work_schedule import WorkSchedule
 from daily_page import DailyPage
 from pdf_config import PdfConfig
 from pdf_writer import make_pdf
+from input_data import InputData
 
 
 def populate_work_schedule(work_schedule, units, resource_type):
@@ -34,29 +35,34 @@ if __name__ == '__main__':
         raise parser.error(
             'Incorrect file extension (source=*.json dest=*.pdf)')
 
-    with open(args.source) as f:
-        data = json.load(f)
+    pdf_config = PdfConfig('./pdf_config.json')
+    input_data = InputData(args.source)
+    material = paginate(input_data.material, pdf_config.)
+    ws = WorkSchedule(input_data.labor, input_data.equipment)
 
-    material = create_dict(data['material']['data'])
-    labor = create_dict(data['labor']['data'])
-    equipment = create_dict(data['equipment']['data'])
-    rentals = create_dict(data['rentals']['data'])
-    services = create_dict(data['services']['data'])
-    stock_consumables = create_dict(data['stock_consumables']['data'])
-    purchased_consumables = create_dict(data['purchased_consumables']['data'])
+    # with open(args.source) as f:
+    #     data = json.load(f)
 
-    ws = WorkSchedule()
-    populate_work_schedule(ws, labor, "labor")
-    populate_work_schedule(ws, equipment, "equipment")
+    # material = create_dict(data['material']['data'])
+    # labor = create_dict(data['labor']['data'])
+    # equipment = create_dict(data['equipment']['data'])
+    # rentals = create_dict(data['rentals']['data'])
+    # services = create_dict(data['services']['data'])
+    # stock_consumables = create_dict(data['stock_consumables']['data'])
+    # purchased_consumables = create_dict(data['purchased_consumables']['data'])
 
-    pdf_config = PdfConfig()
-    pages = []
+    # ws = WorkSchedule()
+    # populate_work_schedule(ws, labor, "labor")
+    # populate_work_schedule(ws, equipment, "equipment")
 
-    for work_day in ws.get_days().values():
-        labor_hours, equip_hours = work_day.paginate(7, 4)
-        for paginated_labor, paginated_equipment in zip(labor_hours, equip_hours):
-            template = "./files/" + pdf_config.daily_config.template
-            page = DailyPage(template, paginated_labor, paginated_equipment)
-            pages.append(page)
+    # pdf_config = PdfConfig()
+    # pages = []
 
-    make_pdf(pages, args.dest)
+    # for work_day in ws.get_days().values():
+    #     labor_hours, equip_hours = work_day.paginate(7, 4)
+    #     for paginated_labor, paginated_equipment in zip(labor_hours, equip_hours):
+    #         template = "./files/" + pdf_config.daily_config.template
+    #         page = DailyPage(template, paginated_labor, paginated_equipment)
+    #         pages.append(page)
+
+    # make_pdf(pages, args.dest)

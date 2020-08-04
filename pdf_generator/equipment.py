@@ -16,7 +16,7 @@ class Equipment:
         self.equipment_adjustment = 0
         self.area_adjustment = 0
         self.operating_cost = 0
-        self.__daily_hours = []
+        self.__daily_hours = {}
 
     @property
     def daily_hours(self):
@@ -24,4 +24,4 @@ class Equipment:
 
     def add_daily_hours(self, date, operating_time, standby_time):
         hours = Hours(date, operating_time, standby_time)
-        self.__daily_hours.append(hours)
+        self.__daily_hours[date] = hours

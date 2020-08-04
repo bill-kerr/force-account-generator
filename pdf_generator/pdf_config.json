@@ -76,5 +76,52 @@
       "amount": "amount",
       "subtotal": "subtotal"
     }
+  },
+  "daily_labor": {
+    "template": "daily_labor.pdf",
+    "row_count": 10,
+    "fields": {
+      "days": {
+        "column_count": 12,
+        "day": "DAY",
+        "st": "ST",
+        "ot": "OT"
+      },
+      "classification": "CLASSIFICATION",
+      "name": "NAME",
+      "total_st": "TOTALST",
+      "total_ot": "TOTALOT"
+    }
+  },
+  "labor_breakdown": {
+    "template": "labor_bd.pdf",
+    "row_count": 7,
+    "base_labor_subtotal": "base_labor_subtotal",
+    "social_security_tax_rate": "ss_tax",
+    "medicare_tax_rate": "medicare_tax",
+    "unemployment_tax_rate": "unemployment_tax",
+    "workers_comp_insurance_rate": "workers_comp",
+    "liability_insurance_rate": "liability",
+    "total_taxes_and_insurance": "total_taxes_and_insurance",
+    "direct_labor_subtotal": "direct_labor_subtotal",
+    "indirect_labor_subtotal": "indirect_labor_subtotal",
+    "direct_labor_total": "direct_labor_total",
+    "indirect_labor_total": "indirect_labor_total",
+    "fields": {
+      "classification": "classification",
+      "name": "name",
+      "st": "st",
+      "ot": "ot",
+      "base_rate_st": "base_rate_st",
+      "base_rate_ot": "base_rate_ot",
+      "hw_pension_rate_st": "hw_pension_rate_st",
+      "hw_pension_rate_ot": "hw_pension_rate_ot",
+      "base_labor_cost_st": "base_labor_cost_st",
+      "base_labor_cost_ot": "base_labor_cost_ot",
+      "direct_labor_rate_st": "direct_labor_rate_st",
+      "direct_labor_rate_ot": "direct_labor_rate_ot",
+      "direct_labor_cost_st": "direct_labor_cost_st",
+      "direct_labor_cost_ot": "direct_labor_cost_ot"
+    }
   }
 }

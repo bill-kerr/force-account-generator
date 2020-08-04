@@ -1,35 +1,22 @@
 from work_day import WorkDay
 
 
+def add_unit_days(unit, collection):
+    for day in unit.daily_hours.values():
+        work_day = WorkDay(unit, day.date)
+        if collection.get(day.date) is None:
+            collection[day.date] = [work_day]
+        else:
+            collection[day.date].append(work_day)
+
+
 class WorkSchedule:
-    def __init__(self):
-        self.__days = {}
+    def __init__(self, labor, equipment):
+        self.labor_days = {}
+        self.equipment_days = {}
 
-    def __repr__(self):
-        days = ''
-        for i, day in enumerate(self.__days):
-            end = ' ' if i != len(self.__days) - 1 else ''
-            days += repr(day) + end
-        return 'WorkSchedule(' + days + ')'
+        for unit in labor:
+            add_unit_days(unit, self.labor_days)
 
-    def add_day(self, date):
-        if self.__days.get(date) is None:
-            self.__days[date] = WorkDay(date)
-        return self.__days[date]
-
-    def get_day(self, date):
-        return self.__days.get(date)
-
-    def get_days(self, start_date=None, end_date=None):
-        if start_date is None and end_date is None:
-            return self.__days
-
-        days = []
-        for day in self.__days:
-            if end_date is not None and start_date is None and day <= end_date:
-                days.append(day)
-            elif start_date is not None and end_date is None and day >= start_date:
-                days.append(day)
-            elif end_date is not None and start_date is not None and start_date <= day <= end_date:
-                days.append(day)
-        return days
+        for unit in equipment:
+            add_unit_days(unit, self.equipment_days)

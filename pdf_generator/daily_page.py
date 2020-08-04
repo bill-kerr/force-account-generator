@@ -18,7 +18,8 @@ class DailyPage:
         self.__fill_equipment_fields()
 
     def __fill_meta_fields(self):
-        self.fields[self.__config.date] =
+        # self.fields[self.__config.date] =
+        pass
 
     def __fill_labor_fields(self):
         for i, labor in enumerate(self.__labor):
