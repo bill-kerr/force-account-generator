@@ -13,8 +13,12 @@ class DailyPage:
         self.__fill_fields()
 
     def __fill_fields(self):
+        self.__fill_meta_fields()
         self.__fill_labor_fields()
         self.__fill_equipment_fields()
+
+    def __fill_meta_fields(self):
+        self.fields[self.__config.date] =
 
     def __fill_labor_fields(self):
         for i, labor in enumerate(self.__labor):
