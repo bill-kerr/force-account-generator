@@ -6,6 +6,7 @@ verify_ssl = true
 [dev-packages]
 pylint = "*"
 pycodestyle = "*"
+autopep8 = "*"
 
 [packages]
 pypdf2 = "*"

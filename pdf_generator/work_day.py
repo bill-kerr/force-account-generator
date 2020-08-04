@@ -7,16 +7,18 @@ class WorkDay:
     def __repr__(self):
         return 'WorkDay(' + self.date + ')'
 
-    def add_labor(self, labor_id, st_hours, ot_hours):
+    def add_labor(self, labor_id, unit, st_hours, ot_hours):
         self.__labor.append({
             'id': labor_id,
+            'unit': unit,
             'st': st_hours,
             'ot': ot_hours
         })
 
-    def add_equipment(self, equipment_id, op_hours, sb_hours):
+    def add_equipment(self, equipment_id, unit, op_hours, sb_hours):
         self.__equipment.append({
             'id': equipment_id,
+            'unit': unit,
             'op': op_hours,
             'sb': sb_hours
         })
