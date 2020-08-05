@@ -3,13 +3,9 @@ Program that creates a PDF force account package from JSON data.
 JSON input data must be in the same format as input.example.json.
 """
 import argparse
-import json
-from util import create_dict, paginate
-from work_schedule import WorkSchedule
-from daily_page import DailyPage
-from pdf_config import PdfConfig
-from pdf_writer import make_pdf
+from pdf_config import PdfFieldConfig
 from input_data import InputData
+from material import MaterialCollection
 
 
 def populate_work_schedule(work_schedule, units, resource_type):
@@ -35,10 +31,9 @@ if __name__ == '__main__':
         raise parser.error(
             'Incorrect file extension (source=*.json dest=*.pdf)')
 
-    pdf_config = PdfConfig('./pdf_config.json')
+    pdf_config = PdfFieldConfig('./pdf_config.json')
     input_data = InputData(args.source)
-    material = paginate(input_data.material, pdf_config.)
-    ws = WorkSchedule(input_data.labor, input_data.equipment)
+    material_collection = MaterialCollection(pdf_config, input_data)
 
     # with open(args.source) as f:
     #     data = json.load(f)

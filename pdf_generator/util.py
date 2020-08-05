@@ -25,3 +25,19 @@ def paginate(values, page_limit):
             paginated_values.append([])
         paginated_values[-1].append(value)
     return paginated_values
+
+
+def get_header_fields(pdf_config, global_data):
+    values = {}
+    headers = pdf_config.headers
+    values[headers.county] = global_data.county
+    values[headers.state_route] = global_data.state_route
+    values[headers.section] = global_data.section
+    values[headers.work_order_number] = global_data.work_order_number
+    values[headers.contract] = global_data.contract
+    values[headers.item_number] = global_data.item_number
+    return values
+
+
+def rnd(num):
+    return round((num + 0.00000001) * 100) / 100

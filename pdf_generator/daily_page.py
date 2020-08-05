@@ -1,5 +1,5 @@
 from util import make_field
-from pdf_config import PdfConfig
+from pdf_config import PdfFieldConfig
 
 
 class DailyPage:

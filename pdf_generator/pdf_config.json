@@ -113,8 +113,8 @@
       "days": {
         "column_count": 12,
         "day": "DAY",
-        "st": "st",
-        "ot": "ot"
+        "hours_st": "st",
+        "hours_ot": "ot"
       },
       "classification": "CLASSIFICATION",
       "name": "NAME",
@@ -139,8 +139,8 @@
     "fields": {
       "classification": "classification",
       "name": "name",
-      "st": "st",
-      "ot": "ot",
+      "hours_st": "st",
+      "hours_ot": "ot",
       "base_rate_st": "base_rate_st",
       "base_rate_ot": "base_rate_ot",
       "hw_pension_rate_st": "hw_pension_rate_st",
@@ -168,8 +168,8 @@
     "fields": {
       "classification": "classification",
       "name": "name",
-      "st": "st",
-      "ot": "ot",
+      "hours_st": "st",
+      "hours_ot": "ot",
       "base_rate_st": "base_rate_st",
       "base_rate_ot": "base_rate_ot",
       "hw_pension_rate_st": "hw_pension_rate_st",
@@ -209,7 +209,6 @@
     "template": "equip_bd_supp.pdf",
     "row_count": 8,
     "amount_subtotal": "amount_subtotal",
-    "amount_total": "amount_total",
     "fields": {
       "description": "description",
       "year": "year",
@@ -238,8 +237,8 @@
       "days": {
         "column_count": 12,
         "day": "DAY",
-        "op": "op",
-        "sb": "sb"
+        "hours_op": "op",
+        "hours_sb": "sb"
       }
     }
   },
