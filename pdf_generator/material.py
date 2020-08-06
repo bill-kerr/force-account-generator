@@ -13,12 +13,13 @@ class Material:
 
 class MaterialPage:
     def __init__(self, materials, field_config, is_first_page):
-        self.is_first_page = first_page
+        self.is_first_page = is_first_page
         self.template = field_config.template
         self.materials = materials
         self.subtotal = self.__calc_subtotal()
         self.fields = field_config.material
-        self.values = self.__set_fields()
+        self.values = {}
+        self.__set_fields()
 
     def __calc_subtotal(self):
         subtotal = 0
@@ -26,19 +27,33 @@ class MaterialPage:
             subtotal += rnd(material.quantity * material.unit_price)
         return subtotal
 
-    def __make_field(self, field, number, value):
-        make_field(self.values, field, number, value)
+    def __make_field(self, field, number, value, formatter=lambda val: str(val)):
+        value = formatter(value)
+        make_field(self.values, field, number + 1, value)
 
     def __set_description(self, number, value):
         field = self.fields.description if self.is_first_page else self.fields.description_supp
-        self.__make_field(field, number + 1, value)
+        self.__make_field(field, number, value)
 
     def __set_quantity(self, number, value):
         field = self.fields.quantity if self.is_first_page else self.fields.quantity_supp
-        self.__make_field(field, number + 1, value)
+        self.__make_field(field, number, str(value))
 
     def __set_unit(self, number, value):
-        field = self.fields.quantity if self.is_first_page else self.fields.quantity_supp
+        field = self.fields.unit if self.is_first_page else self.fields.unit_supp
+        self.__make_field(field, number, value)
+
+    def __set_unit_price(self, number, value):
+        field = self.fields.unit_price if self.is_first_page else self.fields.unit_price_supp
+        self.__make_field(field, number, f'{value:,.2f}')
+
+    def __set_invoice_number(self, number, value):
+        field = self.fields.invoice_number if self.is_first_page else self.fields.invoice_number_supp
+        self.__make_field(field, number, value)
+
+    def __set_amount(self, number, value):
+        field = self.fields.amount if self.is_first_page else self.fields.amount_supp
+        self.__make_field(field, number, f'$ {value:,.2f}')
 
     def __set_fields(self):
         for i, material in enumerate(self.materials):

@@ -1,6 +1,22 @@
 import json
 
 
+class FieldConfig:
+    def __init__(self, config, supp_config=None):
+        self.has_supp = supp_config is not None
+        self.config = config
+        self.supp_config = supp_config
+
+    def get(self, field_name, is_supp):
+        if not is_supp:
+            return self.config[field_name]
+
+        if not self.has_supp and is_supp:
+            return self.config[field_name]
+
+        return self.supp_config[field_name]
+
+
 class DailyConfig:
     def __init__(self, config, supp_config):
         self.template = config["template"]
@@ -72,28 +88,23 @@ class HeadersConfig:
         self.item_number = config["item_number"]
 
 
-class MaterialConfig:
+class MaterialConfig(FieldConfig):
     def __init__(self, config, supp_config):
-        self.template = config["template"]
-        self.row_count = config["row_count"]
-        self.description = config["fields"]["description"]
-        self.quantity = config["fields"]["quantity"]
-        self.unit = config["fields"]["unit"]
-        self.unit_price = config["fields"]["unit_price"]
-        self.invoice_number = config["fields"]["invoice_number"]
-        self.amount = config["fields"]["amount"]
-        self.subtotal = config["fields"]["subtotal"]
-        self.sales_tax = config["fields"]["sales_tax"]
-        self.total = config["fields"]["total"]
-        self.template_supp = supp_config["template"]
-        self.row_count_supp = supp_config["row_count"]
-        self.description_supp = supp_config["fields"]["description"]
-        self.quantity_supp = supp_config["fields"]["quantity"]
-        self.unit_supp = supp_config["fields"]["unit"]
-        self.unit_price_supp = supp_config["fields"]["unit_price"]
-        self.invoice_number_supp = supp_config["fields"]["invoice_number"]
-        self.amount_supp = supp_config["fields"]["amount"]
-        self.subtotal_supp = supp_config["fields"]["subtotal"]
+        super().__init__(config, supp_config)
+        self.template = lambda is_supp=False: self.get("template", is_supp)
+        self.row_count = lambda is_supp=False: self.get("row_count", is_supp)
+        self.description = lambda is_supp=False: self.get(
+            "description", is_supp)
+        self.quantity = lambda is_supp=False: self.get("quantity", is_supp)
+        self.unit = lambda is_supp=False: self.get("unit", is_supp)
+        self.unit_price = lambda is_supp=False: self.get(
+            "unit_price", is_supp)
+        self.invoice_number = lambda is_supp=False: self.get(
+            "invoice_number", is_supp)
+        self.amount = lambda is_supp=False: self.get("amount", is_supp)
+        self.subtotal = lambda is_supp=False: self.get("subtotal", is_supp)
+        self.sales_tax = lambda is_supp=False: self.get("sales_tax", is_supp)
+        self.total = lambda is_supp=False: self.get("total", is_supp)
 
 
 class DailyLaborConfig:
