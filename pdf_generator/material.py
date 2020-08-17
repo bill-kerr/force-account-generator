@@ -1,4 +1,5 @@
-from util import paginate, rnd, make_field
+from util import rnd, make_field
+from paginator import simple_paginate
 
 
 class Material:
@@ -27,9 +28,18 @@ class MaterialPage:
                 continue
             subtotal += rnd(material.quantity * material.unit_price)
         return subtotal
+    
+    def __set_fields(self):
+        for i, material in enumerate(self.materials):
+            self.__set_description(i, material.description)
+            self.__set_quantity(i, material.quantity)
+            self.__set_unit(i, material.unit)
+            self.__set_unit_price(i, material.unit_price)
+            self.__set_invoice_number(i, material.invoice_number)
+            self.__set_amount(i, material.quantity, material.unit_price)
 
     def __make_field(self, field, number, value):
-        if not value: 
+        if not value:
             return
         value = str(value)
         make_field(self.values, field, number + 1, value)
@@ -63,14 +73,7 @@ class MaterialPage:
         field = self.field_config.amount(is_supp=not self.is_first_page)
         self.__make_field(field, number, f'$ {amount:,.2f}')
 
-    def __set_fields(self):
-        for i, material in enumerate(self.materials):
-            self.__set_description(i, material.description)
-            self.__set_quantity(i, material.quantity)
-            self.__set_unit(i, material.unit)
-            self.__set_unit_price(i, material.unit_price)
-            self.__set_invoice_number(i, material.invoice_number)
-            self.__set_amount(i, material.quantity, material.unit_price)
+    
 
 
 class MaterialCollection:
@@ -78,13 +81,13 @@ class MaterialCollection:
         self.materials = input_data.material
         self.global_data = input_data.global_data
         self.field_config = field_config
-        self.paginated_materials = paginate(self.materials, self.field_config.material.row_count())
+        self.paginated_materials = simple_paginate(self.materials, self.field_config.material.row_count())
         self.__create_pages()
 
     def __create_pages(self):
         if len(self.materials) == 0:
             return
 
+        pages = []
         for i, materials in enumerate(self.paginated_materials):
-            page = MaterialPage(materials, self.field_config.material, is_first_page=i == 0)
-            print(page.values)
+            pages.append(MaterialPage(materials, self.field_config.material, is_first_page=i == 0))

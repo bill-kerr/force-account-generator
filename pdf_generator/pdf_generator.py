@@ -6,6 +6,7 @@ import argparse
 from config.config import PdfFieldConfig
 from input_data import InputData
 from material import MaterialCollection
+from labor import LaborCollection
 
 
 def populate_work_schedule(work_schedule, units, resource_type):
@@ -34,6 +35,7 @@ if __name__ == '__main__':
     pdf_config = PdfFieldConfig('./config/pdf_config.json')
     input_data = InputData(args.source)
     material_collection = MaterialCollection(pdf_config, input_data)
+    labor_collection = LaborCollection(pdf_config, input_data)
 
     # with open(args.source) as f:
     #     data = json.load(f)
