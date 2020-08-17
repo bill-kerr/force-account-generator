@@ -1,7 +1,7 @@
 """ The labor file includes the Labor model and requisite page classes for constructing the labor
 portion of a force account. """
 from hours import Hours
-from util import make_field
+from util import make_field, format_date
 from paginator import paginate_by_date
 
 
@@ -13,35 +13,41 @@ class Labor:
         self.base_rate = 0
         self.hw_pension_rate = 0
         self.daily_hours = {}
-    
+
     def __repr__(self):
         return "Labor(" + self.name + ")"
 
     def add_daily_hours(self, date, straight_time, overtime):
+        """ Adds a set of straight time and overtime hours to the Labor object. """
         hours = Hours(date, straight_time, overtime)
         self.daily_hours[date] = hours
 
 
 class DailyLaborPage:
-    def __init__(self, dates, field_config):
+    """ DailyLaborPage represents a single daily labor page. """
+    def __init__(self, dates, units, field_config):
         self.__dates = dates
+        self.__units = units
         self.__field_config = field_config
         self.values = {}
-        self.__st_hours = {}
-        self.__ot_hours = {}
         self.__set_fields()
         print(self.values)
 
     def __set_fields(self):
         for i, date in enumerate(self.__dates):
-            for j, labor_unit in enumerate(date["units"]):
-                if i == 0:
-                    self.__set_classification(j, labor_unit["classification"])
-                    self.__set_name(j, labor_unit["name"])
-  
-                self.__add_hours(labor_unit)
-                self.__set_st_hours(j, i, labor_unit["primary_hours"])
-                self.__set_ot_hours(j, i, labor_unit["secondary_hours"])
+            self.__set_date(i, date)
+
+        for i, unit in enumerate(self.__units):
+            self.__set_classification(i, unit["classification"])
+            self.__set_name(i, unit["name"])
+            total_st_hours = 0
+            total_ot_hours = 0
+            for hours in unit["daily_hours"]:
+                column = self.__dates.index(hours.date)
+                total_st_hours += self.__set_st_hours(i, column, hours.primary_hours)
+                total_ot_hours += self.__set_ot_hours(i, column, hours.secondary_hours)
+            self.__set_total_st(i, total_st_hours)
+            self.__set_total_ot(i, total_ot_hours)
 
     def __make_field(self, field, row, value):
         if not value:
@@ -49,55 +55,45 @@ class DailyLaborPage:
         value = str(value)
         make_field(self.values, field, row + 1, value)
 
-    def __add_hours(self, labor_unit, st_hours_label="primary_hours", ot_hours_label="secondary_hours"):
-        if labor_unit["id"] not in self.__st_hours and labor_unit[st_hours_label] is not None:
-            self.__st_hours[labor_unit["id"]] = labor_unit[st_hours_label]
-        elif labor_unit[st_hours_label] is not None:
-            self.__st_hours[labor_unit["id"]] += labor_unit[st_hours_label]
+    def __set_date(self, column, date):
+        formatted_date = format_date(date, "%m/%d")
+        make_field(self.values, self.__field_config.day(), column, formatted_date)
 
-        if labor_unit["id"] not in self.__ot_hours and labor_unit[ot_hours_label] is not None:
-            self.__ot_hours[labor_unit["id"]] = labor_unit[ot_hours_label]
-        elif labor_unit[ot_hours_label] is not None:
-            self.__ot_hours[labor_unit["id"]] += labor_unit[ot_hours_label]
-
-
-    def __set_classification(self, row, value):
+    def __set_classification(self, row, classification):
+        if classification is None:
+            return
         field = self.__field_config.classification()
-        self.__make_field(field, row, value)
+        self.__make_field(field, row, classification)
 
-    def __set_name(self, row, value):
+    def __set_name(self, row, name):
+        if name is None:
+            return
         field = self.__field_config.name()
-        self.__make_field(field, row, value)
+        self.__make_field(field, row, name)
 
-    def __set_st_hours(self, row, column, value):
-        if value is None:
-            return
-        field = self.__field_config.hours_st() + "_" + str(row)
-        self.__make_field(field, column, f'{value:,.2f}')
+    def __set_st_hours(self, row, column, hours):
+        if hours is None:
+            return 0
+        prefix = "_0" + str(row + 1) if row + 1 < 10 else "_" + str(row + 1)
+        field = self.__field_config.hours_st() + prefix
+        self.__make_field(field, column, f'{hours:,.2f}')
+        return hours
 
-    def __set_ot_hours(self, row, column, value):
-        if value is None:
-            return
-        field = self.__field_config.hours_ot() + "_" + str(row)
-        self.__make_field(field, column, f'{value:,.2f}')
+    def __set_ot_hours(self, row, column, hours):
+        if hours is None:
+            return 0
+        prefix = "_0" + str(row + 1) if row + 1 < 10 else "_" + str(row + 1)
+        field = self.__field_config.hours_ot() + prefix
+        self.__make_field(field, column, f'{hours:,.2f}')
+        return hours
 
+    def __set_total_st(self, row, hours):
+        field = self.__field_config.total_st()
+        self.__make_field(field, row, f'{hours:,.2f}')
 
-class DailyLaborCollection:
-    """ DailyLaborCollection represents multiple daily labor pages. """
-    def __init__(self, date_set, field_config):
-        self.__date_set = date_set
-        self.__field_config = field_config
-        self.__pages = []
-        self.__create_pages()
-
-    def __create_pages(self):
-        for date in self.__date_set:
-            for labor_set in date["units"]:
-                # self.__pages.append(DailyLaborPage())
-                pass
-
-    def get_pages(self):
-        return self.__pages
+    def __set_total_ot(self, row, hours):
+        field = self.__field_config.total_ot()
+        self.__make_field(field, row, f'{hours:,.2f}')
 
 
 class LaborCollection:
@@ -115,7 +111,9 @@ class LaborCollection:
             return
 
         daily_pages = []
-        for date_set in self.__paginated_daily_labor:
-            daily_pages.append(DailyLaborCollection(date_set, self.__field_config).get_pages())
+        for data_set in self.__paginated_daily_labor:
+            for unit_set in data_set["unit_sets"]:
+                page = DailyLaborPage(data_set["dates"], unit_set, self.__field_config.daily_labor)
+                daily_pages.append(page)
 
         self.__pages.append(daily_pages)

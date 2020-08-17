@@ -28,7 +28,7 @@ def paginate_by_date(units, picked_attrs=[], date_limit=12, unit_limit=10):
             date_index = get_date_index(date_sets, hours.date)
 
             if not added[date_index]:
-                reduced_unit = reduce_unit(unit, hours.primary_hours, hours.secondary_hours, picked_attrs)
+                reduced_unit = reduce_unit(unit, date_sets[date_index], picked_attrs)
                 unit_sets[date_index].append(reduced_unit)
                 added[date_index] = True
 
@@ -37,7 +37,7 @@ def paginate_by_date(units, picked_attrs=[], date_limit=12, unit_limit=10):
     for date_set, unit_set in zip(date_sets, unit_sets):
         data = {"dates": date_set, "unit_sets": simple_paginate(unit_set, unit_limit)}
         paginated_data.append(data)
-    
+
     return paginated_data
 
 
@@ -48,12 +48,15 @@ def get_date_index(date_sets, target_date):
     return 0
 
 
-def reduce_unit(unit, primary_hours, secondary_hours, picked_attrs):
+def reduce_unit(unit, date_set, picked_attrs):
     reduced_unit = {}
 
     for attr in picked_attrs:
         reduced_unit[attr] = getattr(unit, attr)
 
-    reduced_unit["primary_hours"] = primary_hours
-    reduced_unit["secondary_hours"] = secondary_hours
+    reduced_unit["daily_hours"] = []
+    for hours in unit.daily_hours.values():
+        if hours.date in date_set:
+            reduced_unit["daily_hours"].append(hours)
+
     return reduced_unit

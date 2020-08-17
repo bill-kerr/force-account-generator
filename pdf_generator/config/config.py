@@ -1,7 +1,9 @@
+""" The config module holds all of the defined field data for writing to the PDF. """
 import json
 
 
 class PdfFieldConfig:
+    """ Represents the overall PDF field config. """
     def __init__(self, pdf_config_path):
         with open(pdf_config_path) as config_file:
             self.__config = json.load(config_file)
@@ -21,15 +23,18 @@ class PdfFieldConfig:
 
 
 class FieldConfig:
+    """ Base class for a page of field names. """
     def __init__(self, config, supp_config=None):
         self.has_supp = supp_config is not None
         self.config = config
         self.supp_config = supp_config
 
     def get(self, field_name):
+        """ Returns a function that returns the correct field name, given if the page is supplemental. """
         return lambda is_supp=False: self.get_field_name(field_name, is_supp)
 
     def get_field_name(self, field_name, is_supp):
+        """ Returns the field name based on the state of the field config. """
         if not is_supp:
             return self.config[field_name]
 
@@ -40,6 +45,7 @@ class FieldConfig:
 
 
 class DailyConfig:
+    """ Field configuration for daily pages. """
     def __init__(self, config, supp_config):
         self.template = config["template"]
         self.description = config["description"]
@@ -78,6 +84,7 @@ class DailyConfig:
 
 
 class FinalSummaryConfig(FieldConfig):
+    """ Field config for the Final Summary page. """
     def __init__(self, config):
         super().__init__(config)
         self.template = self.get("template")
@@ -102,6 +109,7 @@ class FinalSummaryConfig(FieldConfig):
 
 
 class HeadersConfig(FieldConfig):
+    """ Field config for the headers on each page. """
     def __init__(self, config):
         super().__init__(config)
         self.county = config["county"]
@@ -113,6 +121,7 @@ class HeadersConfig(FieldConfig):
 
 
 class MaterialConfig(FieldConfig):
+    """ Field config for the Material page. """
     def __init__(self, config, supp_config):
         super().__init__(config, supp_config=supp_config)
         self.template = self.get("template")
@@ -129,6 +138,7 @@ class MaterialConfig(FieldConfig):
 
 
 class DailyLaborConfig(FieldConfig):
+    """ Field config for the daily labor page. """
     def __init__(self, config):
         super().__init__(config)
         self.template = self.get("template")
@@ -144,6 +154,7 @@ class DailyLaborConfig(FieldConfig):
 
 
 class LaborBreakdownConfig(FieldConfig):
+    """ Field config for the Labor Breakdown page. """
     def __init__(self, config, supp_config):
         super().__init__(config, supp_config=supp_config)
         self.template = ("template")
@@ -176,6 +187,7 @@ class LaborBreakdownConfig(FieldConfig):
 
 
 class DailyEquipmentConfig(FieldConfig):
+    """ Field config for the Daily Equipment page. """
     def __init__(self, config):
         super().__init__(config)
         self.template = self.get("template")
@@ -190,6 +202,7 @@ class DailyEquipmentConfig(FieldConfig):
 
 
 class EquipmentBreakdownConfig(FieldConfig):
+    """ Field config for the Equipment Breakdown page. """
     def __init__(self, config, supp_config):
         super().__init__(config, supp_config=supp_config)
         self.template = self.get("template")
@@ -214,6 +227,7 @@ class EquipmentBreakdownConfig(FieldConfig):
 
 
 class RentalsAndServicesConfig(FieldConfig):
+    """ Field config for the Rentals and Services page. """
     def __init__(self, config, supp_config):
         super().__init__(config, supp_config=supp_config)
         self.template = self.get("template")
@@ -232,6 +246,7 @@ class RentalsAndServicesConfig(FieldConfig):
 
 
 class ConsumablesConfig(FieldConfig):
+    """ Field config for the Consumables page. """
     def __init__(self, config):
         super().__init__(config)
         self.template = self.get("template")

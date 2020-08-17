@@ -9,17 +9,6 @@ from material import MaterialCollection
 from labor import LaborCollection
 
 
-def populate_work_schedule(work_schedule, units, resource_type):
-    for unit_id, unit in units.items():
-        for day in unit['daily_hours']:
-            work_day = work_schedule.add_day(day['date'])
-            if resource_type == "labor":
-                work_day.add_labor(unit_id, unit, day.get('st'), day.get('ot'))
-            elif resource_type == "equipment":
-                work_day.add_equipment(
-                    unit_id, unit, day.get('op'), day.get('sb'))
-
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -36,30 +25,3 @@ if __name__ == '__main__':
     input_data = InputData(args.source)
     material_collection = MaterialCollection(pdf_config, input_data)
     labor_collection = LaborCollection(pdf_config, input_data)
-
-    # with open(args.source) as f:
-    #     data = json.load(f)
-
-    # material = create_dict(data['material']['data'])
-    # labor = create_dict(data['labor']['data'])
-    # equipment = create_dict(data['equipment']['data'])
-    # rentals = create_dict(data['rentals']['data'])
-    # services = create_dict(data['services']['data'])
-    # stock_consumables = create_dict(data['stock_consumables']['data'])
-    # purchased_consumables = create_dict(data['purchased_consumables']['data'])
-
-    # ws = WorkSchedule()
-    # populate_work_schedule(ws, labor, "labor")
-    # populate_work_schedule(ws, equipment, "equipment")
-
-    # pdf_config = PdfConfig()
-    # pages = []
-
-    # for work_day in ws.get_days().values():
-    #     labor_hours, equip_hours = work_day.paginate(7, 4)
-    #     for paginated_labor, paginated_equipment in zip(labor_hours, equip_hours):
-    #         template = "./files/" + pdf_config.daily_config.template
-    #         page = DailyPage(template, paginated_labor, paginated_equipment)
-    #         pages.append(page)
-
-    # make_pdf(pages, args.dest)

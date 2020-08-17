@@ -1,8 +1,13 @@
+"""
+The material file includes the Material model and requisite page classes for constructing
+the material portion of a force account.
+"""
 from util import rnd, make_field
 from paginator import simple_paginate
 
 
 class Material:
+    """ The Material class represents a single material object. """
     def __init__(self):
         self.description = ""
         self.quantity = 0
@@ -13,6 +18,7 @@ class Material:
 
 
 class MaterialPage:
+    """ The MaterialPage class represents a single material page. """
     def __init__(self, materials, field_config, is_first_page):
         self.materials = materials
         self.field_config = field_config
@@ -28,7 +34,7 @@ class MaterialPage:
                 continue
             subtotal += rnd(material.quantity * material.unit_price)
         return subtotal
-    
+
     def __set_fields(self):
         for i, material in enumerate(self.materials):
             self.__set_description(i, material.description)
@@ -73,10 +79,9 @@ class MaterialPage:
         field = self.field_config.amount(is_supp=not self.is_first_page)
         self.__make_field(field, number, f'$ {amount:,.2f}')
 
-    
-
 
 class MaterialCollection:
+    """ The MaterialCollection class represents a set of MaterialPages. """
     def __init__(self, field_config, input_data):
         self.materials = input_data.material
         self.global_data = input_data.global_data
