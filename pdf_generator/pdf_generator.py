@@ -3,7 +3,7 @@ Program that creates a PDF force account package from JSON data.
 JSON input data must be in the same format as input.example.json.
 """
 import argparse
-from pdf_config import PdfFieldConfig
+from config.config import PdfFieldConfig
 from input_data import InputData
 from material import MaterialCollection
 
@@ -31,7 +31,7 @@ if __name__ == '__main__':
         raise parser.error(
             'Incorrect file extension (source=*.json dest=*.pdf)')
 
-    pdf_config = PdfFieldConfig('./pdf_config.json')
+    pdf_config = PdfFieldConfig('./config/pdf_config.json')
     input_data = InputData(args.source)
     material_collection = MaterialCollection(pdf_config, input_data)
 
