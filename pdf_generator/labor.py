@@ -2,7 +2,7 @@
 portion of a force account. """
 from hours import Hours
 from util import make_field, format_date
-from paginator import paginate_by_date
+from paginator import paginate_by_date, simple_paginate
 
 
 class Labor:
@@ -15,7 +15,7 @@ class Labor:
         self.daily_hours = {}
 
     def __repr__(self):
-        return "Labor(" + self.name + ")"
+        return "Labor(" + self.classification + " - " + self.name + ")"
 
     def add_daily_hours(self, date, straight_time, overtime):
         """ Adds a set of straight time and overtime hours to the Labor object. """
@@ -96,13 +96,28 @@ class DailyLaborPage:
         self.__make_field(field, row, f'{hours:,.2f}')
 
 
+class LaborBreakdownPage:
+    def __init__(self, units, field_config):
+        self.__units = units
+        self.__field_config = field_config
+        self.values = {}
+        self.__set_fields()
+
+    def __set_fields(self):
+        pass
+
+
 class LaborCollection:
     """ LaborCollection represents all of the labor pages in the current force account. """
     def __init__(self, field_config, input_data):
         self.__labor = input_data.labor
         self.__global_data = input_data.global_data
         self.__field_config = field_config
-        self.__paginated_daily_labor = paginate_by_date(self.__labor, picked_attrs=["classification", "name"])
+        self.__paginated_daily_labor = paginate_by_date(
+            self.__labor,
+            picked_attrs=["classification", "name"],
+            date_limit=self.__field_config.daily_labor.column_count(),
+            unit_limit=self.__field_config.daily_labor.row_count())
         self.__pages = []
         self.__create_pages()
 
@@ -117,3 +132,8 @@ class LaborCollection:
                 daily_pages.append(page)
 
         self.__pages.append(daily_pages)
+
+        labor_breakdown_pages = []
+        paginated_labor = simple_paginate(self.__labor, self.__field_config.labor_breakdown.row_count())
+        for i, labor_set in enumerate(paginated_labor):
+            labor_breakdown_pages.append(LaborBreakdownPage(labor_set, self.__field_config.labor_breakdown))
