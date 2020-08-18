@@ -1,36 +1,25 @@
 """ The labor file includes the Labor model and requisite page classes for constructing the labor
 portion of a force account. """
-from hours import Hours
 from util import format_date, rnd, decimal_comma_formatter, currency_formatter, percent_formatter
 from paginator import paginate_by_date, simple_paginate
 from page import PageCollection, Page
+from unit import Unit
 
 
-class Labor:
+class Labor(Unit):
     """ The Labor class represents a single labor resource. """
 
     def __init__(self):
+        super().__init__()
         self.classification = ""
         self.name = ""
         self.base_rate_st = 0
         self.base_rate_ot = 0
         self.hw_pension_rate_st = 0
         self.hw_pension_rate_ot = 0
-        self.daily_hours = {}
 
     def __repr__(self):
         return "Labor(" + self.classification + " - " + self.name + ")"
-
-    def add_daily_hours(self, date, straight_time, overtime):
-        """ Adds a set of straight time and overtime hours to the Labor object. """
-        hours = Hours(date, straight_time, overtime)
-        self.daily_hours[date] = hours
-
-    def get_total_hours(self, secondary=False):
-        total_hours = 0
-        for hours in self.daily_hours.values():
-            total_hours += (hours.primary_hours or 0) if not secondary else (hours.secondary_hours or 0)
-        return total_hours
 
     @property
     def base_labor_cost_st(self):
@@ -86,7 +75,7 @@ class DailyLaborPage(Page):
                     i + 1, column, hours.secondary_hours)
             self.__set_total_st(i + 1, total_st_hours)
             self.__set_total_ot(i + 1, total_ot_hours)
-    
+
     def __fill_blanks(self):
         self.fill_blanks(
             self._field_config.total_st(),
