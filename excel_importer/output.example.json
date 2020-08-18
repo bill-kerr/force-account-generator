@@ -38,8 +38,10 @@
       {
         "classification": "Laborer",
         "name": "Jose Calvente",
-        "base_rate": 32.15,
-        "hw_pension_rate": 26.05,
+        "base_rate_st": 32.15,
+        "base_rate_ot": 46.58,
+        "hw_pension_rate_st": 26.05,
+        "hw_pension_rate_ot": 26.05,
         "daily_hours": [
           {
             "date": "2019-11-26",
@@ -56,8 +58,10 @@
       {
         "classification": "Operator",
         "name": "William Camp, Jr.",
-        "base_rate": 45.62,
-        "hw_pension_rate": 26.05,
+        "base_rate_st": 45.62,
+        "base_rate_ot": 72.59,
+        "hw_pension_rate_st": 26.05,
+        "hw_pension_rate_ot": 26.05,
         "daily_hours": [
           {
             "date": "2019-11-26",

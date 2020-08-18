@@ -31,8 +31,10 @@ def create_employee_from_rows(st_row, ot_row, dates):
     employee = {}
     employee['classification'] = st_row[CLASSIFICATION]
     employee['name'] = st_row[NAME]
-    employee['base_rate'] = st_row[BASE_RATE]
-    employee['hw_pension_rate'] = st_row[HW_PENSION_RATE]
+    employee['base_rate_st'] = st_row[BASE_RATE]
+    employee['base_rate_ot'] = ot_row[BASE_RATE]
+    employee['hw_pension_rate_st'] = st_row[HW_PENSION_RATE]
+    employee['hw_pension_rate_ot'] = ot_row[HW_PENSION_RATE]
     employee['daily_hours'] = get_hours(st_row[DATE_START:], ot_row[DATE_START:], dates)
     if len(employee.get('daily_hours')) > 0:
         return employee
