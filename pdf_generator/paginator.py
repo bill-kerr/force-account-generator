@@ -21,7 +21,7 @@ def paginate_by_date(units, picked_attrs=[], date_limit=12, unit_limit=10):
     # 3. Set up unit list
     unit_sets = [[] for x in range(len(date_sets))]
 
-    # 4. Add units to correct unit set
+    # 4. Add reduced units to correct unit set
     for unit in units:
         added = [False for x in date_sets]
         for hours in unit.daily_hours.values():

@@ -10,6 +10,14 @@ from labor import LaborCollection
 from pdf_writer import make_pdf
 
 
+class PdfGenerator:
+    def __init__(self, input_file_path, output_file_path, pdf_config_file="./config/pdf_config.json"):
+        cfg = PdfFieldConfig(pdf_config_file)
+        input_data = InputData(input_file_path)
+        pdf = PdfPackage(input_data, cfg, output_file_path)
+        pdf.generate_pdf()
+
+
 class PdfPackage:
     def __init__(self, input_data, pdf_config, output_file_path):
         self.__input_data = input_data

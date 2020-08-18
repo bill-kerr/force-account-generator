@@ -18,3 +18,4 @@ def format_date(datetime_string, dest_format, org_format="%Y-%m-%d"):
 decimal_formatter = lambda val: f'{val:.2f}'
 decimal_comma_formatter = lambda val: f'{val:,.2f}'
 currency_formatter = lambda val: f'$ {val:,.2f}'
+percent_formatter = lambda val: f'{val * 100:.3f}%'

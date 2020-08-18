@@ -77,7 +77,7 @@ class MaterialPage(Page):
         amount = rnd(quantity * unit_price)
         field = self._field_config.amount(is_supp=not self.__is_first_page)
         self.make_field(field, amount, row=row, formatter=currency_formatter)
-    
+
     def __set_subtotal(self, subtotal):
         field = self._field_config.subtotal(is_supp=not self.__is_first_page)
         self.make_field(field, subtotal, formatter=currency_formatter)
