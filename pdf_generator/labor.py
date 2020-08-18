@@ -7,6 +7,7 @@ from paginator import paginate_by_date, simple_paginate
 
 class Labor:
     """ The Labor class represents a single labor resource. """
+
     def __init__(self):
         self.classification = ""
         self.name = ""
@@ -25,6 +26,7 @@ class Labor:
 
 class DailyLaborPage:
     """ DailyLaborPage represents a single daily labor page. """
+
     def __init__(self, dates, units, field_config):
         self.__dates = dates
         self.__units = units
@@ -44,8 +46,10 @@ class DailyLaborPage:
             total_ot_hours = 0
             for hours in unit["daily_hours"]:
                 column = self.__dates.index(hours.date)
-                total_st_hours += self.__set_st_hours(i, column, hours.primary_hours)
-                total_ot_hours += self.__set_ot_hours(i, column, hours.secondary_hours)
+                total_st_hours += self.__set_st_hours(
+                    i, column, hours.primary_hours)
+                total_ot_hours += self.__set_ot_hours(
+                    i, column, hours.secondary_hours)
             self.__set_total_st(i, total_st_hours)
             self.__set_total_ot(i, total_ot_hours)
 
@@ -57,7 +61,8 @@ class DailyLaborPage:
 
     def __set_date(self, column, date):
         formatted_date = format_date(date, "%m/%d")
-        make_field(self.values, self.__field_config.day(), column, formatted_date)
+        make_field(self.values, self.__field_config.day(),
+                   column, formatted_date)
 
     def __set_classification(self, row, classification):
         if classification is None:
@@ -97,18 +102,41 @@ class DailyLaborPage:
 
 
 class LaborBreakdownPage:
-    def __init__(self, units, field_config):
+    def __init__(self, units, field_config, is_first_page):
         self.__units = units
         self.__field_config = field_config
+        self.__is_first_page = is_first_page
+        self.__base_labor_subtotal = 0
+        self.__direct_labor_subtotal = 0
+        self.__indirect_labor_subtotal = 0
         self.values = {}
         self.__set_fields()
 
     def __set_fields(self):
-        pass
+        for i, unit in enumerate(self.__units):
+            self.__set_classification(i, unit.classification)
+            self.__set_name(i, unit.name)
+            self.__set_st_hours(i, unit.daily_hours)
+            self.__set_ot_hours(i, unit.daily_hours)
+            self.__set_base_rate_st(i, unit.base_rate_st)
+            self.__set_base_rate_ot(i, unit.base_rate_ot)
+            self.__set_base_labor_cost_st(i, unit.base_labor_cost_st)
+            self.__set_base_labor_cost_ot(i, unit.base_labor_cost_ot)
+            self.__set_direct_labor_rate_st(i, unit.direct_labor_rate_st)
+            self.__set_direct_labor_rate_ot(i, unit.direct_labor_rate_ot)
+            self.__set_direct_labor_cost_st(i, unit.direct_labor_cost_st)
+            self.__set_direct_labor_cost_ot(i, unit.direct_labor_cost_ot)
+
+    def __make_field(self, field, number, value):
+        if not value:
+            return
+        value = str(value)
+        make_field(self.values, field, number + 1, value)
 
 
 class LaborCollection:
     """ LaborCollection represents all of the labor pages in the current force account. """
+
     def __init__(self, field_config, input_data):
         self.__labor = input_data.labor
         self.__global_data = input_data.global_data
@@ -128,12 +156,15 @@ class LaborCollection:
         daily_pages = []
         for data_set in self.__paginated_daily_labor:
             for unit_set in data_set["unit_sets"]:
-                page = DailyLaborPage(data_set["dates"], unit_set, self.__field_config.daily_labor)
+                page = DailyLaborPage(
+                    data_set["dates"], unit_set, self.__field_config.daily_labor)
                 daily_pages.append(page)
 
         self.__pages.append(daily_pages)
 
         labor_breakdown_pages = []
-        paginated_labor = simple_paginate(self.__labor, self.__field_config.labor_breakdown.row_count())
+        paginated_labor = simple_paginate(
+            self.__labor, self.__field_config.labor_breakdown.row_count())
         for i, labor_set in enumerate(paginated_labor):
-            labor_breakdown_pages.append(LaborBreakdownPage(labor_set, self.__field_config.labor_breakdown))
+            labor_breakdown_pages.append(LaborBreakdownPage(
+                labor_set, self.__field_config.labor_breakdown))
