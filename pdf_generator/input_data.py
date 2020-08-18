@@ -28,8 +28,10 @@ def load_labor(data):
         labor = Labor()
         labor.classification = labor_data["classification"]
         labor.name = labor_data["name"]
-        labor.base_rate = labor_data["base_rate"]
-        labor.hw_pension_rate = labor_data["hw_pension_rate"]
+        labor.base_rate_st = labor_data["base_rate_st"]
+        labor.base_rate_ot = labor_data["base_rate_ot"]
+        labor.hw_pension_rate_st = labor_data["hw_pension_rate_st"]
+        labor.hw_pension_rate_ot = labor_data["hw_pension_rate_ot"]
         for day in labor_data["daily_hours"]:
             labor.add_daily_hours(
                 day["date"], day.get("st"), day.get("ot"))
