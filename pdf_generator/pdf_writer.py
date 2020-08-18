@@ -2,22 +2,22 @@ from PyPDF2.generic import BooleanObject, NameObject, IndirectObject
 from PyPDF2 import PdfFileReader, PdfFileWriter
 
 
-def make_pdf(pages, output_file_path):
+def make_pdf(pages, output_file_path, root_dir="./templates/"):
     pdf_writer = set_need_appearances_writer(PdfFileWriter())
     streams = []
     for page in pages:
-        streams.append(add_page(pdf_writer, page))
+        streams.append(add_page(pdf_writer, page, root_dir))
     save_pdf(pdf_writer, output_file_path)
     for stream in streams:
         stream.close()
 
 
-def add_page(pdf_writer, page):
-    input_stream = open(page.template, "rb")
+def add_page(pdf_writer, page, root_dir):
+    input_stream = open(root_dir + page.template, "rb")
     pdf_reader = get_pdf_reader(input_stream)
     pdf_writer.addPage(pdf_reader.getPage(0))
     pdf_writer.updatePageFormFieldValues(
-        pdf_writer.getPage(-1), page.fields)
+        pdf_writer.getPage(-1), page.values)
     return input_stream
 
 

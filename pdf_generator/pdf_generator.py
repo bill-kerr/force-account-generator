@@ -7,6 +7,20 @@ from config.config import PdfFieldConfig
 from input_data import InputData
 from material import MaterialCollection
 from labor import LaborCollection
+from pdf_writer import make_pdf
+
+
+class PdfPackage:
+    def __init__(self, input_data, pdf_config, output_file_path):
+        self.__input_data = input_data
+        self.__pdf_config = pdf_config
+        self.__output_file_path = output_file_path
+        self.__material_pages = MaterialCollection(self.__input_data, self.__pdf_config).pages
+        self.__labor_pages = LaborCollection(self.__input_data, self.__pdf_config).pages
+
+    def generate_pdf(self):
+        pages = self.__material_pages + self.__labor_pages
+        make_pdf(pages, self.__output_file_path)
 
 
 if __name__ == '__main__':
@@ -21,7 +35,7 @@ if __name__ == '__main__':
         raise parser.error(
             'Incorrect file extension (source=*.json dest=*.pdf)')
 
-    pdf_config = PdfFieldConfig('./config/pdf_config.json')
-    input_data = InputData(args.source)
-    material_collection = MaterialCollection(pdf_config, input_data)
-    labor_collection = LaborCollection(pdf_config, input_data)
+    config = PdfFieldConfig('./config/pdf_config.json')
+    data = InputData(args.source)
+    pdf_package = PdfPackage(data, config, args.dest)
+    pdf_package.generate_pdf()

@@ -6,6 +6,7 @@ from rental import Rental
 from service import Service
 from purchased_consumable import PurchasedConsumable
 from stock_consumable import StockConsumable
+from util import rnd
 
 
 def load_material(data):
@@ -28,8 +29,8 @@ def load_labor(data):
         labor = Labor()
         labor.classification = labor_data["classification"]
         labor.name = labor_data["name"]
-        labor.base_rate_st = labor_data["base_rate_st"]
-        labor.base_rate_ot = labor_data["base_rate_ot"]
+        labor.base_rate_st = rnd(labor_data["base_rate_st"])
+        labor.base_rate_ot = rnd(labor_data["base_rate_ot"])
         labor.hw_pension_rate_st = labor_data["hw_pension_rate_st"]
         labor.hw_pension_rate_ot = labor_data["hw_pension_rate_ot"]
         for day in labor_data["daily_hours"]:
