@@ -7,15 +7,18 @@ def simple_paginate(values, page_limit):
     return paginated_values
 
 
-def paginate_by_date(units, picked_attrs=[], date_limit=12, unit_limit=10):
+def paginate_by_date(units, picked_attrs=[], date_limit=12, unit_limit=10, sort=True):
     # 1. Get all dates
     dates = []
     for unit in units:
         for hours in unit.daily_hours.values():
+            print(hours.date, hours.primary_hours, hours.secondary_hours)
             if hours.date not in dates:
                 dates.append(hours.date)
 
-    # 2. Paginate dates
+    # 2. Sort and paginate dates
+    if sort:
+        dates.sort()
     date_sets = simple_paginate(dates, date_limit)
 
     # 3. Set up unit list

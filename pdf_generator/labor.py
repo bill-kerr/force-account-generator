@@ -68,11 +68,9 @@ class DailyLaborPage(Page):
             total_st_hours = 0
             total_ot_hours = 0
             for hours in unit["daily_hours"]:
-                column = self.__dates.index(hours.date)
-                total_st_hours += self.__set_st_hours(
-                    i + 1, column, hours.primary_hours)
-                total_ot_hours += self.__set_ot_hours(
-                    i + 1, column, hours.secondary_hours)
+                column = self.__dates.index(hours.date) + 1
+                total_st_hours += self.__set_st_hours(i + 1, column, hours.primary_hours)
+                total_ot_hours += self.__set_ot_hours(i + 1, column, hours.secondary_hours)
             self.__set_total_st(i + 1, total_st_hours)
             self.__set_total_ot(i + 1, total_ot_hours)
 

@@ -63,17 +63,9 @@ class DailyEquipmentPage(Page):
             total_op_hours = 0
             total_sb_hours = 0
             for hours in unit["daily_hours"]:
-                column = self.__dates.index(hours.date)
-                total_op_hours += self.__set_op_hours(
-                    i + 1,
-                    column,
-                    hours.primary_hours
-                )
-                total_sb_hours += self.__set_sb_hours(
-                    i + 1,
-                    column,
-                    hours.secondary_hours
-                )
+                column = self.__dates.index(hours.date) + 1
+                total_op_hours += self.__set_op_hours(i + 1, column, hours.primary_hours)
+                total_sb_hours += self.__set_sb_hours(i + 1, column, hours.secondary_hours)
             self.__set_total_op(i + 1, total_op_hours)
             self.__set_total_sb(i + 1, total_sb_hours)
 
