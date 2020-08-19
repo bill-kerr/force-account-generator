@@ -5,6 +5,7 @@ from rentals_and_services import RentalsAndServicesCollection
 from consumables import ConsumablesCollection
 from summary import SummaryData, SummaryPage
 from pdf_writer import make_pdf
+from daily import DailyCollection
 
 
 class PdfPackage:
@@ -19,6 +20,8 @@ class PdfPackage:
         self.__rentals_and_services = RentalsAndServicesCollection(self.__data_loader, self.__pdf_config)
         self.__consumables = ConsumablesCollection(self.__data_loader, self.__pdf_config)
         self.__summary_page = SummaryPage(self.__generate_summary_data(), self.__pdf_config)
+        if daily_sheets:
+            self.__generate_daily_sheets()
 
     def __generate_summary_data(self):
         summary_data = SummaryData()
@@ -38,6 +41,9 @@ class PdfPackage:
         summary_data.prime_contractor = self.__data_loader.global_data.prime_contractor
         summary_data.statement_of_cost = self.__data_loader.global_data.statement_of_cost
         return summary_data
+
+    def __generate_daily_sheets(self):
+        daily_sheets = DailyCollection(self.__data_loader, self.__pdf_config)
 
     def generate_pdf(self):
         self.__pages.append(self.__summary_page)

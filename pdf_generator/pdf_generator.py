@@ -21,12 +21,14 @@ class PdfGenerator:
         pdf = PdfPackage(data_loader, cfg, output_file_path, daily_sheets=daily_sheets)
         pdf.generate_pdf()
 
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument(
         'source', help='The path to the source JSON file (must end with .json)')
     parser.add_argument(
         'dest', help='The path to the destination PDF file (must end with .pdf)')
+    parser.add_argument('--daily-sheets', dest='daily_sheets', default=False, action='store_true')
     args = parser.parse_args()
 
     if not args.source.endswith('.json') or not args.dest.endswith('.pdf'):
@@ -35,5 +37,5 @@ if __name__ == '__main__':
 
     config = PdfFieldConfig('./config/pdf_config.json')
     data = DataLoader(args.source)
-    pdf_package = PdfPackage(data, config, args.dest)
+    pdf_package = PdfPackage(data, config, args.dest, daily_sheets=args.daily_sheets)
     pdf_package.generate_pdf()
