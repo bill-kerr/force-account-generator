@@ -257,9 +257,9 @@ class EquipmentBreakdownPage(Page):
         )
 
 class EquipmentCollection(PageCollection):
-    def __init__(self, input_data, field_config):
-        super().__init__(input_data, field_config)
-        self.__equipment = input_data.equipment
+    def __init__(self, data_loader, field_config):
+        super().__init__(data_loader, field_config)
+        self.__equipment = data_loader.equipment
         self.__paginated_daily_equipment = paginate_by_date(
             self.__equipment,
             picked_attrs=["description"],

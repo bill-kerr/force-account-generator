@@ -314,9 +314,9 @@ class LaborBreakdownPage(Page):
 class LaborCollection(PageCollection):
     """ LaborCollection represents all of the labor pages in the current force account. """
 
-    def __init__(self, input_data, field_config):
-        super().__init__(input_data, field_config)
-        self.__labor = input_data.labor
+    def __init__(self, data_loader, field_config):
+        super().__init__(data_loader, field_config)
+        self.__labor = data_loader.labor
         self.__paginated_daily_labor = paginate_by_date(
             self.__labor,
             picked_attrs=["classification", "name"],

@@ -85,11 +85,11 @@ class MaterialPage(Page):
 
 class MaterialCollection(PageCollection):
     """ The MaterialCollection class represents a set of MaterialPages. """
-    def __init__(self, input_data, field_config):
-        super().__init__(input_data, field_config)
-        self.__materials = input_data.material
+    def __init__(self, data_loader, field_config):
+        super().__init__(data_loader, field_config)
+        self.__materials = data_loader.material
         self.__sales_tax = 0
-        self.__total_cost = 0
+        self.total_cost = 0
         self.__calc_totals()
         self.__paginated_materials = simple_paginate(self.__materials, self._field_config.material.row_count())
         self.__create_pages()
@@ -101,7 +101,7 @@ class MaterialCollection(PageCollection):
                 continue
             amount = rnd(material.quantity * material.unit_price)
             tax = amount * material.sales_tax_rate
-            self.__total_cost += amount + tax
+            self.total_cost += amount + tax
             self.__sales_tax += tax
 
     def __create_pages(self):
@@ -122,5 +122,5 @@ class MaterialCollection(PageCollection):
             formatter=currency_formatter)
         self.pages[0].make_field(
             self._field_config.material.total(),
-            self.__total_cost,
+            self.total_cost,
             formatter=currency_formatter)

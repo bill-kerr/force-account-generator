@@ -101,10 +101,10 @@ class RentalsAndServicesPage(Page):
 
 
 class RentalsAndServicesCollection(PageCollection):
-    def __init__(self, input_data, field_config):
-        super().__init__(input_data, field_config)
-        self.__rentals = input_data.rentals
-        self.__services = input_data.services
+    def __init__(self, data_loader, field_config):
+        super().__init__(data_loader, field_config)
+        self.__rentals = data_loader.rentals
+        self.__services = data_loader.services
         self.total_rental_cost = 0
         self.total_services_cost = 0
         self.__calc_totals()

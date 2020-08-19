@@ -4,42 +4,16 @@ JSON input data must be in the same format as input.example.json.
 """
 import argparse
 from config.config import PdfFieldConfig
-from input_data import InputData
-from material import MaterialCollection
-from labor import LaborCollection
-from equipment import EquipmentCollection
-from rentals_and_services import RentalsAndServicesCollection
-from consumables import ConsumablesCollection
-from pdf_writer import make_pdf
+from data_loader import DataLoader
+from pdf_package import PdfPackage
 
 
 class PdfGenerator:
     def __init__(self, input_file_path, output_file_path, pdf_config_file="./config/pdf_config.json"):
         cfg = PdfFieldConfig(pdf_config_file)
-        input_data = InputData(input_file_path)
-        pdf = PdfPackage(input_data, cfg, output_file_path)
+        data_loader = DataLoader(input_file_path)
+        pdf = PdfPackage(data_loader, cfg, output_file_path)
         pdf.generate_pdf()
-
-
-class PdfPackage:
-    def __init__(self, input_data, pdf_config, output_file_path):
-        self.__input_data = input_data
-        self.__pdf_config = pdf_config
-        self.__output_file_path = output_file_path
-        self.__material_pages = MaterialCollection(self.__input_data, self.__pdf_config).pages
-        self.__labor_pages = LaborCollection(self.__input_data, self.__pdf_config).pages
-        self.__equipment_pages = EquipmentCollection(self.__input_data, self.__pdf_config).pages
-        self.__rentals_and_services_pages = RentalsAndServicesCollection(self.__input_data, self.__pdf_config).pages
-        self.__consumables_pages = ConsumablesCollection(self.__input_data, self.__pdf_config).pages
-
-    def generate_pdf(self):
-        pages = self.__material_pages
-        pages += self.__labor_pages
-        pages += self.__equipment_pages
-        pages += self.__rentals_and_services_pages
-        pages += self.__consumables_pages
-        make_pdf(pages, self.__output_file_path)
-
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -54,6 +28,6 @@ if __name__ == '__main__':
             'Incorrect file extension (source=*.json dest=*.pdf)')
 
     config = PdfFieldConfig('./config/pdf_config.json')
-    data = InputData(args.source)
+    data = DataLoader(args.source)
     pdf_package = PdfPackage(data, config, args.dest)
     pdf_package.generate_pdf()

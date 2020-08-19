@@ -155,10 +155,10 @@ class ConsumablesPage(Page):
 
 
 class ConsumablesCollection(PageCollection):
-    def __init__(self, input_data, field_config):
-        super().__init__(input_data, field_config)
-        self.__purchased = input_data.purchased_consumables
-        self.__stock = input_data.stock_consumables
+    def __init__(self, data_loader, field_config):
+        super().__init__(data_loader, field_config)
+        self.__purchased = data_loader.purchased_consumables
+        self.__stock = data_loader.stock_consumables
         self.total_consumables_cost = 0
         self.__calc_totals()
         self.__paginated_purchased = simple_paginate(

@@ -26,8 +26,8 @@ class Page:
 
 
 class PageCollection:
-    def __init__(self, input_data, field_config):
-        self._global_data = input_data.global_data
+    def __init__(self, data_loader, field_config):
+        self._global_data = data_loader.global_data
         self._field_config = field_config
         self.pages = []
 
@@ -40,3 +40,13 @@ class PageCollection:
             page.make_field(config.work_order_number, self._global_data.work_order_number)
             page.make_field(config.contract, self._global_data.contract)
             page.make_field(config.item_number, self._global_data.item_number)
+
+
+def populate_page_headers(page, pdf_config, global_data):
+    config = pdf_config.headers
+    page.make_field(config.county, global_data.county)
+    page.make_field(config.state_route, global_data.state_route)
+    page.make_field(config.section, global_data.section)
+    page.make_field(config.work_order_number, global_data.work_order_number)
+    page.make_field(config.contract, global_data.contract)
+    page.make_field(config.item_number, global_data.item_number)

@@ -112,24 +112,24 @@ def load_stock_consumables(data):
 
 
 class GlobalData:
-    def __init__(self, input_data):
-        self.county = input_data["county"]
-        self.state_route = input_data["state_route"]
-        self.section = input_data["section"]
-        self.work_order_number = input_data["work_order_number"]
-        self.contract = input_data["contract"]
-        self.item_number = input_data["item_number"]
-        self.prime_contractor = input_data["prime_contractor"]
-        self.statement_of_cost = input_data["statement_of_cost"]
-        self.default_sales_tax_rate = input_data["material"]["default_sales_tax_rate"]
-        self.social_security_tax_rate = input_data["labor"]["social_security_tax_rate"]
-        self.medicare_tax_rate = input_data["labor"]["medicare_tax_rate"]
-        self.unemployment_tax_rate = input_data["labor"]["unemployment_tax_rate"]
-        self.workers_comp_insurance_rate = input_data["labor"]["workers_comp_insurance_rate"]
-        self.liability_insurance_rate = input_data["labor"]["liability_insurance_rate"]
+    def __init__(self, data_loader):
+        self.county = data_loader["county"]
+        self.state_route = data_loader["state_route"]
+        self.section = data_loader["section"]
+        self.work_order_number = data_loader["work_order_number"]
+        self.contract = data_loader["contract"]
+        self.item_number = data_loader["item_number"]
+        self.prime_contractor = data_loader["prime_contractor"]
+        self.statement_of_cost = data_loader["statement_of_cost"]
+        self.default_sales_tax_rate = data_loader["material"]["default_sales_tax_rate"]
+        self.social_security_tax_rate = data_loader["labor"]["social_security_tax_rate"]
+        self.medicare_tax_rate = data_loader["labor"]["medicare_tax_rate"]
+        self.unemployment_tax_rate = data_loader["labor"]["unemployment_tax_rate"]
+        self.workers_comp_insurance_rate = data_loader["labor"]["workers_comp_insurance_rate"]
+        self.liability_insurance_rate = data_loader["labor"]["liability_insurance_rate"]
 
 
-class InputData:
+class DataLoader:
     def __init__(self, json_config_file):
         with open(json_config_file) as f:
             data = json.load(f)
