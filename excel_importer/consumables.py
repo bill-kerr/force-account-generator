@@ -9,7 +9,7 @@ P_INVOICE_NUMBER = Config.columns['consumables']['p_invoice_number']
 
 S_CHECK = Config.columns['consumables']['check'][1]
 S_DESCRIPTION = Config.columns['consumables']['s_description']
-S_INVOICE_VALUE = Config.columns['consumables']['s_invoice_number']
+S_INVOICE_VALUE = Config.columns['consumables']['s_invoice_value']
 S_PERCENT_REIMBURSED = Config.columns['consumables']['s_percent_reimbursed']
 S_INVOICE_NUMBER = Config.columns['consumables']['s_invoice_number']
 
