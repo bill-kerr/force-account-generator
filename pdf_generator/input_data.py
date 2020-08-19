@@ -2,10 +2,8 @@ import json
 from labor import Labor
 from equipment import Equipment
 from material import Material
-from rental import Rental
-from service import Service
-from purchased_consumable import PurchasedConsumable
-from stock_consumable import StockConsumable
+from rentals_and_services import Rental, Service
+from consumables import PurchasedConsumable, StockConsumable
 from util import rnd
 
 

@@ -8,6 +8,7 @@ from input_data import InputData
 from material import MaterialCollection
 from labor import LaborCollection
 from equipment import EquipmentCollection
+from rentals_and_services import RentalsAndServicesCollection
 from pdf_writer import make_pdf
 
 
@@ -27,9 +28,10 @@ class PdfPackage:
         self.__material_pages = MaterialCollection(self.__input_data, self.__pdf_config).pages
         self.__labor_pages = LaborCollection(self.__input_data, self.__pdf_config).pages
         self.__equipment_pages = EquipmentCollection(self.__input_data, self.__pdf_config).pages
+        self.__rentals_and_services_pages = RentalsAndServicesCollection(self.__input_data, self.__pdf_config).pages
 
     def generate_pdf(self):
-        pages = self.__material_pages + self.__labor_pages + self.__equipment_pages
+        pages = self.__material_pages + self.__labor_pages + self.__equipment_pages + self.__rentals_and_services_pages
         make_pdf(pages, self.__output_file_path)
 
 
