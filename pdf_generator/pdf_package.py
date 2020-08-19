@@ -8,7 +8,7 @@ from pdf_writer import make_pdf
 
 
 class PdfPackage:
-    def __init__(self, data_loader, pdf_config, output_file_path):
+    def __init__(self, data_loader, pdf_config, output_file_path, daily_sheets=False):
         self.__data_loader = data_loader
         self.__pdf_config = pdf_config
         self.__output_file_path = output_file_path

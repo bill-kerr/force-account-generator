@@ -1,4 +1,4 @@
-import itertools
+from itertools import zip_longest
 from page import PageCollection, Page
 from paginator import simple_paginate
 from util import currency_formatter
@@ -125,7 +125,7 @@ class RentalsAndServicesCollection(PageCollection):
         if len(self.__rentals) == 0 and len(self.__services) == 0:
             return
 
-        zipped_sets = itertools.zip_longest(self.__paginated_rentals, self.__paginated_services)
+        zipped_sets = zip_longest(self.__paginated_rentals, self.__paginated_services)
         for i, sets in enumerate(zipped_sets):
             self.pages.append(RentalsAndServicesPage(
                 sets[0], sets[1], self._field_config.rentals_and_services, is_first_page=i == 0))

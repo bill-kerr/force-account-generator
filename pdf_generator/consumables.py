@@ -1,4 +1,4 @@
-import itertools
+from itertools import zip_longest
 from page import PageCollection, Page
 from paginator import simple_paginate
 from util import currency_formatter, decimal_comma_formatter, three_decimal_formatter, two_decimal_percent_formatter
@@ -178,6 +178,6 @@ class ConsumablesCollection(PageCollection):
         if len(self.__purchased) == 0 and len(self.__stock) == 0:
             return
 
-        zipped_sets = itertools.zip_longest(self.__paginated_purchased, self.__paginated_stock)
+        zipped_sets = zip_longest(self.__paginated_purchased, self.__paginated_stock)
         for sets in zipped_sets:
             self.pages.append(ConsumablesPage(sets[0], sets[1], self._field_config.consumables))
