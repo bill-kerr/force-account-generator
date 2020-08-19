@@ -259,10 +259,14 @@ class LaborBreakdownPage(Page):
         self.make_field(field, name, row=row)
 
     def __set_st_hours(self, row, hours):
+        if hours == 0:
+            return
         field = self._field_config.hours_st(is_supp=not self.__is_first_page)
         self.make_field(field, hours, row=row, formatter=decimal_comma_formatter)
 
     def __set_ot_hours(self, row, hours):
+        if hours == 0:
+            return
         field = self._field_config.hours_ot(is_supp=not self.__is_first_page)
         self.make_field(field, hours, row=row, formatter=decimal_comma_formatter)
 

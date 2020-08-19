@@ -12,7 +12,6 @@ def paginate_by_date(units, picked_attrs=[], date_limit=12, unit_limit=10, sort=
     dates = []
     for unit in units:
         for hours in unit.daily_hours.values():
-            print(hours.date, hours.primary_hours, hours.secondary_hours)
             if hours.date not in dates:
                 dates.append(hours.date)
 
