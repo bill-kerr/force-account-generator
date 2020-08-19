@@ -252,10 +252,12 @@
     "purchased_consumable_unit_price": "p_unit_price",
     "purchased_consumable_invoice_number": "p_invoice",
     "purchased_consumable_amount": "p_amount",
+    "purchased_consumable_subtotal": "p_subtotal",
     "stock_consumable_description": "s_description",
     "stock_consumable_invoice_value": "s_value",
     "stock_consumable_percent_reimbursed": "s_percent",
     "stock_consumable_invoice_number": "s_invoice",
-    "stock_consumable_amount": "s_amount"
+    "stock_consumable_amount": "s_amount",
+    "stock_consumable_subtotal": "s_subtotal"
   }
 }
