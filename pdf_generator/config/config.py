@@ -35,52 +35,40 @@ class FieldConfig:
 
     def get_field_name(self, field_name, is_supp):
         """ Returns the field name based on the state of the field config. """
-        if not is_supp:
-            return self.config[field_name]
-
-        if not self.has_supp and is_supp:
+        if not is_supp or not self.has_supp:
             return self.config[field_name]
 
         return self.supp_config[field_name]
 
 
-class DailyConfig:
+class DailyConfig(FieldConfig):
     """ Field configuration for daily pages. """
     def __init__(self, config, supp_config):
-        self.template = config["template"]
-        self.description = config["description"]
-        self.date = config["date"]
-        self.ecms_number = config["ecms_number"]
-        self.sr_sec = config["sr_sec"]
-        self.item_number = config["item_number"]
-        self.authorization_number = config["authorization_number"]
-        self.contractor = config["contractor"]
-        self.subcontractor = config["subcontractor"]
-        self.inspector = config["inspector"]
-        self.locations = config["locations"]
-        self.labor_row_count = config["labor"]["row_count"]
-        self.labor_name = config["labor"]["name"]
-        self.labor_classification = config["labor"]["classification"]
-        self.labor_hours_st = config["labor"]["hours_st"]
-        self.labor_hours_ot = config["labor"]["hours_ot"]
-        self.equipment_row_count = config["equipment"]["row_count"]
-        self.equipment_type = config["equipment"]["equipment_type"]
-        self.equipment_configuration = config["equipment"]["configuration"]
-        self.equipment_year = config["equipment"]["year"]
-        self.equipment_make = config["equipment"]["make"]
-        self.equipment_model = config["equipment"]["model"]
-        self.equipment_hours_op = config["equipment"]["hours_op"]
-        self.equipment_hours_sb = config["equipment"]["hours_sb"]
-        self.template_supp = supp_config["template"]
-        self.date_supp = supp_config["date"]
-        self.ecms_number_supp = supp_config["ecms_number"]
-        self.sr_sec_supp = supp_config["sr_sec"]
-        self.item_number_supp = supp_config["item_number"]
-        self.authorization_number_supp = supp_config["authorization_number"]
-        self.contractor_supp = supp_config["contractor"]
-        self.subcontractor_supp = supp_config["subcontractor"]
-        self.inspector_supp = supp_config["inspector"]
-        self.locations_supp = supp_config["locations"]
+        super().__init__(config, supp_config=supp_config)
+        self.template = self.get("template")
+        self.description = self.get("description")
+        self.date = self.get("date")
+        self.ecms_number = self.get("ecms_number")
+        self.sr_sec = self.get("sr_sec")
+        self.item_number = self.get("item_number")
+        self.authorization_number = self.get("authorization_number")
+        self.contractor = self.get("contractor")
+        self.subcontractor = self.get("subcontractor")
+        self.inspector = self.get("inspector")
+        self.locations = self.get("locations")
+        self.labor_row_count = self.get("labor_row_count")
+        self.labor_name = self.get("labor_name")
+        self.labor_classification = self.get("labor_classification")
+        self.labor_hours_st = self.get("labor_hours_st")
+        self.labor_hours_ot = self.get("labor_hours_ot")
+        self.equipment_row_count = self.get("equipment_row_count")
+        self.equipment_type = self.get("equipment_type")
+        self.equipment_configuration = self.get("equipment_configuration")
+        self.equipment_year = self.get("equipment_year")
+        self.equipment_make = self.get("equipment_make")
+        self.equipment_model = self.get("equipment_model")
+        self.equipment_hours_op = self.get("equipment_hours_op")
+        self.equipment_hours_sb = self.get("equipment_hours_sb")
 
 
 class FinalSummaryConfig(FieldConfig):

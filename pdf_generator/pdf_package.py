@@ -13,6 +13,7 @@ class PdfPackage:
         self.__data_loader = data_loader
         self.__pdf_config = pdf_config
         self.__output_file_path = output_file_path
+        self.__make_daily_sheets = daily_sheets
         self.__pages = []
         self.__material = MaterialCollection(self.__data_loader, self.__pdf_config)
         self.__labor = LaborCollection(self.__data_loader, self.__pdf_config)
@@ -43,7 +44,7 @@ class PdfPackage:
         return summary_data
 
     def __generate_daily_sheets(self):
-        daily_sheets = DailyCollection(self.__data_loader, self.__pdf_config)
+        self.__daily_sheets = DailyCollection(self.__data_loader, self.__pdf_config)
 
     def generate_pdf(self):
         self.__pages.append(self.__summary_page)
@@ -52,4 +53,8 @@ class PdfPackage:
         self.__pages += self.__equipment.pages
         self.__pages += self.__rentals_and_services.pages
         self.__pages += self.__consumables.pages
+
+        if self.__make_daily_sheets:
+            self.__pages += self.__daily_sheets.pages
+
         make_pdf(self.__pages, self.__output_file_path)

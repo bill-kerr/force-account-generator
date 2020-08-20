@@ -10,11 +10,7 @@ from pdf_package import PdfPackage
 
 class PdfGenerator:
     def __init__(
-        self,
-        input_file_path,
-        output_file_path,
-        pdf_config_file="./config/pdf_config.json",
-        daily_sheets=False
+            self, input_file_path, output_file_path, pdf_config_file="./config/pdf_config.json", daily_sheets=False
     ):
         cfg = PdfFieldConfig(pdf_config_file)
         data_loader = DataLoader(input_file_path)

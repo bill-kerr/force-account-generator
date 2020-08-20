@@ -11,23 +11,19 @@
     "subcontractor": "subcontractor",
     "inspector": "inspector",
     "locations": "locations",
-    "labor": {
-      "row_count": 7,
-      "name": "name",
-      "classification": "class",
-      "hours_st": "hours_st",
-      "hours_ot": "hours_ot"
-    },
-    "equipment": {
-      "row_count": 4,
-      "equipment_type": "type",
-      "configuration": "config",
-      "year": "year",
-      "make": "make",
-      "model": "model",
-      "hours_op": "hours_op",
-      "hours_sb": "hours_sb"
-    }
+    "labor_row_count": 7,
+    "labor_name": "name",
+    "labor_classification": "class",
+    "labor_hours_st": "hours_st",
+    "labor_hours_ot": "hours_ot",
+    "equipment_row_count": 4,
+    "equipment_type": "type",
+    "equipment_configuration": "config",
+    "equipment_year": "year",
+    "equipment_make": "make",
+    "equipment_model": "model",
+    "equipment_hours_op": "hours_op",
+    "equipment_hours_sb": "hours_sb"
   },
   "daily_supp": {
     "template": "daily_page_2.pdf",
