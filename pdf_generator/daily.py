@@ -1,7 +1,7 @@
 from itertools import zip_longest
-from page import PageCollection, Page
-from paginator import simple_paginate
-from util import decimal_comma_formatter
+from .page import PageCollection, Page
+from .paginator import simple_paginate
+from .util import decimal_comma_formatter
 
 
 class DailyPage(Page):

@@ -1,4 +1,4 @@
-from config import Config
+from .config import Config
 
 # COLUMNS
 CHECK = Config.columns['material']['check'][0]

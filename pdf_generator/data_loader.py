@@ -1,10 +1,10 @@
 import json
-from labor import Labor
-from equipment import Equipment
-from material import Material
-from rentals_and_services import Rental, Service
-from consumables import PurchasedConsumable, StockConsumable
-from util import rnd
+from .labor import Labor
+from .equipment import Equipment
+from .material import Material
+from .rentals_and_services import Rental, Service
+from .consumables import PurchasedConsumable, StockConsumable
+from .util import rnd
 
 
 def load_material(data):
@@ -130,16 +130,14 @@ class GlobalData:
 
 
 class DataLoader:
-    def __init__(self, json_config_file):
-        with open(json_config_file) as f:
-            data = json.load(f)
-            self.global_data = GlobalData(data)
-            self.material = load_material(data["material"])
-            self.labor = load_labor(data["labor"])
-            self.equipment = load_equipment(data["equipment"])
-            self.rentals = load_rentals(data["rentals"])
-            self.services = load_services(data["services"])
-            self.purchased_consumables = load_purchased_consumbles(
-                data["purchased_consumables"])
-            self.stock_consumables = load_stock_consumables(
-                data["stock_consumables"])
+    def __init__(self, data):
+        self.global_data = GlobalData(data)
+        self.material = load_material(data["material"])
+        self.labor = load_labor(data["labor"])
+        self.equipment = load_equipment(data["equipment"])
+        self.rentals = load_rentals(data["rentals"])
+        self.services = load_services(data["services"])
+        self.purchased_consumables = load_purchased_consumbles(
+            data["purchased_consumables"])
+        self.stock_consumables = load_stock_consumables(
+            data["stock_consumables"])

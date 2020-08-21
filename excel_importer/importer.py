@@ -1,23 +1,22 @@
 """
-Program that extracts data from Excel to a JSON file for force account generation.
-JSON data will be created in the same format as output.example.json.
+Program that extracts Force Account data from Excel.
 """
-import json
-import argparse
-from workbook import Workbook
+from .workbook import Workbook
 
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('source', help='The path to the source Excel file (must end with .xlsx)')
-    parser.add_argument('dest', help='The path to the destination JSON file (must end with .json)')
-    args = parser.parse_args()
+class Importer:
+    def __init__(self, source_file, delay_processing=False):
+        self.__data_loaded = False
+        self.__wb = Workbook(source_file)
+        if not delay_processing:
+            self.process_data()
 
-    if not args.source.endswith('.xlsx') or not args.dest.endswith('.json'):
-        raise parser.error('Incorrect file extension (source=*.xlsx dest=*.json)')
+    def process_data(self):
+        if not self.__data_loaded:
+            self.__data = self.__wb.process_workbook()
+            self.__data_loaded = True
+            return self.__data
 
-    wb = Workbook(args.source)
-    data = wb.process_workbook()
-
-    with open(args.dest, 'w') as fp:
-        json.dump(data, fp)
+    @property
+    def data(self):
+        return self.__data if self.__data_loaded else None

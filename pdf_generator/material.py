@@ -2,13 +2,14 @@
 The material file includes the Material model and requisite page classes for constructing
 the material portion of a force account.
 """
-from util import rnd, decimal_comma_formatter, currency_formatter
-from paginator import simple_paginate
-from page import PageCollection, Page
+from .util import rnd, decimal_comma_formatter, currency_formatter
+from .paginator import simple_paginate
+from .page import PageCollection, Page
 
 
 class Material:
     """ The Material class represents a single material object. """
+
     def __init__(self):
         self.description = ""
         self.quantity = 0
@@ -20,6 +21,7 @@ class Material:
 
 class MaterialPage(Page):
     """ The MaterialPage class represents a single material page. """
+
     def __init__(self, materials, field_config, is_first_page):
         template = field_config.template(is_supp=not is_first_page)
         super().__init__(field_config, template)
@@ -85,6 +87,7 @@ class MaterialPage(Page):
 
 class MaterialCollection(PageCollection):
     """ The MaterialCollection class represents a set of MaterialPages. """
+
     def __init__(self, data_loader, field_config):
         super().__init__(data_loader, field_config)
         self.__materials = data_loader.material

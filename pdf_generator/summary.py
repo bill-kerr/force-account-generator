@@ -1,5 +1,5 @@
-from page import Page
-from util import rnd, currency_formatter
+from .page import Page
+from .util import rnd, currency_formatter
 
 
 class SummaryData():

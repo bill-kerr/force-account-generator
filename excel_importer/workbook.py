@@ -1,11 +1,11 @@
 from openpyxl import load_workbook as load_wb
-from config import Config
-from worksheet import Worksheet
-from material import process_material
-from labor import process_labor
-from equipment import process_equipment
-from consumables import process_consumables
-from rentals_and_services import process_rentals_and_services
+from .config import Config
+from .worksheet import Worksheet
+from .material import process_material
+from .labor import process_labor
+from .equipment import process_equipment
+from .consumables import process_consumables
+from .rentals_and_services import process_rentals_and_services
 
 
 class Workbook:
@@ -63,7 +63,7 @@ class Workbook:
 
     def _process_worksheets(self):
         data = {}
-        for worksheet in self.worksheets.values():
+        for i, worksheet in enumerate(self.worksheets.values()):
             data.update(worksheet.process())
         return data
 

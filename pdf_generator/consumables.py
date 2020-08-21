@@ -1,7 +1,8 @@
 from itertools import zip_longest
-from page import PageCollection, Page
-from paginator import simple_paginate
-from util import currency_formatter, decimal_comma_formatter, three_decimal_formatter, two_decimal_percent_formatter
+from .page import PageCollection, Page
+from .paginator import simple_paginate
+from .util import currency_formatter, decimal_comma_formatter, three_decimal_formatter, two_decimal_percent_formatter
+
 
 class PurchasedConsumable:
     def __init__(self):

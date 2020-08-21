@@ -1,4 +1,4 @@
-from config import Config
+from .config import Config
 
 # COLUMNS
 R_CHECK = Config.columns['rentals_and_services']['check'][0]

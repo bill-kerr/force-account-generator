@@ -1,4 +1,4 @@
-from config import Config
+from .config import Config
 
 # COLUMNS
 P_CHECK = Config.columns['consumables']['check'][0]

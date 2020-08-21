@@ -1,7 +1,8 @@
 from itertools import zip_longest
-from page import PageCollection, Page
-from paginator import simple_paginate
-from util import currency_formatter
+from .page import PageCollection, Page
+from .paginator import simple_paginate
+from .util import currency_formatter
+
 
 class Rental:
     def __init__(self):

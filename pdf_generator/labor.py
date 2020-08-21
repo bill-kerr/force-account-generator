@@ -1,9 +1,9 @@
 """ The labor file includes the Labor model and requisite page classes for constructing the labor
 portion of a force account. """
-from util import format_date, rnd, decimal_comma_formatter, currency_formatter, percent_formatter
-from paginator import paginate_by_date, simple_paginate
-from page import PageCollection, Page
-from unit import Unit
+from .util import format_date, rnd, decimal_comma_formatter, currency_formatter, percent_formatter
+from .paginator import paginate_by_date, simple_paginate
+from .page import PageCollection, Page
+from .unit import Unit
 
 
 class Labor(Unit):
@@ -199,7 +199,6 @@ class LaborBreakdownPage(Page):
             value=0,
             formatter=currency_formatter
         )
-
 
     def __set_taxes_and_insurance_fields(self):
         self.__set_social_security(self.__taxes_and_insurance.social_security)

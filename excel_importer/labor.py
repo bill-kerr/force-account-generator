@@ -1,5 +1,5 @@
-from config import Config
-from util import get_dates, get_hours
+from .config import Config
+from .util import get_dates, get_hours
 
 # COLUMNS
 CHECK = Config.columns['labor']['check'][0]

@@ -1,5 +1,5 @@
-from unit import Unit
-from util import (
+from .unit import Unit
+from .util import (
     rnd,
     format_date,
     decimal_comma_formatter,
@@ -7,8 +7,8 @@ from util import (
     whole_number_formatter,
     three_decimal_formatter
 )
-from paginator import paginate_by_date, simple_paginate
-from page import Page, PageCollection
+from .paginator import paginate_by_date, simple_paginate
+from .page import Page, PageCollection
 
 
 class Equipment(Unit):
@@ -255,6 +255,7 @@ class EquipmentBreakdownPage(Page):
             value=0,
             formatter=currency_formatter
         )
+
 
 class EquipmentCollection(PageCollection):
     def __init__(self, data_loader, field_config):
