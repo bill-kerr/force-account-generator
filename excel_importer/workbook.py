@@ -9,18 +9,18 @@ from .rentals_and_services import process_rentals_and_services
 
 
 class Workbook:
-    def __init__(self, file_path):
-        self._load_workbook(file_path)
+    def __init__(self, source_file):
+        self._load_workbook(source_file)
         self._sheet_map = {name: key for key, name in Config.worksheet_names.items()}
         self._defined_cell_map = {name: key for key, name in Config.defined_cells.items()}
         self._generate_defined_cells()
         self._generate_worksheets()
 
-    def _load_workbook(self, file_path):
+    def _load_workbook(self, source_file):
         try:
-            self._workbook = load_wb(file_path, read_only=True, data_only=True)
+            self._workbook = load_wb(source_file, read_only=True, data_only=True)
         except Exception:
-            raise Exception('Error loading workbook from ' + file_path)
+            raise Exception('Error loading workbook from ' + source_file)
 
     def _generate_defined_cells(self):
         cell_names = Config.defined_cells.values()
