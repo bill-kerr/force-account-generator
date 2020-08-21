@@ -9,6 +9,11 @@ pylint = "*"
 [packages]
 pypdf2 = "*"
 openpyxl = "*"
+django = "*"
+celery = "*"
+celery-progress = "*"
+redis = "*"
+django-celery-results = "*"
 
 [requires]
 python_version = "3.8"
