@@ -25,3 +25,5 @@ def debug_task(self):
 
 
 # celery -A client worker -l info
+# NOTE: Celery not supported on windows, must run solo pool as follows:
+# celery -A client worker -l info --pool=solo

@@ -9,11 +9,12 @@ from .daily import DailyCollection
 
 
 class PdfPackage:
-    def __init__(self, data_loader, pdf_config, output_file_path, daily_sheets=False):
+    def __init__(self, data_loader, pdf_config, output_file_path, daily_sheets=False, callback=None):
         self.__data_loader = data_loader
         self.__pdf_config = pdf_config
         self.__output_file_path = output_file_path
         self.__make_daily_sheets = daily_sheets
+        self.__callback = callback
         self.__pages = []
         self.__material = MaterialCollection(self.__data_loader, self.__pdf_config)
         self.__labor = LaborCollection(self.__data_loader, self.__pdf_config)
@@ -57,4 +58,4 @@ class PdfPackage:
         if self.__make_daily_sheets:
             self.__pages += self.__daily_sheets.pages
 
-        make_pdf(self.__pages, self.__output_file_path)
+        make_pdf(self.__pages, self.__output_file_path, callback=self.__callback)

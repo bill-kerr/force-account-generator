@@ -4,9 +4,12 @@ import json
 
 class PdfFieldConfig:
     """ Represents the overall PDF field config. """
-    def __init__(self, pdf_config_path):
+
+    def __init__(self, pdf_config_path, callback=None):
+        self.__cb = callback
         with open(pdf_config_path) as config_file:
             self.__config = json.load(config_file)
+            self.__callback({'message': 'JSON pdf config loaded.', 'progress': 0})
             self.daily_config = DailyConfig(self.__config["daily"], self.__config["daily_supp"])
             self.material = MaterialConfig(self.__config["material"], self.__config["material_supp"])
             self.final_summary = FinalSummaryConfig(self.__config["final_summary"])
@@ -21,9 +24,14 @@ class PdfFieldConfig:
                 self.__config["rentals_and_services"], self.__config["rentals_and_services_supp"])
             self.consumables = ConsumablesConfig(self.__config["consumables"])
 
+    def __callback(self, status):
+        if self.__cb is not None:
+            self.__cb(status)
+
 
 class FieldConfig:
     """ Base class for a page of field names. """
+
     def __init__(self, config, supp_config=None):
         self.has_supp = supp_config is not None
         self.config = config
@@ -43,6 +51,7 @@ class FieldConfig:
 
 class DailyConfig(FieldConfig):
     """ Field configuration for daily pages. """
+
     def __init__(self, config, supp_config):
         super().__init__(config, supp_config=supp_config)
         self.template = self.get("template")
@@ -73,6 +82,7 @@ class DailyConfig(FieldConfig):
 
 class FinalSummaryConfig(FieldConfig):
     """ Field config for the Final Summary page. """
+
     def __init__(self, config):
         super().__init__(config)
         self.template = self.get("template")
@@ -100,6 +110,7 @@ class FinalSummaryConfig(FieldConfig):
 
 class HeadersConfig(FieldConfig):
     """ Field config for the headers on each page. """
+
     def __init__(self, config):
         super().__init__(config)
         self.county = config["county"]
@@ -112,6 +123,7 @@ class HeadersConfig(FieldConfig):
 
 class MaterialConfig(FieldConfig):
     """ Field config for the Material page. """
+
     def __init__(self, config, supp_config):
         super().__init__(config, supp_config=supp_config)
         self.template = self.get("template")
@@ -129,6 +141,7 @@ class MaterialConfig(FieldConfig):
 
 class DailyLaborConfig(FieldConfig):
     """ Field config for the daily labor page. """
+
     def __init__(self, config):
         super().__init__(config)
         self.template = self.get("template")
@@ -145,6 +158,7 @@ class DailyLaborConfig(FieldConfig):
 
 class LaborBreakdownConfig(FieldConfig):
     """ Field config for the Labor Breakdown page. """
+
     def __init__(self, config, supp_config):
         super().__init__(config, supp_config=supp_config)
         self.template = self.get("template")
@@ -178,6 +192,7 @@ class LaborBreakdownConfig(FieldConfig):
 
 class DailyEquipmentConfig(FieldConfig):
     """ Field config for the Daily Equipment page. """
+
     def __init__(self, config):
         super().__init__(config)
         self.template = self.get("template")
@@ -193,6 +208,7 @@ class DailyEquipmentConfig(FieldConfig):
 
 class EquipmentBreakdownConfig(FieldConfig):
     """ Field config for the Equipment Breakdown page. """
+
     def __init__(self, config, supp_config):
         super().__init__(config, supp_config=supp_config)
         self.template = self.get("template")
@@ -218,6 +234,7 @@ class EquipmentBreakdownConfig(FieldConfig):
 
 class RentalsAndServicesConfig(FieldConfig):
     """ Field config for the Rentals and Services page. """
+
     def __init__(self, config, supp_config):
         super().__init__(config, supp_config=supp_config)
         self.template = self.get("template")
@@ -237,6 +254,7 @@ class RentalsAndServicesConfig(FieldConfig):
 
 class ConsumablesConfig(FieldConfig):
     """ Field config for the Consumables page. """
+
     def __init__(self, config):
         super().__init__(config)
         self.template = self.get("template")

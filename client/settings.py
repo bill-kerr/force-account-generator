@@ -85,6 +85,7 @@ DATABASES = {
     }
 }
 
+FILE_UPLOAD_HANDLERS = ["django.core.files.uploadhandler.TemporaryFileUploadHandler"]
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -124,7 +125,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-CELERY_BROKER_URL = 'redis://h:p1fafb2a95964ed70df4f56e4bfce3e44069b949f1e573619c59c308bcbe102c9@ec2-54-198-37-6.compute-1.amazonaws.com:11629'
+CELERY_BROKER_URL = 'redis://h:p1fafb2a95964ed70df4f56e4bfce3e44069b949f1e573619c59c308bcbe102c9@ec2-54-161-104-125.compute-1.amazonaws.com:6789'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_BACKEND = 'django-db'

@@ -3,16 +3,29 @@ from PyPDF2.generic import BooleanObject, NameObject, IndirectObject
 from PyPDF2 import PdfFileReader, PdfFileWriter
 
 
-def make_pdf(pages, output_file_path):
+def make_pdf(pages, output_file_path, callback=None):
     root_dir = os.path.dirname(os.path.realpath(__file__))
     dir_path = os.path.join(root_dir, 'templates')
     pdf_writer = set_need_appearances_writer(PdfFileWriter())
     streams = []
-    for page in pages:
+    num_pages = len(pages)
+    progress_callback(callback, num_pages, 0)
+    for i, page in enumerate(pages):
+        progress_callback(callback, num_pages, i + 1)
         streams.append(add_page(pdf_writer, page, dir_path))
     save_pdf(pdf_writer, output_file_path)
     for stream in streams:
         stream.close()
+
+
+def progress_callback(callback, num_pages, completed):
+    if callback is None:
+        return
+    progress = (completed / num_pages)
+    message = f'Creating PDF page {completed} of {num_pages}.'
+    status = {'message': message, 'num_pages': num_pages,
+              'completed_pages': completed, 'progress': progress}
+    callback(status)
 
 
 def add_page(pdf_writer, page, root_dir):

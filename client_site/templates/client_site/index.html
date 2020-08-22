@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,5 +13,29 @@
     {{ form }}
     <input type="submit" value="Submit">
   </form>
+  <div class="progress-wrapper">
+    <div id="progress-bar" style="background-color: lightblue; width: 0%">&nbsp;</div>
+  </div>
+  <div id="progress-bar-message">Waiting for progress to start...</div>
+  <script src="{% static 'celery_progress/celery_progress.js' %}"></script>
+  <script>
+    function customResult(resultElement, result) {
+      console.log(resultElement);
+    }
+
+    function customProgress(progressBarElement, progressMessageElement, progress) {
+      console.log(progress);
+      progressBarElement.style.width = progress.percent + '%';
+      progressMessageElement.innerHTML = progress.description.message;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      var progressUrl = "{% url 'celery_progress:task_status' task_id %}";
+      CeleryProgressBar.initProgressBar(progressUrl, {
+        onResult: customResult,
+        onProgress: customProgress
+      });
+    });
+  </script>
 </body>
 </html>

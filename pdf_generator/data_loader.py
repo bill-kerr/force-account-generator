@@ -130,7 +130,7 @@ class GlobalData:
 
 
 class DataLoader:
-    def __init__(self, data):
+    def __init__(self, data, callback=None):
         self.global_data = GlobalData(data)
         self.material = load_material(data["material"])
         self.labor = load_labor(data["labor"])
@@ -141,3 +141,5 @@ class DataLoader:
             data["purchased_consumables"])
         self.stock_consumables = load_stock_consumables(
             data["stock_consumables"])
+        if callback is not None:
+            callback({'message': 'Data loaded.', 'progress': 0})
