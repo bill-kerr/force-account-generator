@@ -595,7 +595,6 @@ video {
 
 body {
   font-family: "Rubik", "sans-serif";
-  font-weight: 300;
   color: #1a202c;
 }
 
@@ -617,6 +616,7 @@ h1 {
   font-size: 2.5rem;
   line-height: 3rem;
   margin-bottom: 1rem;
+  font-weight: 300;
 }
 
 .heading strong {
@@ -711,4 +711,108 @@ h1 {
 
 .ml-3 {
   margin-left: 0.75rem;
+}
+
+.progress-wrapper {
+  margin-top: 4rem;
+  font-size: 1.1rem;
+}
+
+.progress-step {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  color: #a0aec0;
+}
+
+.step-title {
+  display: flex;
+  align-items: center;
+  margin-left: 1rem;
+}
+
+.step-content {
+  margin-left: 1rem;
+  flex: 1;
+  display: none;
+}
+
+.step-icon {
+  height: 1.5rem;
+  width: 1.5rem;
+  border-radius: 100%;
+  border: 1px dashed #a0aec0;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  padding: 0.125rem;
+}
+
+.step-icon svg {
+  height: 0;
+  width: 0;
+}
+
+.active {
+  color: inherit;
+}
+
+.active .step-content {
+  display: block;
+}
+
+.active svg {
+  height: 0;
+  width: 0;
+}
+
+.active .step-icon {
+  border: 1px solid #3182ce;
+}
+
+.completed {
+  color: #a0aec0;
+}
+
+.completed svg {
+  color: #68d391;
+}
+
+.completed .step-icon {
+  border-color: #68d391;
+}
+
+.waiting {
+  color: #a0aec0;
+}
+
+.waiting svg {
+  border-color: #a0aec0;
+}
+
+.error {
+  color: #e53e3e;
+}
+
+.error .error-icon {
+  height: 1.5rem;
+  width: 1.5rem;
+  color: #e53e3e;
+}
+
+.error .step-icon {
+  border: none;
+  padding: 0;
+}
+
+#pdf-page-progress {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.85rem;
+}
+
+.progress-bar {
+  height: 2px;
+  width: 100%;
+  background-color: #3182ce;
 }

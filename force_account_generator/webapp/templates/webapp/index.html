@@ -36,7 +36,7 @@
     </div>
 
 
-    {% if form %}
+    {% if False %}
     <div class="form-wrapper">
       <div class="actions">
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="document-add">
@@ -58,10 +58,63 @@
     {% endif %}
 
     {% if task_id %}
-    <div class="progress-wrapper">
+    {% comment %} <div class="progress-wrapper">
       <div id="progress-bar" style="background-color: lightblue; width: 0%">&nbsp;</div>
     </div>
-    <div id="progress-bar-message"></div>
+    <div id="progress-bar-message"></div> {% endcomment %}
+    <div class="progress-wrapper">
+
+      <div class="progress-step">
+        <span class="step-icon">
+          <svg viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd">
+            </path>
+          </svg>
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="error-icon">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+            </path>
+          </svg>
+        </span>
+        <span class="step-title">Loading data</span>
+        <div class="step-content">Step content</div>
+      </div>
+
+      <div class="progress-step">
+        <span class="step-icon">
+          <svg viewBox="0 0 20 20" fill="currentColor" style="">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd">
+            </path>
+          </svg>
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="error-icon">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+            </path>
+          </svg>
+        </span>
+        <span class="step-title">Generating PDF pages</span>
+        <div class="step-content">
+          <div id="pdf-page-progress">
+            <div>1 / 3</div>
+            <div class="progress-bar"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="progress-step">
+        <span class="step-icon">
+          <svg viewBox="0 0 20 20" fill="currentColor" style="">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd">
+            </path>
+          </svg>
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="error-icon">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+            </path>
+          </svg>
+        </span>
+        <span class="step-title">Saving PDF</span>
+        <div class="step-content">Step content</div>
+      </div>
+
+    </div>
     {% endif %}
   </div>
 
@@ -70,23 +123,40 @@
   {% if task_id %}
   <script src="{% static 'celery_progress/celery_progress.js' %}"></script>
   <script>
-    function customResult(resultElement, result) {
-      console.log(resultElement);
-    }
-
-    function customProgress(progressBarElement, progressMessageElement, progress) {
+    {% comment %} function customProgress(progressBarElement, progressMessageElement, progress) {
       console.log(progress);
       progressBarElement.style.width = progress.percent + '%';
       if (progress.description) {
         progressMessageElement.innerHTML = progress.description.message;
       }
+    } {% endcomment %}
+
+    function onProgress(_progElem, _messageElem, progress) {
+      console.log(progress);
+      if (!progress.description || !progress.description.progress) {
+        return;
+      }
+
+      var width = (progress.description.progress * 100).toString() + "%";
+      document.getElementById('pdf-page-progress').style.width = width;
+    }
+
+    function onSuccess(_progElem, _messageElem, result) {
+      console.log('Success result:');
+      console.log(result);
+    }
+
+    function onError(_progElem, _messageElem, errorMessage) {
+      console.log('Error:');
+      console.log(errorMessage);
     }
 
     document.addEventListener("DOMContentLoaded", function () {
       var progressUrl = "{% url 'celery_progress:task_status' task_id %}";
       CeleryProgressBar.initProgressBar(progressUrl, {
-        onResult: customResult,
-        onProgress: customProgress
+        onProgress: onProgress,
+        onSuccess: onSuccess,
+        onError: onError
       });
     });
   </script>
