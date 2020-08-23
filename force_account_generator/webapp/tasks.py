@@ -26,6 +26,6 @@ def load_data(input_file, save_json):
 
 def make_callback(progress_recorder):
     def progress_callback(status):
-        progress = status['progress'] * 100
+        progress = (status.get('progress') or 0) * 100
         progress_recorder.set_progress(progress, 100, description=status)
     return progress_callback

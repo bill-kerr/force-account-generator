@@ -142,4 +142,4 @@ class DataLoader:
         self.stock_consumables = load_stock_consumables(
             data["stock_consumables"])
         if callback is not None:
-            callback({'message': 'Data loaded.', 'progress': 0})
+            callback({'message': 'Data loaded.', 'progress': 0, 'stage': 1})

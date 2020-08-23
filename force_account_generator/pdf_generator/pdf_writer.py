@@ -9,22 +9,22 @@ def make_pdf(pages, output_file_path, callback=None):
     pdf_writer = set_need_appearances_writer(PdfFileWriter())
     streams = []
     num_pages = len(pages)
-    progress_callback(callback, num_pages, 0)
+    progress_callback(callback, num_pages, 0, 2)
     for i, page in enumerate(pages):
-        progress_callback(callback, num_pages, i + 1)
+        progress_callback(callback, num_pages, i + 1, 2)
         streams.append(add_page(pdf_writer, page, dir_path))
-    save_pdf(pdf_writer, output_file_path)
+    save_pdf(pdf_writer, output_file_path, callback=callback)
     for stream in streams:
         stream.close()
 
 
-def progress_callback(callback, num_pages, completed):
+def progress_callback(callback, num_pages=1, completed=1, stage=0, message=None):
     if callback is None:
         return
     progress = (completed / num_pages)
-    message = f'Creating PDF page {completed} of {num_pages}.'
-    status = {'message': message, 'num_pages': num_pages,
-              'completed_pages': completed, 'progress': progress}
+    msg = f'Creating PDF page {completed} of {num_pages}.' if message is None else message
+    status = {'message': msg, 'num_pages': num_pages,
+              'completed_pages': completed, 'progress': progress, 'stage': stage}
     callback(status)
 
 
@@ -63,6 +63,8 @@ def set_need_appearances_writer(writer):
         return writer
 
 
-def save_pdf(pdf_writer, output_file_path):
+def save_pdf(pdf_writer, output_file_path, callback=None):
+    progress_callback(callback, stage=3, message="Saving PDF.")
     with open(output_file_path, "wb") as output_stream:
         pdf_writer.write(output_stream)
+    progress_callback(callback, stage=4, message="PDF saved.")

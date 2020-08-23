@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;700&display=swap" rel="stylesheet">
   <title>Force Account Generator</title>
 </head>
-<body>
+<body class="hero-background">
 
   <div class="container">
     <h1>Force Account Generator</h1>
@@ -36,7 +36,7 @@
     </div>
 
 
-    {% if False %}
+    {% if form %}
     <div class="form-wrapper">
       <div class="actions">
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="document-add">
@@ -64,7 +64,7 @@
     <div id="progress-bar-message"></div> {% endcomment %}
     <div class="progress-wrapper">
 
-      <div class="progress-step">
+      <div class="progress-step" id="stage-1">
         <span class="step-icon">
           <svg viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd">
@@ -79,7 +79,7 @@
         <div class="step-content">Step content</div>
       </div>
 
-      <div class="progress-step">
+      <div class="progress-step" id="stage-2">
         <span class="step-icon">
           <svg viewBox="0 0 20 20" fill="currentColor" style="">
             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd">
@@ -99,7 +99,7 @@
         </div>
       </div>
 
-      <div class="progress-step">
+      <div class="progress-step" id="stage-3">
         <span class="step-icon">
           <svg viewBox="0 0 20 20" fill="currentColor" style="">
             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd">
@@ -116,50 +116,24 @@
 
     </div>
     {% endif %}
+
   </div>
 
 
 
   {% if task_id %}
-  <script src="{% static 'celery_progress/celery_progress.js' %}"></script>
-  <script>
-    {% comment %} function customProgress(progressBarElement, progressMessageElement, progress) {
-      console.log(progress);
-      progressBarElement.style.width = progress.percent + '%';
-      if (progress.description) {
-        progressMessageElement.innerHTML = progress.description.message;
-      }
-    } {% endcomment %}
-
-    function onProgress(_progElem, _messageElem, progress) {
-      console.log(progress);
-      if (!progress.description || !progress.description.progress) {
-        return;
-      }
-
-      var width = (progress.description.progress * 100).toString() + "%";
-      document.getElementById('pdf-page-progress').style.width = width;
-    }
-
-    function onSuccess(_progElem, _messageElem, result) {
-      console.log('Success result:');
-      console.log(result);
-    }
-
-    function onError(_progElem, _messageElem, errorMessage) {
-      console.log('Error:');
-      console.log(errorMessage);
-    }
-
-    document.addEventListener("DOMContentLoaded", function () {
-      var progressUrl = "{% url 'celery_progress:task_status' task_id %}";
-      CeleryProgressBar.initProgressBar(progressUrl, {
-        onProgress: onProgress,
-        onSuccess: onSuccess,
-        onError: onError
+    <script src="{% static 'celery_progress/celery_progress.js' %}"></script>
+    <script src="{% static 'webapp/main.js' %}"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var progressUrl = "{% url 'celery_progress:task_status' task_id %}";
+        CeleryProgressBar.initProgressBar(progressUrl, {
+          onProgress: onProgress,
+          onSuccess: onSuccess,
+          onError: onError,
+        });
       });
-    });
-  </script>
+    </script>
   {% endif %}
 </body>
 </html>
