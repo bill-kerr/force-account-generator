@@ -4,44 +4,92 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="{% static 'webapp/styles.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;700&display=swap" rel="stylesheet">
   <title>Force Account Generator</title>
 </head>
 <body>
 
-  <h3>Hello, this is the Force Account Generator</h3>
-  
-  <form action="{% url 'webapp:index' %}" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit">
-  </form>
+  <div class="container">
+    <h1>Force Account Generator</h1>
+    <div class="heading">
+      <h2>
+        Generate PennDOT force accounts,<br /> <strong>without the pain.</strong>
+      </h2>
+      <span>Fill in an Excel spreadsheet and generate a valid PennDOT PDF Force Account package.</span>
+      <div class="heading-actions">
+        <a href="#" class="button button-primary button-icon download">
+          <svg viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd">
+            </path>
+          </svg>
+          Download the Excel template
+        </a>
+        <a href="https://github.com/bk7987/force-account-generator" class="ml-3 button button-icon external-link" target="_blank">
+          <span>Source code</span>
+          <svg viewBox="0 0 20 20" fill="currentColor" stroke-width="1">
+            <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path>
+            <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
 
-  <div class="progress-wrapper">
-    <div id="progress-bar" style="background-color: lightblue; width: 0%">&nbsp;</div>
+
+    {% if form %}
+    <div class="form-wrapper">
+      <div class="actions">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="document-add">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+          </path>
+        </svg>
+        <div class="ml-2">
+          <span>Drop your file or</span>
+          <button class="ml-2 button button-primary" style="font-weight: 400;">Select file</button>
+        </div>
+      </div>
+    </div>
+    
+    <form action="{% url 'webapp:index' %}" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form }}
+      <input type="submit" value="Submit">
+    </form>
+    {% endif %}
+
+    {% if task_id %}
+    <div class="progress-wrapper">
+      <div id="progress-bar" style="background-color: lightblue; width: 0%">&nbsp;</div>
+    </div>
+    <div id="progress-bar-message"></div>
+    {% endif %}
   </div>
-  <div id="progress-bar-message">Waiting for progress to start...</div>
+
+
 
   {% if task_id %}
-    <script src="{% static 'celery_progress/celery_progress.js' %}"></script>
-    <script>
-      function customResult(resultElement, result) {
-        console.log(resultElement);
-      }
+  <script src="{% static 'celery_progress/celery_progress.js' %}"></script>
+  <script>
+    function customResult(resultElement, result) {
+      console.log(resultElement);
+    }
 
-      function customProgress(progressBarElement, progressMessageElement, progress) {
-        console.log(progress);
-        progressBarElement.style.width = progress.percent + '%';
+    function customProgress(progressBarElement, progressMessageElement, progress) {
+      console.log(progress);
+      progressBarElement.style.width = progress.percent + '%';
+      if (progress.description) {
         progressMessageElement.innerHTML = progress.description.message;
       }
+    }
 
-      document.addEventListener("DOMContentLoaded", function () {
-        var progressUrl = "{% url 'celery_progress:task_status' task_id %}";
-        CeleryProgressBar.initProgressBar(progressUrl, {
-          onResult: customResult,
-          onProgress: customProgress
-        });
+    document.addEventListener("DOMContentLoaded", function () {
+      var progressUrl = "{% url 'celery_progress:task_status' task_id %}";
+      CeleryProgressBar.initProgressBar(progressUrl, {
+        onResult: customResult,
+        onProgress: customProgress
       });
-    </script>
+    });
+  </script>
   {% endif %}
 </body>
 </html>
