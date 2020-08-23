@@ -5,9 +5,9 @@ import os
 from celery import Celery
 
 # set the default Django settings module for the 'celery' program.
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'client.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'force_account_generator.settings')
 
-app = Celery('client')
+app = Celery('force_account_generator')
 
 # Using a string here means the worker doesn't have to serialize
 # the configuration object to child processes.
@@ -24,6 +24,5 @@ def debug_task(self):
     print('Request: {0!r}'.format(self.request))
 
 
-# celery -A client worker -l info
 # NOTE: Celery not supported on windows, must run solo pool as follows:
-# celery -A client worker -l info --pool=solo
+# celery -A force_account_generator worker -l info --pool=solo

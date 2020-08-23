@@ -1,4 +1,4 @@
-"""client URL Configuration
+"""force_account_generator URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.1/topics/http/urls/
@@ -18,6 +18,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('client_site.urls')),
+    path('', include('webapp.urls')),
     path('celery-progress/', include('celery_progress.urls'))
 ]

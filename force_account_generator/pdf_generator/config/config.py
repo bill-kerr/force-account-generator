@@ -1,28 +1,31 @@
 """ The config module holds all of the defined field data for writing to the PDF. """
 import json
+import os
 
 
 class PdfFieldConfig:
     """ Represents the overall PDF field config. """
 
-    def __init__(self, pdf_config_path, callback=None):
+    def __init__(self, callback=None):
         self.__cb = callback
-        with open(pdf_config_path) as config_file:
+
+        file_path = os.path.join(os.getcwd(), 'pdf_generator', 'pdf_config.json')
+        with open(file_path) as config_file:
             self.__config = json.load(config_file)
-            self.__callback({'message': 'JSON pdf config loaded.', 'progress': 0})
-            self.daily_config = DailyConfig(self.__config["daily"], self.__config["daily_supp"])
-            self.material = MaterialConfig(self.__config["material"], self.__config["material_supp"])
-            self.final_summary = FinalSummaryConfig(self.__config["final_summary"])
-            self.headers = HeadersConfig(self.__config["force_account_headers"])
-            self.daily_labor = DailyLaborConfig(self.__config["daily_labor"])
-            self.labor_breakdown = LaborBreakdownConfig(
-                self.__config["labor_breakdown"], self.__config["labor_breakdown_supp"])
-            self.daily_equipment = DailyEquipmentConfig(self.__config["daily_equipment"])
-            self.equipment_breakdown = EquipmentBreakdownConfig(
-                self.__config["equipment_breakdown"], self.__config["equipment_breakdown_supp"])
-            self.rentals_and_services = RentalsAndServicesConfig(
-                self.__config["rentals_and_services"], self.__config["rentals_and_services_supp"])
-            self.consumables = ConsumablesConfig(self.__config["consumables"])
+        self.__callback({'message': 'JSON pdf config loaded.', 'progress': 0})
+        self.daily_config = DailyConfig(self.__config["daily"], self.__config["daily_supp"])
+        self.material = MaterialConfig(self.__config["material"], self.__config["material_supp"])
+        self.final_summary = FinalSummaryConfig(self.__config["final_summary"])
+        self.headers = HeadersConfig(self.__config["force_account_headers"])
+        self.daily_labor = DailyLaborConfig(self.__config["daily_labor"])
+        self.labor_breakdown = LaborBreakdownConfig(
+            self.__config["labor_breakdown"], self.__config["labor_breakdown_supp"])
+        self.daily_equipment = DailyEquipmentConfig(self.__config["daily_equipment"])
+        self.equipment_breakdown = EquipmentBreakdownConfig(
+            self.__config["equipment_breakdown"], self.__config["equipment_breakdown_supp"])
+        self.rentals_and_services = RentalsAndServicesConfig(
+            self.__config["rentals_and_services"], self.__config["rentals_and_services_supp"])
+        self.consumables = ConsumablesConfig(self.__config["consumables"])
 
     def __callback(self, status):
         if self.__cb is not None:

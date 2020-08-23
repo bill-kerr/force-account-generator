@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Force Account Generator</title>
+</head>
+<body>
+
+  <h3>Hello, this is the Force Account Generator</h3>
+  
+  <form action="{% url 'webapp:index' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit">
+  </form>
+
+  <div class="progress-wrapper">
+    <div id="progress-bar" style="background-color: lightblue; width: 0%">&nbsp;</div>
+  </div>
+  <div id="progress-bar-message">Waiting for progress to start...</div>
+
+  {% if task_id %}
+    <script src="{% static 'celery_progress/celery_progress.js' %}"></script>
+    <script>
+      function customResult(resultElement, result) {
+        console.log(resultElement);
+      }
+
+      function customProgress(progressBarElement, progressMessageElement, progress) {
+        console.log(progress);
+        progressBarElement.style.width = progress.percent + '%';
+        progressMessageElement.innerHTML = progress.description.message;
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        var progressUrl = "{% url 'celery_progress:task_status' task_id %}";
+        CeleryProgressBar.initProgressBar(progressUrl, {
+          onResult: customResult,
+          onProgress: customProgress
+        });
+      });
+    </script>
+  {% endif %}
+</body>
+</html>
