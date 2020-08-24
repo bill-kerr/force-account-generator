@@ -22,7 +22,7 @@ class Importer:
     def __callback(self, message):
         if self.__cb is None:
             return
-        status = {'status': 'processing', 'stage': 0, 'stage_progress': 0, 'stage_total': 1, 'message': message}
+        status = {'status': 'processing', 'stage': 1, 'stage_progress': 0, 'stage_total': 1, 'message': message}
         self.__cb(status)
 
     @property

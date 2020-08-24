@@ -12,7 +12,7 @@ def generate_force_account(self, input_file_path, file_object_id, output_file_pa
     data = load_data(input_file_path, save_json, callback=cb)
     generate_pdf(data, output_file_path, daily_sheets=daily_sheets, callback=cb)
     UploadedFile.objects.get(id=file_object_id).delete()
-    return 'Done'
+    return True
 
 
 def load_data(file_path, save_json, callback=None):

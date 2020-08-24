@@ -729,6 +729,7 @@ h1 {
   align-items: center;
   margin-bottom: 1rem;
   color: #a0aec0;
+  transition: color 1s;
 }
 
 .step-title {
@@ -757,6 +758,7 @@ h1 {
 .step-icon svg {
   height: 0;
   width: 0;
+  transition: height 1s, width 1s;
 }
 
 .active {
@@ -767,11 +769,6 @@ h1 {
   display: block;
 }
 
-.active svg {
-  height: 0;
-  width: 0;
-}
-
 .active .step-icon {
   border: 1px solid #3182ce;
 }
@@ -780,12 +777,18 @@ h1 {
   color: #a0aec0;
 }
 
-.completed svg {
+.completed .step-content {
+  display: block;
+}
+
+.completed .success-icon {
   color: #68d391;
+  height: 1rem;
+  width: 1rem;
 }
 
 .completed .step-icon {
-  border-color: #68d391;
+  border: 1px solid #68d391;
 }
 
 .waiting {
@@ -817,10 +820,17 @@ h1 {
   font-size: 0.85rem;
 }
 
-.progress-bar {
+#progress-bar-container {
   height: 2px;
   width: 100%;
+  background-color: #e2e8f0;
+}
+
+#progress-bar {
+  height: 2px;
+  width: 0%;
   background-color: #3182ce;
+  transition: width 1s;
 }
 
 .hero-background::before {

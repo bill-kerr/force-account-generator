@@ -6,7 +6,7 @@
 
   <div class="progress-step" id="stage-1">
     <span class="step-icon">
-      <svg viewBox="0 0 20 20" fill="currentColor">
+      <svg viewBox="0 0 20 20" fill="currentColor" class="success-icon">
         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd">
         </path>
       </svg>
@@ -15,13 +15,13 @@
         </path>
       </svg>
     </span>
-    <span class="step-title">Loading data</span>
-    <div class="step-content">Step content</div>
+    <span class="step-title">Loading data from Excel workbook</span>
+    <div class="step-content"></div>
   </div>
 
   <div class="progress-step" id="stage-2">
     <span class="step-icon">
-      <svg viewBox="0 0 20 20" fill="currentColor" style="">
+      <svg viewBox="0 0 20 20" fill="currentColor" class="success-icon">
         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd">
         </path>
       </svg>
@@ -33,15 +33,17 @@
     <span class="step-title">Generating PDF pages</span>
     <div class="step-content">
       <div id="pdf-page-progress">
-        <div>1 / 3</div>
-        <div class="progress-bar"></div>
+        <div><span id="current-page"></span> / <span id="total-pages"></span></div>
+        <div id="progress-bar-container">
+          <div id="progress-bar"></div>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="progress-step" id="stage-3">
     <span class="step-icon">
-      <svg viewBox="0 0 20 20" fill="currentColor" style="">
+      <svg viewBox="0 0 20 20" fill="currentColor" class="success-icon">
         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd">
         </path>
       </svg>
@@ -50,8 +52,8 @@
         </path>
       </svg>
     </span>
-    <span class="step-title">Saving PDF</span>
-    <div class="step-content">Step content</div>
+    <span class="step-title">Saving PDF to file</span>
+    <div class="step-content"></div>
   </div>
 
 </div>
