@@ -15,6 +15,7 @@ def index(request):
             docfile.save()
             dest_path = os.path.join(os.getcwd(), 'generated', f'{uuid.uuid4()}.pdf')
             result = generate_force_account.delay(docfile.file_path, docfile.id, dest_path)
+            form = UploadFileForm()
             return HttpResponseRedirect(f'/process/{result.task_id}')
     else:
         form = UploadFileForm()

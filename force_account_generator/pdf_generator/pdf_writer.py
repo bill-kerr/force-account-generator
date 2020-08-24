@@ -9,22 +9,20 @@ def make_pdf(pages, output_file_path, callback=None):
     pdf_writer = set_need_appearances_writer(PdfFileWriter())
     streams = []
     num_pages = len(pages)
-    progress_callback(callback, num_pages, 0, 2)
     for i, page in enumerate(pages):
-        progress_callback(callback, num_pages, i + 1, 2)
         streams.append(add_page(pdf_writer, page, dir_path))
+        message = f'Creating PDF page {i+1} of {num_pages}.'
+        progress_callback(callback, message, num_pages=num_pages, completed=i + 1)
     save_pdf(pdf_writer, output_file_path, callback=callback)
     for stream in streams:
         stream.close()
 
 
-def progress_callback(callback, num_pages=1, completed=1, stage=0, message=None):
+def progress_callback(callback, message, num_pages=1, completed=1):
     if callback is None:
         return
-    progress = (completed / num_pages)
-    msg = f'Creating PDF page {completed} of {num_pages}.' if message is None else message
-    status = {'message': msg, 'num_pages': num_pages,
-              'completed_pages': completed, 'progress': progress, 'stage': stage}
+    status = {'status': 'processing', 'stage': 2, 'stage_progress': completed,
+              'stage_total': num_pages, 'message': message}
     callback(status)
 
 
@@ -33,16 +31,14 @@ def add_page(pdf_writer, page, root_dir):
     input_stream = open(file_path, "rb")
     pdf_reader = get_pdf_reader(input_stream)
     pdf_writer.addPage(pdf_reader.getPage(0))
-    pdf_writer.updatePageFormFieldValues(
-        pdf_writer.getPage(-1), page.values)
+    pdf_writer.updatePageFormFieldValues(pdf_writer.getPage(-1), page.values)
     return input_stream
 
 
 def get_pdf_reader(input_stream):
     pdf_reader = PdfFileReader(input_stream, strict=False)
     if "/AcroForm" in pdf_reader.trailer["/Root"]:
-        pdf_reader.trailer["/Root"]["/AcroForm"].update(
-            {NameObject("/NeedAppearances"): BooleanObject(True)})
+        pdf_reader.trailer["/Root"]["/AcroForm"].update({NameObject("/NeedAppearances"): BooleanObject(True)})
     return pdf_reader
 
 
@@ -54,8 +50,7 @@ def set_need_appearances_writer(writer):
                 NameObject("/AcroForm"): IndirectObject(len(writer._objects), 0, writer)})
 
         need_appearances = NameObject("/NeedAppearances")
-        writer._root_object["/AcroForm"][need_appearances] = BooleanObject(
-            True)
+        writer._root_object["/AcroForm"][need_appearances] = BooleanObject(True)
         return writer
 
     except Exception as e:
@@ -64,7 +59,7 @@ def set_need_appearances_writer(writer):
 
 
 def save_pdf(pdf_writer, output_file_path, callback=None):
-    progress_callback(callback, stage=3, message="Saving PDF.")
+    callback({'status': 'processing', 'stage': 3, 'stage_progress': 0,
+              'stage_total': 1, 'message': 'Saving PDF to file.'})
     with open(output_file_path, "wb") as output_stream:
         pdf_writer.write(output_stream)
-    progress_callback(callback, stage=4, message="PDF saved.")

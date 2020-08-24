@@ -7,28 +7,27 @@ from .models import UploadedFile
 
 
 @shared_task(bind=True)
-def generate_force_account(self, input_file, file_object_id, output_file_path, daily_sheets=False, save_json=True):
-    data = load_data(input_file, save_json)
+def generate_force_account(self, input_file_path, file_object_id, output_file_path, daily_sheets=False, save_json=True):
     cb = make_callback(ProgressRecorder(self))
+    data = load_data(input_file_path, save_json, callback=cb)
     generate_pdf(data, output_file_path, daily_sheets=daily_sheets, callback=cb)
     UploadedFile.objects.get(id=file_object_id).delete()
     return 'Done'
 
 
-def load_data(input_file, save_json):
-    file_path = input_file.temporary_file_path()
-
+def load_data(file_path, save_json, callback=None):
     if file_path.endswith('.xlsx'):
-        return Importer(input_file, save_json=save_json).data
+        return Importer(file_path, save_json=save_json, callback=callback).data
 
     if file_path.endswith('.json'):
-        return load_json_data(input_file)
+        return load_json_data(file_path)
 
     raise TypeError('An invalid filetype was supplied.')
 
 
 def make_callback(progress_recorder):
     def progress_callback(status):
-        progress = (status.get('progress') or 0) * 100
+        stage = status.get('stage') or 0
+        progress = (stage - 1) * 100 if stage != 0 else 0
         progress_recorder.set_progress(progress, 100, description=status)
     return progress_callback

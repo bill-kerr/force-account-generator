@@ -6,13 +6,10 @@ import os
 class PdfFieldConfig:
     """ Represents the overall PDF field config. """
 
-    def __init__(self, callback=None):
-        self.__cb = callback
-
+    def __init__(self):
         file_path = os.path.join(os.getcwd(), 'pdf_generator', 'pdf_config.json')
         with open(file_path) as config_file:
             self.__config = json.load(config_file)
-        self.__callback({'message': 'JSON pdf config loaded.', 'progress': 0})
         self.daily_config = DailyConfig(self.__config["daily"], self.__config["daily_supp"])
         self.material = MaterialConfig(self.__config["material"], self.__config["material_supp"])
         self.final_summary = FinalSummaryConfig(self.__config["final_summary"])
@@ -26,10 +23,6 @@ class PdfFieldConfig:
         self.rentals_and_services = RentalsAndServicesConfig(
             self.__config["rentals_and_services"], self.__config["rentals_and_services_supp"])
         self.consumables = ConsumablesConfig(self.__config["consumables"])
-
-    def __callback(self, status):
-        if self.__cb is not None:
-            self.__cb(status)
 
 
 class FieldConfig:
