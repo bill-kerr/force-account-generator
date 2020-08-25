@@ -2,6 +2,12 @@
 {% load static %}
 
 {% block content %}
+<div class="heading">
+  <h2>
+    Your Force Account package is on the way...
+  </h2>
+  <span>It should automatically download when complete. If not, click the "Download PDF" button.</span>
+</div>
 <div class="progress-wrapper">
 
   <div class="progress-step" id="stage-1">
@@ -54,6 +60,19 @@
     </span>
     <span class="step-title">Saving PDF to file</span>
     <div class="step-content"></div>
+  </div>
+
+  <div class="mt-12 heading-actions">
+    <a href="#" class="button button-primary button-icon download disabled" id="pdf-download">
+      <svg viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd">
+        </path>
+      </svg>
+      Download PDF
+    </a>
+    <a href="{% url 'webapp:index' %}" class="ml-3 button">
+      Generate another Force Account
+    </a>
   </div>
 
 </div>

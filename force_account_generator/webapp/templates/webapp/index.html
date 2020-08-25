@@ -12,14 +12,14 @@
 
   <div class="container">
     <div>
-      <h1>Force Account Generator</h1>
+      <h1><a href="{% url 'webapp:index' %}">Force Account Generator</a></h1>
     </div>
     {% block content %}
     <div class="heading">
       <h2>
         Generate PennDOT force accounts,<br /> <strong>without the pain.</strong>
       </h2>
-      <span>Fill in an Excel spreadsheet and generate a valid PennDOT PDF Force Account package.</span>
+      <span>Create valid PennDOT PDF Force Account packages, from a simple Excel spreadsheet.</span>
       <div class="heading-actions">
         <a href="#" class="button button-primary button-icon download">
           <svg viewBox="0 0 20 20" fill="currentColor">
@@ -38,34 +38,39 @@
       </div>
     </div>
 
-    <div class="form-wrapper">
+    {% comment %} <div class="form-wrapper">
       <div class="actions">
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="document-add">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-          </path>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="document-add" fill="currentColor">
+          <path d="M23 1.5q.41 0 .7.3.3.29.3.7v19q0 .41-.3.7-.29.3-.7.3H7q-.41 0-.7-.3-.3-.29-.3-.7V18H1q-.41 0-.7-.3-.3-.29-.3-.7V7q0-.41.3-.7Q.58 6 1 6h5V2.5q0-.41.3-.7.29-.3.7-.3zM6 13.28l1.42 2.66h2.14l-2.38-3.87 2.34-3.8H7.46l-1.3 2.4-.05.08-.04.09-.64-1.28-.66-1.29H2.59l2.27 3.82-2.48 3.85h2.16zM14.25 21v-3H7.5v3zm0-4.5v-3.75H12v3.75zm0-5.25V7.5H12v3.75zm0-5.25V3H7.5v3zm8.25 15v-3h-6.75v3zm0-4.5v-3.75h-6.75v3.75zm0-5.25V7.5h-6.75v3.75zm0-5.25V3h-6.75v3z"/>
         </svg>
         <div class="ml-2">
-          <span>Drop your file or</span>
-          <button class="ml-2 button button-primary" style="font-weight: 400;">Select file</button>
+          <span>Drop your Excel file here</span>
         </div>
       </div>
-    </div>
+    </div> {% endcomment %}
     
-    <form action="{% url 'webapp:index' %}" method="post" enctype="multipart/form-data">
+    <form action="{% url 'webapp:upload' %}" method="post" enctype="multipart/form-data" class="dropzone" id="dropzone">
+      <div class="dz-message"></div>
+      <div class="dropzone-message">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="document-add" fill="currentColor">
+          <path d="M23 1.5q.41 0 .7.3.3.29.3.7v19q0 .41-.3.7-.29.3-.7.3H7q-.41 0-.7-.3-.3-.29-.3-.7V18H1q-.41 0-.7-.3-.3-.29-.3-.7V7q0-.41.3-.7Q.58 6 1 6h5V2.5q0-.41.3-.7.29-.3.7-.3zM6 13.28l1.42 2.66h2.14l-2.38-3.87 2.34-3.8H7.46l-1.3 2.4-.05.08-.04.09-.64-1.28-.66-1.29H2.59l2.27 3.82-2.48 3.85h2.16zM14.25 21v-3H7.5v3zm0-4.5v-3.75H12v3.75zm0-5.25V7.5H12v3.75zm0-5.25V3H7.5v3zm8.25 15v-3h-6.75v3zm0-4.5v-3.75h-6.75v3.75zm0-5.25V7.5h-6.75v3.75zm0-5.25V3h-6.75v3z"/>
+        </svg>
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" id="upload-error-icon">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+          </path>
+        </svg>
+        <span>Drop your Excel file here</span>
+      </div>
       {% csrf_token %}
-      {{ form }}
-      <input type="submit" value="Submit">
+      {% comment %} {% csrf_token %}
+      {{ form }} {% endcomment %}
     </form>
+    <div id="upload-status"></div>
 
-    {% if task_id %}
-    {% comment %} <div class="progress-wrapper">
-      <div id="progress-bar" style="background-color: lightblue; width: 0%">&nbsp;</div>
-    </div>
-    <div id="progress-bar-message"></div> {% endcomment %}
-    
-    {% endif %}
-
+    {% include 'webapp/dropzone_template.html' %}
   </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/min/dropzone.min.js"></script>
+  <script src="{% static 'webapp/dropzoneConfig.js' %}"></script>
   {% endblock content %}
 </body>
 </html>

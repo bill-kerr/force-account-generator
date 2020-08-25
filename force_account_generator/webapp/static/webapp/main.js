@@ -66,6 +66,9 @@ function onSuccess(_progElem, _messageElem, result) {
   if (result === true) {
     complete(stage1, stage2, stage3);
   }
+
+  stage2.querySelector(".step-content").style.display = "none";
+  document.getElementById("pdf-download").classList.remove("disabled");
 }
 
 function onError(_progElem, _messageElem, errorMessage) {
