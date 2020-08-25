@@ -32,6 +32,7 @@ def generate(request):
         form = GenerateForceAccountForm(request.POST)
         if form.is_valid():
             file_id = form.cleaned_data['file_id']
+            print(file_id)
             docfile = UploadedFile.objects.get(pk=file_id)
             daily_sheets = form.cleaned_data['daily_sheets']
             dest_path = gen_pdf_filename()

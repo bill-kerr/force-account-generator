@@ -36,7 +36,7 @@ function getSize(file, bytesSent = null, showUnit = true) {
 
 function convert(bytes, divisor, unit, showUnit = true) {
   const unitString = showUnit ? " " + unit : "";
-  return (Math.round((bytes / divisor) * 100) / 100).toString() + unitString;
+  return (Math.round((bytes / divisor) * 100) / 100).toFixed(2).toString() + unitString;
 }
 
 function onAddedFile(file) {
@@ -44,19 +44,26 @@ function onAddedFile(file) {
 }
 
 function onError(_file, errorMessage) {
-  this.removeAllFiles(true);
+  resetDropzone(this);
+  console.log(errorMessage);
+  dropzone.style.borderColor = "#e53e3e";
+  const errorElem = document.getElementById("upload-error");
+  errorElem.style.display = "flex";
+  errorElem.querySelector("span").innerHTML = errorMessage;
+  setTimeout(() => {
+    errorElem.style.display = "none";
+    dropzone.style.borderColor = "#90cdf4";
+  }, 4000);
+  return;
+}
+
+function resetDropzone(dz) {
+  dz.removeAllFiles();
   const messageContainer = dropzone.querySelector(".dropzone-message");
   messageContainer.style.display = "flex";
-  const errorTextElem = messageContainer.querySelector("span");
-  errorTextElem.style.color = "#E53E3E";
-  errorTextElem.innerHTML = errorMessage;
-  document.getElementById("upload-error-icon").style.display = "inline-block";
-  document.querySelector(".document-add").style.display = "none";
   dropzone.style.height = "16rem";
   dropzone.style.pointerEvents = "all";
-  dropzone.style.border = "3px dashed #E53E3E";
-  console.log(errorMessage);
-  return;
+  dropzone.style.border = "3px dashed #90cdf4";
 }
 
 function onMaxFilesExceeded(file) {
@@ -77,11 +84,17 @@ function onProcessing(_file) {
   dropzone.style.border = "none";
 }
 
-function onSuccess(_file, _response) {
+function onSuccess(_file, response) {
   const progressElem = document.querySelector("#upload-progress > div");
   progressElem.style.backgroundColor = "#68d391";
   const messageElem = document.querySelector(".dropzone-template-wrapper span");
   messageElem.style.color = "#38A169";
   messageElem.innerHTML = "Uploaded";
-  console.log(_response);
+
+  const generateForm = document.getElementById("generate-form");
+  generateForm.style.display = "flex";
+
+  const fileIdField = document.getElementById("generate-file-id-field");
+  fileIdField.value = response["file_id"];
+  console.log(response);
 }
