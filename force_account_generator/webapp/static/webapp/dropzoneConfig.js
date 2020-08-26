@@ -15,6 +15,7 @@ Dropzone.options.dropzone = {
     this.on("uploadprogress", onProgress);
     this.on("processing", onProcessing);
     this.on("success", onSuccess);
+    this.on("sending", onSending);
   },
   paramName: "docfile",
   createImageThumbnails: false,
@@ -97,4 +98,9 @@ function onSuccess(_file, response) {
   const fileIdField = document.getElementById("generate-file-id-field");
   fileIdField.value = response["file_id"];
   console.log(response);
+}
+
+function onSending(_file, _xhrObj, formData) {
+  const dailySheets = document.getElementById("daily_sheets").checked;
+  formData.append("daily_sheets", dailySheets);
 }

@@ -6,6 +6,6 @@ class UploadFileForm(forms.Form):
 
 
 class GenerateForceAccountForm(forms.Form):
-    file_id = forms.IntegerField(required=True)
+    docfile = forms.FileField(required=True)
     daily_sheets = forms.BooleanField(initial=False, required=False)
     save_json = forms.BooleanField(initial=False, required=False)

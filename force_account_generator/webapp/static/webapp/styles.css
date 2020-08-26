@@ -96,11 +96,24 @@ h1 {
   color: #38a169;
 }
 
-.dropzone {
+.form-options {
+  margin-top: 4rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  font-size: 0.85rem;
+}
+
+.form-options label {
+  margin-left: 0.25rem;
+}
+
+#dropzone {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 4rem;
   width: 100%;
   height: 16rem;
   border-radius: 0.5rem;
@@ -298,7 +311,6 @@ h1 {
   flex-direction: column;
   justify-content: center;
   flex: 1;
-  margin-left: 1rem;
   border-radius: 1rem;
 }
 
@@ -340,21 +352,21 @@ h1 {
   color: #3182ce;
 }
 
-.dropzone-name {
-  margin-left: 1rem;
-}
-
-.dropzone-size {
-  margin-left: 1rem;
-}
-
 .upload-progress-wrapper {
   display: flex;
   flex-direction: column;
   flex: 1;
+  margin-left: 1rem;
 }
 
-.upload-tracker {
+.upload-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.upload-info-size {
   display: flex;
   align-items: center;
 }
@@ -364,12 +376,9 @@ h1 {
 }
 
 #transferred-size {
-  margin-right: 0.25rem;
-  margin-left: 1rem;
   font-size: 1.2rem;
   font-weight: 700;
-  width: 3rem;
-  text-align: right;
+  margin-right: 0.25rem;
 }
 
 #upload-error {
