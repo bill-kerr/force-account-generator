@@ -22,7 +22,6 @@ def generate(request):
             docfile = UploadedFile(docfile=request.FILES['docfile'])
             docfile.save()
             daily_sheets = form.cleaned_data['daily_sheets']
-            print(form.cleaned_data)
             dest_path = gen_pdf_filename()
             result = generate_force_account.delay(docfile.file_path, docfile.id, dest_path, daily_sheets=daily_sheets)
             return JsonResponse({'task_id': result.task_id})

@@ -9,14 +9,14 @@
         <div class="upload-info">
           <div data-dz-name class="dropzone-name"></div>
           <div class="upload-info-size">
-            <div id="transferred-size"></div>
+            <div id="transferred-size" x-text="transferredSize"></div>
             <span>/</span>
-            <div id="total-size"></div>
+            <div id="total-size" x-text="fileSize + ' ' + fileSizeUnit"></div>
           </div>
         </div>
 
         <div id="upload-progress">
-          <div></div>
+          <div :style="'width: ' + transferredPercent"></div>
         </div>
       </div>
 

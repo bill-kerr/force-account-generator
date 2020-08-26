@@ -12,9 +12,9 @@ Dropzone.options.dropzone = {
     this.on("addedfile", onAddedFile);
     this.on("error", onError);
     this.on("maxfilesexceeded", onMaxFilesExceeded);
-    this.on("uploadprogress", onProgress);
+    this.on("uploadprogress", onUploadProgress);
     this.on("processing", onProcessing);
-    this.on("success", onSuccess);
+    this.on("success", onUploadSuccess);
     this.on("sending", onSending);
   },
   paramName: "docfile",
@@ -72,32 +72,30 @@ function onMaxFilesExceeded(file) {
   this.addFile(file);
 }
 
-function onProgress(file, progress, bytesSent) {
+function onUploadProgress(file, progress, bytesSent) {
   const progressElem = document.querySelector("#upload-progress > div");
   progressElem.style.width = progress + "%";
   document.getElementById("transferred-size").innerHTML = getSize(file, bytesSent, false);
 }
 
 function onProcessing(_file) {
+  document.querySelector(".form-options").style.display = "none";
   dropzone.querySelector(".dropzone-message").style.display = "none";
   dropzone.style.height = "0";
   dropzone.style.pointerEvents = "none";
   dropzone.style.border = "none";
 }
 
-function onSuccess(_file, response) {
+function onUploadSuccess(_file, response) {
   const progressElem = document.querySelector("#upload-progress > div");
   progressElem.style.backgroundColor = "#68d391";
   const messageElem = document.querySelector(".dropzone-template-wrapper span");
   messageElem.style.color = "#38A169";
   messageElem.innerHTML = "Uploaded";
 
-  const generateForm = document.getElementById("generate-form");
-  generateForm.style.display = "flex";
-
-  const fileIdField = document.getElementById("generate-file-id-field");
-  fileIdField.value = response["file_id"];
-  console.log(response);
+  if (response["task_id"]) {
+    initCeleryProgress(response["task_id"]);
+  }
 }
 
 function onSending(_file, _xhrObj, formData) {

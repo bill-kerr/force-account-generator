@@ -39,6 +39,7 @@ h1 {
   margin-top: 1.5rem;
   display: flex;
   align-items: center;
+  margin-bottom: 4rem;
 }
 
 .button {
@@ -97,7 +98,6 @@ h1 {
 }
 
 .form-options {
-  margin-top: 4rem;
   margin-bottom: 0.5rem;
   display: flex;
   align-items: center;
@@ -317,7 +317,6 @@ h1 {
 #upload-progress > div {
   background-color: #3182ce;
   height: 100%;
-  width: 0%;
   transition: width 0.2s;
   border-radius: 1rem;
 }
@@ -399,10 +398,4 @@ h1 {
 
 #upload-error span {
   margin-left: 1rem;
-}
-
-#generate-form {
-  display: none;
-  align-items: center;
-  margin-top: 2rem;
 }

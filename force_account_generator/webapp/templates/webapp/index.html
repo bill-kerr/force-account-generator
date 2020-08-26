@@ -7,10 +7,14 @@
   <link rel="stylesheet" type="text/css" href="{% static 'webapp/preflight.css' %}">
   <link rel="stylesheet" type="text/css" href="{% static 'webapp/styles.css' %}">
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
   <title>Force Account Generator</title>
 </head>
-<body>
-
+<body 
+  x-data="initialState"
+  @addedfile.window = "setUploading($event.detail)"
+  @uploadprogress.window = "bytesSent = $event.detail.bytesSent"
+>
   <div class="container">
     <div>
       <h1><a href="{% url 'webapp:index' %}">Force Account Generator</a></h1>
@@ -39,14 +43,14 @@
       </div>
     </div>
     
-    <div class="form-options">
+    <div class="form-options" x-show="!uploading">
       <input type="checkbox" name="daily_sheets" form="dropzone" id="daily_sheets">
       <label for="daily_sheets">Generate daily sign-off sheets</label>
     </div>
-    <form action="{% url 'webapp:generate' %}" method="post" enctype="multipart/form-data" class="dropzone" id="dropzone">
+    <form action="{% url 'webapp:generate' %}" method="post" enctype="multipart/form-data" class="dropzone" id="dropzone" x-show="!uploading">
       {% csrf_token %}
       <div class="dz-message"></div>
-      <div class="dropzone-message">
+      <div class="dropzone-message" x-show="!uploading">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="document-add" fill="currentColor">
           <path d="M23 1.5q.41 0 .7.3.3.29.3.7v19q0 .41-.3.7-.29.3-.7.3H7q-.41 0-.7-.3-.3-.29-.3-.7V18H1q-.41 0-.7-.3-.3-.29-.3-.7V7q0-.41.3-.7Q.58 6 1 6h5V2.5q0-.41.3-.7.29-.3.7-.3zM6 13.28l1.42 2.66h2.14l-2.38-3.87 2.34-3.8H7.46l-1.3 2.4-.05.08-.04.09-.64-1.28-.66-1.29H2.59l2.27 3.82-2.48 3.85h2.16zM14.25 21v-3H7.5v3zm0-4.5v-3.75H12v3.75zm0-5.25V7.5H12v3.75zm0-5.25V3H7.5v3zm8.25 15v-3h-6.75v3zm0-4.5v-3.75h-6.75v3.75zm0-5.25V7.5h-6.75v3.75zm0-5.25V3h-6.75v3z"/>
         </svg>
@@ -64,17 +68,17 @@
 
     <div id="upload-status"></div>
 
-    <form id="generate-form" action="{% url 'webapp:generate' %}" method="post">
-      {% csrf_token %}
-      <input type="hidden" name="file_id" id="generate-file-id-field">
-      <input type="checkbox" name="daily_sheets">
-      <button type="submit">Submit</button>
-    </form>
-
     {% include 'webapp/partials/dropzone_template.html' %}
+
+    <div id="stage-1" x-show="uploading">This is a test of AlpineJS</div>
+    <div id="stage-2"></div>
+    <div id="stage-3"></div>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/min/dropzone.min.js"></script>
-  <script src="{% static 'webapp/dropzoneConfig.js' %}"></script>
+  {% comment %} <script src="{% static 'webapp/dropzoneConfig.js' %}"></script> {% endcomment %}
+  <script src="{% static 'celery_progress/celery_progress.js' %}"></script>
+  <script src="{% static 'webapp/main.js' %}"></script>
+  
   {% endblock content %}
 </body>
 </html>
