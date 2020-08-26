@@ -58,6 +58,12 @@ h1 {
   font-weight: 700;
 }
 
+.button-primary-inverse {
+  background-color: white;
+  color: #3182ce;
+  font-weight: 700;
+}
+
 .button-primary:hover {
   background-color: #4299e1;
 }
@@ -145,11 +151,6 @@ h1 {
   margin-left: 0.75rem;
 }
 
-.progress-wrapper {
-  margin-top: 4rem;
-  font-size: 1.1rem;
-}
-
 .step-title {
   display: flex;
   align-items: center;
@@ -159,7 +160,6 @@ h1 {
 .step-content {
   margin-left: 1rem;
   flex: 1;
-  display: none;
 }
 
 .step-icon {
@@ -191,14 +191,11 @@ h1 {
   padding: 1rem;
   background-color: #f7fafc;
   border-radius: 0.25rem;
+  min-height: 4.75rem;
 }
 
 .pdf-progress > div.active {
-  color: green;
-}
-
-.active .step-content {
-  display: block;
+  color: #1a202c;
 }
 
 .active .step-icon {
@@ -263,19 +260,6 @@ h1 {
   font-size: 0.85rem;
 }
 
-#progress-bar-container {
-  height: 2px;
-  width: 100%;
-  background-color: #e2e8f0;
-}
-
-#progress-bar {
-  height: 2px;
-  width: 0%;
-  background-color: #3182ce;
-  transition: width 1s;
-}
-
 .hero-background::before {
   content: "";
   position: absolute;
@@ -310,7 +294,7 @@ h1 {
   height: 3.5rem;
 }
 
-#upload-progress {
+.progress-bar {
   height: 1rem;
   background-color: #e2e8f0;
   display: flex;
@@ -320,8 +304,7 @@ h1 {
   border-radius: 1rem;
 }
 
-#upload-progress > div {
-  background-color: #3182ce;
+.progress-bar > div {
   height: 100%;
   transition: width 0.2s;
   border-radius: 1rem;
@@ -352,30 +335,30 @@ h1 {
   color: #3182ce;
 }
 
-.upload-progress-wrapper {
+.progress-wrapper {
   display: flex;
   flex-direction: column;
   flex: 1;
   margin-left: 1rem;
 }
 
-.upload-info {
+.progress-info {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
 }
 
-.upload-info-size {
+.progress-info-size {
   display: flex;
   align-items: center;
 }
 
-#total-size {
+.progress-total-size {
   margin-left: 0.25rem;
 }
 
-#transferred-size {
+.progress-completed-size {
   font-size: 1.2rem;
   font-weight: 700;
   margin-right: 0.25rem;
@@ -410,4 +393,35 @@ h1 {
 
 .error-banner-close {
   cursor: pointer;
+}
+
+.pdf-ready {
+  border-radius: 0.25rem;
+  margin-top: 2rem;
+  min-height: 4.75rem;
+  background-color: #3182ce;
+  color: white;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  justify-content: space-between;
+}
+
+.pdf-ready > span {
+  font-size: 1.2rem;
+}
+
+/* .pdf-ready .download-pdf {
+  background-color: white;
+  color: #3182ce;
+  font-weight: 700;
+  padding: 1rem;
+  border-radius: 0.25rem;
+  margin-left: 1.5rem;
+} */
+
+.pdf-ready > div {
+  display: flex;
+  align-items: center;
 }

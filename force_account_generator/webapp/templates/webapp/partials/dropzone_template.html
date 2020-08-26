@@ -2,24 +2,24 @@
   <div id="dropzone-template" style="width: 100%;" x-show="fileAdded">
 
 
-    <div class="dropzone-template-wrapper">
+    <div class="dropzone-template-wrapper" x-show.transition.duration.1000ms="stage < 1">
       <span 
         x-text="uploading ? 'Uploading' : 'Uploaded'"
         :style="'color: ' + (uploading ? '#3182ce' : '#38a169')"
       >
       </span>
 
-      <div class="upload-progress-wrapper">
-        <div class="upload-info">
+      <div class="progress-wrapper">
+        <div class="progress-info">
           <div data-dz-name class="dropzone-name"></div>
-          <div class="upload-info-size">
-            <div id="transferred-size" x-text="transferredSize"></div>
+          <div class="progress-info-size">
+            <div class="progress-completed-size" x-text="transferredSize"></div>
             <span>/</span>
-            <div id="total-size" x-text="fileSize + ' ' + fileSizeUnit"></div>
+            <div class="progress-total-size" x-text="fileSize + ' ' + fileSizeUnit"></div>
           </div>
         </div>
 
-        <div id="upload-progress">
+        <div class="progress-bar">
           <div :style="'width: ' + transferredPercent + '; background-color: ' + (uploading ? '#3182ce' : '#68d391')"></div>
         </div>
       </div>

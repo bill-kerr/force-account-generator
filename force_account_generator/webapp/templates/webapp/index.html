@@ -68,30 +68,7 @@
 
     <div id="upload-status"></div>
     {% include 'webapp/partials/dropzone_template.html' %}
-
-    <div class="pdf-progress">
-      <div :class="{ 'active': stage === 1, 'completed': stage > 1 }" id="stage-1" x-show="stage >= 1">
-        <div class="step-icon">
-        </div>
-        <div class="step-content" x-text="'Loading data from Excel file'">
-        </div>
-      </div>
-      <div :class="{ 'active': stage === 2, 'completed': stage > 2 }" id="stage-2" x-show="stage >= 1">
-        <div class="step-icon">
-        </div>
-        <div class="step-content" x-text="currentPage + '/' + totalPages">
-        </div>
-      </div>
-      <div :class="{ 'active': stage === 3, 'completed': stage > 3 }" id="stage-3" x-show="stage >= 1">
-        <div class="step-icon">
-        </div>
-        <div class="step-content" x-text="'Saving PDF to file'">
-        </div>
-      </div>
-    </div>
-    <div class="pdf-ready" x-show="stage >= 4">
-      Your PDF is ready!
-    </div>
+    {% include 'webapp/partials/pdf_progress.html' %}
 
     <div class="error-banner" x-show="error">
       <div class="error-banner-details">
