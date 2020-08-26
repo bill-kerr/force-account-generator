@@ -11,9 +11,14 @@
   <title>Force Account Generator</title>
 </head>
 <body 
-  x-data="initialState"
-  @addedfile.window = "setUploading($event.detail)"
-  @uploadprogress.window = "bytesSent = $event.detail.bytesSent"
+  x-data="appData"
+  @processingupload.window="setUploading($event.detail)"
+  @uploadprogress.window="bytesSent = $event.detail.bytesSent"
+  @uploadsuccess.window="uploading = false"
+  @error.window="error = $event.detail.error"
+  @resetform.window="reset()"
+  @setstage.window="setStage($event.detail.stage)"
+  @pdfprogress.window="currentPage = $event.detail.current; totalPages = $event.detail.total"
 >
   <div class="container">
     <div>
@@ -43,14 +48,17 @@
       </div>
     </div>
     
-    <div class="form-options" x-show="!uploading">
+    <div class="form-options" x-show="!fileAdded">
       <input type="checkbox" name="daily_sheets" form="dropzone" id="daily_sheets">
       <label for="daily_sheets">Generate daily sign-off sheets</label>
     </div>
-    <form action="{% url 'webapp:generate' %}" method="post" enctype="multipart/form-data" class="dropzone" id="dropzone" x-show="!uploading">
+    <form action="{% url 'webapp:generate' %}" method="post" enctype="multipart/form-data" class="dropzone" id="dropzone" 
+      x-show="!fileAdded"
+      :style="'border-color: ' + (error ? '#e53e3e' : '#90cdf4')"
+    >
       {% csrf_token %}
       <div class="dz-message"></div>
-      <div class="dropzone-message" x-show="!uploading">
+      <div class="dropzone-message" :style="'color: ' + error ? 'red' : 'inherit'">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="document-add" fill="currentColor">
           <path d="M23 1.5q.41 0 .7.3.3.29.3.7v19q0 .41-.3.7-.29.3-.7.3H7q-.41 0-.7-.3-.3-.29-.3-.7V18H1q-.41 0-.7-.3-.3-.29-.3-.7V7q0-.41.3-.7Q.58 6 1 6h5V2.5q0-.41.3-.7.29-.3.7-.3zM6 13.28l1.42 2.66h2.14l-2.38-3.87 2.34-3.8H7.46l-1.3 2.4-.05.08-.04.09-.64-1.28-.66-1.29H2.59l2.27 3.82-2.48 3.85h2.16zM14.25 21v-3H7.5v3zm0-4.5v-3.75H12v3.75zm0-5.25V7.5H12v3.75zm0-5.25V3H7.5v3zm8.25 15v-3h-6.75v3zm0-4.5v-3.75h-6.75v3.75zm0-5.25V7.5h-6.75v3.75zm0-5.25V3h-6.75v3z"/>
         </svg>
@@ -58,24 +66,50 @@
       </div>
     </form>
 
-    <div id="upload-error">
-      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
-        </path>
-      </svg>
-      <span></span>
-    </div>
-
     <div id="upload-status"></div>
-
     {% include 'webapp/partials/dropzone_template.html' %}
 
-    <div id="stage-1" x-show="uploading">This is a test of AlpineJS</div>
-    <div id="stage-2"></div>
-    <div id="stage-3"></div>
+    <div class="pdf-progress">
+      <div :class="{ 'active': stage === 1, 'completed': stage > 1 }" id="stage-1" x-show="stage >= 1">
+        <div class="step-icon">
+        </div>
+        <div class="step-content" x-text="'Loading data from Excel file'">
+        </div>
+      </div>
+      <div :class="{ 'active': stage === 2, 'completed': stage > 2 }" id="stage-2" x-show="stage >= 1">
+        <div class="step-icon">
+        </div>
+        <div class="step-content" x-text="currentPage + '/' + totalPages">
+        </div>
+      </div>
+      <div :class="{ 'active': stage === 3, 'completed': stage > 3 }" id="stage-3" x-show="stage >= 1">
+        <div class="step-icon">
+        </div>
+        <div class="step-content" x-text="'Saving PDF to file'">
+        </div>
+      </div>
+    </div>
+    <div class="pdf-ready" x-show="stage >= 4">
+      Your PDF is ready!
+    </div>
+
+    <div class="error-banner" x-show="error">
+      <div class="error-banner-details">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+          </path>
+        </svg>
+        <span x-text="error"></span>
+      </div>
+      <div class="error-banner-close" @click="$dispatch('resetform')">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </div>
+    </div>
+
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/min/dropzone.min.js"></script>
-  {% comment %} <script src="{% static 'webapp/dropzoneConfig.js' %}"></script> {% endcomment %}
   <script src="{% static 'celery_progress/celery_progress.js' %}"></script>
   <script src="{% static 'webapp/main.js' %}"></script>
   

@@ -122,7 +122,7 @@ h1 {
   transition: height 1s;
 }
 
-.dropzone:hover {
+#dropzone:hover {
   background-color: #ebf8ff;
   cursor: pointer;
 }
@@ -148,14 +148,6 @@ h1 {
 .progress-wrapper {
   margin-top: 4rem;
   font-size: 1.1rem;
-}
-
-.progress-step {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
-  color: #a0aec0;
-  transition: color 1s;
 }
 
 .step-title {
@@ -187,8 +179,22 @@ h1 {
   transition: height 1s, width 1s;
 }
 
-.active {
-  color: inherit;
+.pdf-progress {
+  color: #a0aec0;
+  transition: color 1s;
+}
+
+.pdf-progress > div {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #f7fafc;
+  border-radius: 0.25rem;
+}
+
+.pdf-progress > div.active {
+  color: green;
 }
 
 .active .step-content {
@@ -331,11 +337,6 @@ h1 {
   margin-left: 1rem;
 }
 
-#upload-status {
-  display: flex;
-  align-items: center;
-}
-
 .dropzone-template-wrapper {
   display: flex;
   width: 100%;
@@ -380,9 +381,10 @@ h1 {
   margin-right: 0.25rem;
 }
 
-#upload-error {
-  display: none;
+.error-banner {
+  display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 1rem;
   margin-top: 1rem;
   border-radius: 0.25rem;
@@ -391,11 +393,21 @@ h1 {
   width: 100%;
 }
 
-#upload-error svg {
-  height: 2rem;
-  width: 2rem;
+.error-banner-details {
+  display: flex;
+  align-items: center;
 }
 
-#upload-error span {
+.error-banner svg {
+  height: 2rem;
+  width: 2rem;
+  flex-shrink: 0;
+}
+
+.error-banner-details > span {
   margin-left: 1rem;
+}
+
+.error-banner-close {
+  cursor: pointer;
 }

@@ -1,9 +1,13 @@
 <div style="width: 100%;">
-  <div id="dropzone-template" style="width: 100%;">
+  <div id="dropzone-template" style="width: 100%;" x-show="fileAdded">
 
 
     <div class="dropzone-template-wrapper">
-      <span>Uploading</span>
+      <span 
+        x-text="uploading ? 'Uploading' : 'Uploaded'"
+        :style="'color: ' + (uploading ? '#3182ce' : '#38a169')"
+      >
+      </span>
 
       <div class="upload-progress-wrapper">
         <div class="upload-info">
@@ -16,7 +20,7 @@
         </div>
 
         <div id="upload-progress">
-          <div :style="'width: ' + transferredPercent"></div>
+          <div :style="'width: ' + transferredPercent + '; background-color: ' + (uploading ? '#3182ce' : '#68d391')"></div>
         </div>
       </div>
 
