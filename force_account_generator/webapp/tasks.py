@@ -12,13 +12,12 @@ def generate_force_account(self, input_file_path, file_object_id, output_file_pa
     cb = make_callback(progress_recorder)
     data = load_data(input_file_path, save_json, callback=cb)
     pdf_file = generate_pdf(data, output_file_path, daily_sheets=daily_sheets, callback=cb)
-    package = ForceAccountPackage(docfile=pdf_file)
+    package = ForceAccountPackage(docfile=pdf_file, task_id=self.request.id)
     package.save()
     UploadedFile.objects.get(id=file_object_id).delete()
     progress_recorder.set_progress(100, 100, {'status': 'completed', 'stage': 4, 'stage_progress': 1,
                                               'stage_total': 1, 'message': 'PDF is ready.',
                                               'pdf_file': package.file_path})
-    return package
 
 
 def load_data(file_path, save_json, callback=None):

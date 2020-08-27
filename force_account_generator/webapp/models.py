@@ -16,6 +16,7 @@ class UploadedFile(models.Model):
 
 class ForceAccountPackage(models.Model):
     docfile = models.FileField()
+    task_id = models.UUIDField(blank=False)
 
     def __str__(self):
         return self.docfile.name

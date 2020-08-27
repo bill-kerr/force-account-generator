@@ -34,6 +34,7 @@ const appData = {
   stage: 0,
   currentPage: 0,
   totalPages: 0,
+  taskId: null,
 
   get fileSize() {
     return this._getSize(this.fileBytes);
@@ -65,6 +66,7 @@ const appData = {
     this.stage = 0;
     this.currentPage = 0;
     this.totalPages = 0;
+    this.taskId = null;
   },
 
   setUploading({ fileBytes }) {
@@ -92,8 +94,8 @@ function onUploadProgress(_file, progress, bytesSent) {
 }
 
 function onUploadSuccess(_file, response) {
-  window.dispatchEvent(new CustomEvent("uploadsuccess"));
   if (response["task_id"]) {
+    window.dispatchEvent(new CustomEvent("uploadsuccess", { detail: { taskId: response["task_id"] } }));
     return initCeleryProgress(response["task_id"]);
   }
   dispatchError("No response from the server. Please try again in a little bit.");
@@ -128,8 +130,6 @@ function onGenerateProgress(_progElem, _msgElem, { description: progress }) {
     return;
   }
   dispatchSetStage(progress.stage);
-
-  console.log(progress);
 
   if (progress.stage === 2) {
     const current = progress["stage_progress"];

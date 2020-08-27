@@ -14,7 +14,7 @@
   x-data="appData"
   @processingupload.window="setUploading($event.detail)"
   @uploadprogress.window="bytesSent = $event.detail.bytesSent"
-  @uploadsuccess.window="uploading = false"
+  @uploadsuccess.window="uploading = false; taskId = $event.detail.taskId"
   @error.window="error = $event.detail.error"
   @resetform.window="reset()"
   @setstage.window="setStage($event.detail.stage)"
