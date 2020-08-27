@@ -59,3 +59,4 @@ class PdfPackage:
             self.__pages += self.__daily_sheets.pages
 
         make_pdf(self.__pages, self.__output_file_path, callback=self.__callback)
+        return self.__output_file_path

@@ -21,8 +21,15 @@
   @pdfprogress.window="currentPage = $event.detail.current; totalPages = $event.detail.total"
 >
   <div class="container">
-    <div>
+    <div class="navbar">
       <h1><a href="{% url 'webapp:index' %}">Force Account Generator</a></h1>
+      <div>
+        <svg viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd">
+          </path>
+        </svg>
+        <span>About</span>
+      </div>
     </div>
     {% block content %}
     <div class="heading">
@@ -31,7 +38,7 @@
       </h2>
       <span>Create valid PennDOT PDF Force Account packages, from a simple Excel spreadsheet.</span>
       <div class="heading-actions">
-        <a href="#" class="button button-primary button-icon download">
+        <a href="{% static 'webapp/template.xlsx' %}" class="button button-primary button-icon download">
           <svg viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd">
             </path>
@@ -66,6 +73,14 @@
       </div>
     </form>
 
+    <div class="refresh-button" x-show="stage >= 4">
+      <div @click="reset()">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+          </path>
+        </svg>
+      </div>
+    </div>
     <div id="upload-status"></div>
     {% include 'webapp/partials/dropzone_template.html' %}
     {% include 'webapp/partials/pdf_progress.html' %}

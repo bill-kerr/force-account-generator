@@ -3,16 +3,22 @@ from celery_progress.backend import ProgressRecorder
 from pdf_generator import generate_pdf
 from excel_importer import Importer
 from .util import load_json_data
-from .models import UploadedFile
+from .models import UploadedFile, ForceAccountPackage
 
 
 @shared_task(bind=True)
 def generate_force_account(self, input_file_path, file_object_id, output_file_path, daily_sheets=False, save_json=True):
-    cb = make_callback(ProgressRecorder(self))
+    progress_recorder = ProgressRecorder(self)
+    cb = make_callback(progress_recorder)
     data = load_data(input_file_path, save_json, callback=cb)
-    generate_pdf(data, output_file_path, daily_sheets=daily_sheets, callback=cb)
+    pdf_file = generate_pdf(data, output_file_path, daily_sheets=daily_sheets, callback=cb)
+    package = ForceAccountPackage(docfile=pdf_file)
+    package.save()
     UploadedFile.objects.get(id=file_object_id).delete()
-    return True
+    progress_recorder.set_progress(100, 100, {'status': 'completed', 'stage': 4, 'stage_progress': 1,
+                                              'stage_total': 1, 'message': 'PDF is ready.',
+                                              'pdf_file': package.file_path})
+    return package
 
 
 def load_data(file_path, save_json, callback=None):

@@ -14,6 +14,17 @@ class UploadedFile(models.Model):
         return os.path.realpath(self.docfile.name)
 
 
+class ForceAccountPackage(models.Model):
+    docfile = models.FileField()
+
+    def __str__(self):
+        return self.docfile.name
+
+    @property
+    def file_path(self):
+        return os.path.realpath(self.docfile.name)
+
+
 @receiver(models.signals.post_delete, sender=UploadedFile)
 def auto_delete_file(sender, instance, **kwargs):
     if instance.file_path:

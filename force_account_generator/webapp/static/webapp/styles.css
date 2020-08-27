@@ -10,6 +10,39 @@ h1 {
   font-weight: 700;
 }
 
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar > div {
+  display: inline-flex;
+  align-items: center;
+  background-color: white;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  color: #4a5568;
+  border-radius: 0.25rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.navbar > div:hover {
+  color: inherit;
+}
+
+.navbar > div:hover svg {
+  color: inherit;
+}
+
+.navbar > div svg {
+  height: 1.5rem;
+  width: 1.5rem;
+  margin-right: 0.25rem;
+  margin-left: -0.25rem;
+  color: #718096;
+}
+
 .container {
   margin: auto;
   padding: 1rem;
@@ -85,6 +118,10 @@ h1 {
 .button-icon svg {
   height: 1.5rem;
   width: 1.5rem;
+}
+
+.external-link:hover span {
+  color: #1a202c;
 }
 
 .external-link svg {
@@ -212,6 +249,12 @@ h1 {
   }
 }
 
+@keyframes spin-180 {
+  100% {
+    transform: rotate(180deg);
+  }
+}
+
 .completed {
   color: #a0aec0;
 }
@@ -333,13 +376,13 @@ h1 {
   font-size: 0.85rem;
   text-transform: uppercase;
   color: #3182ce;
+  margin-right: 1rem;
 }
 
 .progress-wrapper {
   display: flex;
   flex-direction: column;
   flex: 1;
-  margin-left: 1rem;
 }
 
 .progress-info {
@@ -404,7 +447,7 @@ h1 {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   display: flex;
   align-items: center;
-  padding: 1rem;
+  padding: 1rem 2rem;
   justify-content: space-between;
 }
 
@@ -424,4 +467,31 @@ h1 {
 .pdf-ready > div {
   display: flex;
   align-items: center;
+}
+
+.refresh-button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.refresh-button > div {
+  padding: 0.5rem;
+  background-color: #edf2f7;
+  border-radius: 0.25rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+}
+
+.refresh-button > div:hover svg {
+  animation: spin-180 0.75s ease-in-out;
+}
+
+.refresh-button svg {
+  height: 1.5rem;
+  width: 1.5rem;
+  color: #2d3748;
 }
