@@ -1,0 +1,55 @@
+{% extends 'webapp/index.html' %}
+{% load static %}
+{% block content %}
+
+<div class="background-container">
+  <div class="background"></div>
+</div>
+<div class="container">
+  <div class="navbar">
+    <h1><a href="{% url 'webapp:index' %}">Force Account Generator</a></h1>
+    <a href="{% url 'webapp:index' %}">
+      <svg viewBox="0 0 24 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd">
+        </path>
+      </svg>
+      <span>Back to the generator</span>
+    </a>
+  </div>
+
+  <div class="about-article">
+    <h2>Tired of filling out PDF forms?</h2>
+    <p>
+      The Force Account Generator was born out of a desire to quickly fill in proprietary PDF forms with Excel data. As it stands, the PennDOT force account 
+      package PDF is cumbersome and inadequate for large datasets. Furthermore, filling in individual form fields on a PDF is tiresome and prone to error.
+      The Force Account Generator fixes all of that. It allows users to easily enter their data into Excel and generate a valid PDF form for submission.
+      It saves time and reduces human error.
+    </p>
+    <h2>How to use it</h2>
+    <p>
+      First, <a href="{% static 'webapp/template.xlsx' %}">download the Excel template</a>. The template should be familiar to anyone who has created a PennDOT
+      force account before. Simply fill in the required information on each tab and save the file on your computer. Come back here to the generator and drop
+      your Excel file in the file dropzone on the main page. We will do the rest of the work!
+    </p>
+    <h2>How it's built</h2>
+    <p>
+      The generator originated as a Python script with a <a href="https://docs.python.org/3/library/tkinter.html" target="_blank">Tkinter</a> interface, but
+      evolved to the <a href="https://www.djangoproject.com/" target="_blank">Django</a>-based application you see today. The Django backend utilizes a pool of
+      <a href="https://docs.celeryproject.org/en/stable/">Celery</a> workers to asynchronously process the Excel workbook and build the PDF file. The status
+      of the process is continuously queried by the frontend via an API endpoint to allow realtime updates.
+    </p>
+    <p>
+      The Excel file is read into a large data structure using the <a href="https://openpyxl.readthedocs.io/en/stable/" target="_blank">openpyxl</a> library. 
+      This large data structure is then handed off to the PDF generator portion of the program, which organizes, manipulates, and paginates the data to fit 
+      the structure of the PennDOT force account forms. Blank template PDF form pages are then populated with the appropriate data using the 
+      <a href="https://pythonhosted.org/PyPDF2/">PyPDF2</a> library. The pages are merged and the PDF is saved to disk and served to the user.
+    </p>
+    <p>
+      The frontend uses a combination of the Django templating engine for initial rendering and routing along with 
+      <a href="https://github.com/alpinejs" target="_blank">AlpineJS</a> and <a href="https://www.dropzonejs.com/" target="_blank">DropzoneJS</a> for the 
+      reactive components of the design.
+    </p>
+  </div>
+</div>
+
+{% endblock content %}

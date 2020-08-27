@@ -1,7 +1,17 @@
+html {
+  height: 100%;
+}
+
 body {
   font-family: "Rubik", "sans-serif";
   color: #1a202c;
   text-rendering: optimizeLegibility;
+  position: relative;
+  min-height: 100%;
+}
+
+[x-cloak] {
+  display: none;
 }
 
 h1 {
@@ -16,7 +26,7 @@ h1 {
   justify-content: space-between;
 }
 
-.navbar > div {
+.navbar > a {
   display: inline-flex;
   align-items: center;
   background-color: white;
@@ -27,15 +37,15 @@ h1 {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }
 
-.navbar > div:hover {
+.navbar > a:hover {
   color: inherit;
 }
 
-.navbar > div:hover svg {
+.navbar > a:hover svg {
   color: inherit;
 }
 
-.navbar > div svg {
+.navbar > a svg {
   height: 1.5rem;
   width: 1.5rem;
   margin-right: 0.25rem;
@@ -45,7 +55,7 @@ h1 {
 
 .container {
   margin: auto;
-  padding: 1rem;
+  padding: 2rem;
   max-width: 1024px;
 }
 
@@ -153,7 +163,7 @@ h1 {
   margin-left: 0.25rem;
 }
 
-#dropzone {
+.dropzone {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -165,7 +175,7 @@ h1 {
   transition: height 1s;
 }
 
-#dropzone:hover {
+.dropzone:hover {
   background-color: #ebf8ff;
   cursor: pointer;
 }
@@ -255,6 +265,11 @@ h1 {
   }
 }
 
+.dz-drag-hover {
+  background-color: #ebf8ff;
+  cursor: pointer;
+}
+
 .completed {
   color: #a0aec0;
 }
@@ -303,10 +318,18 @@ h1 {
   font-size: 0.85rem;
 }
 
-.hero-background::before {
+.background-container {
+  position: absolute;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+}
+
+.background {
   content: "";
   position: absolute;
-  width: 50%;
+  width: 75%;
   top: -50%;
   height: 300%;
   right: -25%;
@@ -438,9 +461,14 @@ h1 {
   cursor: pointer;
 }
 
+#stage1,
+#stage2,
+#stage3 {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
 .pdf-ready {
   border-radius: 0.25rem;
-  margin-top: 2rem;
   min-height: 4.75rem;
   background-color: #3182ce;
   color: white;
@@ -449,20 +477,13 @@ h1 {
   align-items: center;
   padding: 1rem 2rem;
   justify-content: space-between;
+  flex: 1;
+  margin-left: 2rem;
 }
 
 .pdf-ready > span {
   font-size: 1.2rem;
 }
-
-/* .pdf-ready .download-pdf {
-  background-color: white;
-  color: #3182ce;
-  font-weight: 700;
-  padding: 1rem;
-  border-radius: 0.25rem;
-  margin-left: 1.5rem;
-} */
 
 .pdf-ready > div {
   display: flex;
@@ -472,26 +493,58 @@ h1 {
 .refresh-button {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  width: 100%;
 }
 
 .refresh-button > div {
-  padding: 0.5rem;
+  padding: 1rem;
   background-color: #edf2f7;
   border-radius: 0.25rem;
   font-size: 0.9rem;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }
 
 .refresh-button > div:hover svg {
   animation: spin-180 0.75s ease-in-out;
+  color: #2d3748;
 }
 
 .refresh-button svg {
-  height: 1.5rem;
-  width: 1.5rem;
-  color: #2d3748;
+  height: 3.5rem;
+  width: 3.5rem;
+  color: #4a5568;
+}
+
+.about-article {
+  margin-top: 4rem;
+}
+
+.about-article h2 {
+  font-size: 1.5rem;
+  font-weight: 300;
+  margin-top: 2rem;
+  color: #2a4365;
+}
+
+.about-article p {
+  margin-top: 0.5rem;
+  line-height: 1.75rem;
+}
+
+.about-article a {
+  color: #3182ce;
+}
+
+.about-article a:hover {
+  color: #2b6cb0;
+}
+
+.completed-popup {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
 }

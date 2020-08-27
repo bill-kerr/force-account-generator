@@ -2,7 +2,9 @@
   <div id="dropzone-template" style="width: 100%;" x-show="fileAdded">
 
 
-    <div class="dropzone-template-wrapper" x-show.transition.duration.1000ms="stage < 1">
+    <div 
+      class="dropzone-template-wrapper" 
+    >
       <span 
         x-text="uploading ? 'Uploading' : 'Uploaded'"
         :style="'color: ' + (uploading ? '#3182ce' : '#38a169')"

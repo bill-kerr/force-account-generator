@@ -12,10 +12,6 @@ def index(request):
     return render(request, 'webapp/index.html', {'form': form})
 
 
-def process(request, task_id):
-    return render(request, 'webapp/process.html', {'task_id': task_id})
-
-
 def generate(request):
     if request.method == 'POST':
         form = GenerateForceAccountForm(request.POST, request.FILES)
@@ -37,3 +33,7 @@ def packages(request, task_id):
     response = HttpResponse(package.docfile, content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename={filename}'
     return response
+
+
+def about(request):
+    return render(request, 'webapp/about.html')

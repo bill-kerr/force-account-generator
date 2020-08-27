@@ -6,5 +6,6 @@ app_name = 'webapp'
 urlpatterns = [
     path('', views.index, name='index'),
     path('generate/', views.generate, name='generate'),
-    path('packages/<uuid:task_id>', views.packages, name='packages')
+    path('packages/<uuid:task_id>', views.packages, name='packages'),
+    path('about/', views.about, name='about')
 ]

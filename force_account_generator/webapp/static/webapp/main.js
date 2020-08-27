@@ -33,7 +33,7 @@ const appData = {
   error: null,
   stage: 0,
   currentPage: 0,
-  totalPages: 0,
+  totalPages: 1,
   taskId: null,
 
   get fileSize() {
@@ -65,7 +65,7 @@ const appData = {
     this.fileSizeUnit = "KB";
     this.stage = 0;
     this.currentPage = 0;
-    this.totalPages = 0;
+    this.totalPages = 1;
     this.taskId = null;
   },
 

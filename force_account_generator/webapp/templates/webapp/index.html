@@ -20,18 +20,21 @@
   @setstage.window="setStage($event.detail.stage)"
   @pdfprogress.window="currentPage = $event.detail.current; totalPages = $event.detail.total"
 >
+  {% block content %}
+  <div class="background-container">
+    <div class="background"></div>
+  </div>
   <div class="container">
     <div class="navbar">
       <h1><a href="{% url 'webapp:index' %}">Force Account Generator</a></h1>
-      <div>
+      <a href="{% url 'webapp:about' %}">
         <svg viewBox="0 0 20 20" fill="currentColor">
           <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd">
           </path>
         </svg>
         <span>About</span>
-      </div>
+      </a>
     </div>
-    {% block content %}
     <div class="heading">
       <h2>
         Generate PennDOT force accounts,<br /> <strong>without the pain.</strong>
@@ -60,8 +63,8 @@
       <label for="daily_sheets">Generate daily sign-off sheets</label>
     </div>
     <form action="{% url 'webapp:generate' %}" method="post" enctype="multipart/form-data" class="dropzone" id="dropzone" 
-      x-show="!fileAdded"
       :style="'border-color: ' + (error ? '#e53e3e' : '#90cdf4')"
+      x-show="!fileAdded"
     >
       {% csrf_token %}
       <div class="dz-message"></div>
@@ -73,19 +76,12 @@
       </div>
     </form>
 
-    <div class="refresh-button" x-show="stage >= 4">
-      <div @click="reset()">
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
-          </path>
-        </svg>
-      </div>
-    </div>
+    
     <div id="upload-status"></div>
     {% include 'webapp/partials/dropzone_template.html' %}
     {% include 'webapp/partials/pdf_progress.html' %}
 
-    <div class="error-banner" x-show="error">
+    <div class="error-banner" x-show.transition.in.opacity.duration.1000ms="error">
       <div class="error-banner-details">
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
