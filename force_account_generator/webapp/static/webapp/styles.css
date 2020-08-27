@@ -42,7 +42,7 @@ h1 {
 }
 
 .navbar > a:hover svg {
-  color: inherit;
+  color: #2d3748;
 }
 
 .navbar > a svg {
@@ -140,7 +140,11 @@ h1 {
 
 .external-link svg {
   margin-left: 0.5rem;
-  color: #63b3ed;
+  color: #718096;
+}
+
+.external-link:hover svg {
+  color: #2d3748;
 }
 
 .download svg {

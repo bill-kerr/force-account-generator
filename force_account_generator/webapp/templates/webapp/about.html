@@ -40,9 +40,9 @@
     </p>
     <p>
       The Excel file is read into a large data structure using the <a href="https://openpyxl.readthedocs.io/en/stable/" target="_blank">openpyxl</a> library. 
-      This large data structure is then handed off to the PDF generator portion of the program, which organizes, manipulates, and paginates the data to fit 
-      the structure of the PennDOT force account forms. Blank template PDF form pages are then populated with the appropriate data using the 
-      <a href="https://pythonhosted.org/PyPDF2/">PyPDF2</a> library. The pages are merged and the PDF is saved to disk and served to the user.
+      This large data structure is then handed off to the PDF generator portion of the program, which performs intermediary calculations, formats the output, and 
+      paginates the data to fit the structure of the PennDOT force account forms. Blank template PDF form pages are then populated with the appropriate data 
+      using the <a href="https://pythonhosted.org/PyPDF2/">PyPDF2</a> library. The pages are merged and the PDF is saved to disk and served to the user.
     </p>
     <p>
       The frontend uses a combination of the Django templating engine for initial rendering and routing along with 
