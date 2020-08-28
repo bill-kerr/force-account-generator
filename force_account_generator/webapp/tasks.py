@@ -7,10 +7,10 @@ from .models import UploadedFile, ForceAccountPackage
 
 
 @shared_task(bind=True)
-def generate_force_account(self, input_file_path, file_object_id, output_file_path, daily_sheets=False, save_json=True):
+def generate_force_account(self, input_file_path, file_object_id, output, daily_sheets=False, save_json=True):
     cb = make_callback(ProgressRecorder(self))
     data = load_data(input_file_path, save_json, callback=cb)
-    pdf_file = generate_pdf(data, output_file_path, daily_sheets=daily_sheets, callback=cb)
+    pdf_file = generate_pdf(data, output, daily_sheets=daily_sheets, callback=cb)
     package = ForceAccountPackage(docfile=pdf_file, task_id=self.request.id)
     package.save()
     UploadedFile.objects.get(id=file_object_id).delete()

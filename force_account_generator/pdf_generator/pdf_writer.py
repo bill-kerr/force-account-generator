@@ -1,9 +1,11 @@
 import os
+from io import BytesIO
 from PyPDF2.generic import BooleanObject, NameObject, IndirectObject
 from PyPDF2 import PdfFileReader, PdfFileWriter
+import boto3
 
 
-def make_pdf(pages, output_file_path, callback=None):
+def make_pdf(pages, output, callback=None):
     root_dir = os.path.dirname(os.path.realpath(__file__))
     dir_path = os.path.join(root_dir, 'templates')
     pdf_writer = set_need_appearances_writer(PdfFileWriter())
@@ -13,7 +15,7 @@ def make_pdf(pages, output_file_path, callback=None):
         streams.append(add_page(pdf_writer, page, dir_path))
         message = f'Creating PDF page {i+1} of {num_pages}.'
         progress_callback(callback, message, num_pages=num_pages, completed=i + 1)
-    save_pdf(pdf_writer, output_file_path, callback=callback)
+    save_pdf(pdf_writer, output, callback=callback)
     for stream in streams:
         stream.close()
 
@@ -58,8 +60,28 @@ def set_need_appearances_writer(writer):
         return writer
 
 
-def save_pdf(pdf_writer, output_file_path, callback=None):
+def save_pdf(pdf_writer, output, callback=None):
     callback({'status': 'processing', 'stage': 3, 'stage_progress': 0,
               'stage_total': 1, 'message': 'Saving PDF to file.'})
+    s3 = boto3.resource('s3')
+    obj = s3.Object('force-account-generator', output)
+    file_result = BytesIO()
+    pdf_writer.write(file_result)
+    file_result.seek(0)
+    obj.put(Body=file_result)
+    if isinstance(output, str):
+        save_to_file(output, pdf_writer)
+    elif callable(output):
+        use_writer(output, pdf_writer)
+
+
+def save_to_file(output_file_path, pdf_writer):
     with open(output_file_path, "wb") as output_stream:
-        pdf_writer.write(output_stream)
+        return pdf_writer.write(output_stream)
+
+
+def use_writer(writer, pdf_writer):
+    file_result = BytesIO()
+    pdf_writer.write(file_result)
+    file_result.seek(0)
+    writer(file_result)

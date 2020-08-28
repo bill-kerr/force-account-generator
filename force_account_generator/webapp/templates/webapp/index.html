@@ -1,106 +1,129 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://unpkg.com/tailwindcss@1.7.5/dist/base.css">
-  <link rel="stylesheet" type="text/css" href="{% static 'webapp/styles.css' %}">
-  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
-  <title>Force Account Generator</title>
-</head>
-<body 
-  x-data="appData"
-  @processingupload.window="setUploading($event.detail)"
-  @uploadprogress.window="bytesSent = $event.detail.bytesSent"
-  @uploadsuccess.window="uploading = false; taskId = $event.detail.taskId"
-  @error.window="error = $event.detail.error"
-  @resetform.window="reset()"
-  @setstage.window="setStage($event.detail.stage)"
-  @pdfprogress.window="currentPage = $event.detail.current; totalPages = $event.detail.total"
->
-  {% block content %}
-  <div class="background-container">
-    <div class="background"></div>
-  </div>
-  <div class="container">
-    <div class="navbar">
-      <h1><a href="{% url 'webapp:index' %}">Force Account Generator</a></h1>
-      <a href="{% url 'webapp:about' %}">
-        <svg viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd">
-          </path>
-        </svg>
-        <span>About</span>
-      </a>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% block imports %}
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@1.7.5/dist/base.css" />
+    <link rel="stylesheet" type="text/css" href="{% static 'webapp/styles.css' %}" />
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    {% endblock imports %}
+    <title>Force Account Generator</title>
+  </head>
+  <body
+    x-data="appData"
+    @processingupload.window="setUploading($event.detail)"
+    @uploadprogress.window="bytesSent = $event.detail.bytesSent"
+    @uploadsuccess.window="uploading = false; taskId = $event.detail.taskId"
+    @error.window="error = $event.detail.error"
+    @resetform.window="reset()"
+    @setstage.window="setStage($event.detail.stage)"
+    @pdfprogress.window="currentPage = $event.detail.current; totalPages = $event.detail.total"
+  >
+    {% block content %}
+    <div class="background-container">
+      <div class="background"></div>
     </div>
-    <div class="heading">
-      <h2>
-        Generate PennDOT force accounts,<br /> <strong>without the pain.</strong>
-      </h2>
-      <span>Create valid PennDOT PDF Force Account packages, from a simple Excel spreadsheet.</span>
-      <div class="heading-actions">
-        <a href="{% static 'webapp/template.xlsx' %}" class="button button-primary button-icon download">
+    <div class="container">
+      <div class="navbar">
+        <h1><a href="{% url 'webapp:index' %}">Force Account Generator</a></h1>
+        <a href="{% url 'webapp:about' %}">
           <svg viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd">
-            </path>
+            <path
+              fill-rule="evenodd"
+              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
+              clip-rule="evenodd"
+            ></path>
           </svg>
-          Download the Excel template
-        </a>
-        <a href="https://github.com/bk7987/force-account-generator" class="ml-3 button button-icon external-link" target="_blank">
-          <span>Source code</span>
-          <svg viewBox="0 0 20 20" fill="currentColor" stroke-width="1">
-            <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path>
-            <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path>
-          </svg>
+          <span>About</span>
         </a>
       </div>
-    </div>
-    
-    <div class="form-options" x-show="!fileAdded">
-      <input type="checkbox" name="daily_sheets" form="dropzone" id="daily_sheets">
-      <label for="daily_sheets">Generate daily sign-off sheets</label>
-    </div>
-    <form action="{% url 'webapp:generate' %}" method="post" enctype="multipart/form-data" class="dropzone" id="dropzone" 
-      :style="'border-color: ' + (error ? '#e53e3e' : '#90cdf4')"
-      x-show="!fileAdded"
-    >
-      {% csrf_token %}
-      <div class="dz-message"></div>
-      <div class="dropzone-message" :style="'color: ' + error ? 'red' : 'inherit'">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="document-add" fill="currentColor">
-          <path d="M23 1.5q.41 0 .7.3.3.29.3.7v19q0 .41-.3.7-.29.3-.7.3H7q-.41 0-.7-.3-.3-.29-.3-.7V18H1q-.41 0-.7-.3-.3-.29-.3-.7V7q0-.41.3-.7Q.58 6 1 6h5V2.5q0-.41.3-.7.29-.3.7-.3zM6 13.28l1.42 2.66h2.14l-2.38-3.87 2.34-3.8H7.46l-1.3 2.4-.05.08-.04.09-.64-1.28-.66-1.29H2.59l2.27 3.82-2.48 3.85h2.16zM14.25 21v-3H7.5v3zm0-4.5v-3.75H12v3.75zm0-5.25V7.5H12v3.75zm0-5.25V3H7.5v3zm8.25 15v-3h-6.75v3zm0-4.5v-3.75h-6.75v3.75zm0-5.25V7.5h-6.75v3.75zm0-5.25V3h-6.75v3z"/>
-        </svg>
-        <span>Drop your Excel file here</span>
+      <div class="heading">
+        <h2>
+          Generate PennDOT force accounts,<br />
+          <strong>without the pain.</strong>
+        </h2>
+        <span>Create valid PennDOT PDF Force Account packages, from a simple Excel spreadsheet.</span>
+        <div class="heading-actions">
+          <a href="{% static 'webapp/template.xlsx' %}" class="button button-primary button-icon download">
+            <svg viewBox="0 0 20 20" fill="currentColor">
+              <path
+                fill-rule="evenodd"
+                d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            Download the Excel template
+          </a>
+          <a
+            href="https://github.com/bk7987/force-account-generator"
+            class="ml-3 button button-icon external-link"
+            target="_blank"
+          >
+            <span>Source code</span>
+            <svg viewBox="0 0 20 20" fill="currentColor" stroke-width="1">
+              <path
+                d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"
+              ></path>
+              <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path>
+            </svg>
+          </a>
+        </div>
       </div>
-    </form>
 
-    
-    <div id="upload-status"></div>
-    {% include 'webapp/partials/dropzone_template.html' %}
-    {% include 'webapp/partials/pdf_progress.html' %}
-
-    <div class="error-banner" x-show.transition.in.opacity.duration.1000ms="error">
-      <div class="error-banner-details">
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
-          </path>
-        </svg>
-        <span x-text="error"></span>
+      <div class="form-options" x-show="!fileAdded">
+        <input type="checkbox" name="daily_sheets" form="dropzone" id="daily_sheets" />
+        <label for="daily_sheets">Generate daily sign-off sheets</label>
       </div>
-      <div class="error-banner-close" @click="$dispatch('resetform')">
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
+      <form
+        action="{% url 'webapp:generate' %}"
+        method="post"
+        enctype="multipart/form-data"
+        class="dropzone"
+        id="dropzone"
+        :style="'border-color: ' + (error ? '#e53e3e' : '#90cdf4')"
+        x-show="!fileAdded"
+      >
+        {% csrf_token %}
+        <div class="dz-message"></div>
+        <div class="dropzone-message" :style="'color: ' + error ? 'red' : 'inherit'">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="document-add" fill="currentColor">
+            <path
+              d="M23 1.5q.41 0 .7.3.3.29.3.7v19q0 .41-.3.7-.29.3-.7.3H7q-.41 0-.7-.3-.3-.29-.3-.7V18H1q-.41 0-.7-.3-.3-.29-.3-.7V7q0-.41.3-.7Q.58 6 1 6h5V2.5q0-.41.3-.7.29-.3.7-.3zM6 13.28l1.42 2.66h2.14l-2.38-3.87 2.34-3.8H7.46l-1.3 2.4-.05.08-.04.09-.64-1.28-.66-1.29H2.59l2.27 3.82-2.48 3.85h2.16zM14.25 21v-3H7.5v3zm0-4.5v-3.75H12v3.75zm0-5.25V7.5H12v3.75zm0-5.25V3H7.5v3zm8.25 15v-3h-6.75v3zm0-4.5v-3.75h-6.75v3.75zm0-5.25V7.5h-6.75v3.75zm0-5.25V3h-6.75v3z"
+            />
+          </svg>
+          <span>Drop your Excel file here</span>
+        </div>
+      </form>
+
+      <div id="upload-status"></div>
+      {% include 'webapp/partials/dropzone_template.html' %} {% include 'webapp/partials/pdf_progress.html' %}
+
+      <div class="error-banner" x-show.transition.in.opacity.duration.1000ms="error">
+        <div class="error-banner-details">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+            ></path>
+          </svg>
+          <span x-text="error"></span>
+        </div>
+        <div class="error-banner-close" @click="$dispatch('resetform')">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </div>
       </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/min/dropzone.min.js"></script>
+    <script src="{% static 'celery_progress/celery_progress.js' %}"></script>
+    <script src="{% static 'webapp/main.js' %}"></script>
 
-  </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/min/dropzone.min.js"></script>
-  <script src="{% static 'celery_progress/celery_progress.js' %}"></script>
-  <script src="{% static 'webapp/main.js' %}"></script>
-  
-  {% endblock content %}
-</body>
+    {% endblock content %}
+  </body>
 </html>
