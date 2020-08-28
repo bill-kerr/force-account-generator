@@ -1,6 +1,7 @@
 import os
 from django.db import models
 from django.dispatch import receiver
+from django.conf import settings
 
 
 class UploadedFile(models.Model):
@@ -9,10 +10,6 @@ class UploadedFile(models.Model):
     def __str__(self):
         return self.docfile.name
 
-    @property
-    def file_path(self):
-        return os.path.realpath(self.docfile.name)
-
 
 class ForceAccountPackage(models.Model):
     docfile = models.FileField()
@@ -20,10 +17,6 @@ class ForceAccountPackage(models.Model):
 
     def __str__(self):
         return self.docfile.name
-
-    @property
-    def file_path(self):
-        return os.path.realpath(self.docfile.name)
 
 
 @receiver(models.signals.post_delete, sender=UploadedFile)

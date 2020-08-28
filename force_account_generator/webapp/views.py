@@ -16,11 +16,12 @@ def generate(request):
     if request.method == 'POST':
         form = GenerateForceAccountForm(request.POST, request.FILES)
         if form.is_valid():
-            docfile = UploadedFile(docfile=request.FILES['docfile'])
-            docfile.save()
+            uploaded_file = UploadedFile(docfile=request.FILES['docfile'])
+            uploaded_file.save()
+            docfile = uploaded_file.docfile
             daily_sheets = form.cleaned_data['daily_sheets']
             dest_path = gen_pdf_filename()
-            result = generate_force_account.delay(docfile.file_path, docfile.id, dest_path, daily_sheets=daily_sheets)
+            result = generate_force_account.delay(docfile.path, uploaded_file.id, dest_path, daily_sheets=daily_sheets)
             return JsonResponse({'task_id': result.task_id})
     response = JsonResponse({'error': 'Bad request'})
     response.status_code = 400

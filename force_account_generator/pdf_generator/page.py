@@ -17,7 +17,7 @@ class Page:
             return
         key = self.__make_field_name(field_name_base, row=row, column=column)
         self.values.update({key: formatter(value)})
-    
+
     def fill_blanks(self, field_name_base, row_count, value="", formatter=lambda val: str(val)):
         for i in range(row_count):
             field_name = self.__make_field_name(field_name_base, row=i + 1)
@@ -40,13 +40,3 @@ class PageCollection:
             page.make_field(config.work_order_number, self._global_data.work_order_number)
             page.make_field(config.contract, self._global_data.contract)
             page.make_field(config.item_number, self._global_data.item_number)
-
-
-def populate_page_headers(page, pdf_config, global_data):
-    config = pdf_config.headers
-    page.make_field(config.county, global_data.county)
-    page.make_field(config.state_route, global_data.state_route)
-    page.make_field(config.section, global_data.section)
-    page.make_field(config.work_order_number, global_data.work_order_number)
-    page.make_field(config.contract, global_data.contract)
-    page.make_field(config.item_number, global_data.item_number)

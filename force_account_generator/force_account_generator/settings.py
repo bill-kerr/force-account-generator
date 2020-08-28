@@ -18,15 +18,18 @@ from django.core.exceptions import ImproperlyConfigured
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
-with open(os.path.join(BASE_DIR, 'secrets.json')) as secrets_file:
-    secrets = json.load(secrets_file)
+if (os.path.exists('secrets.json')):
+    with open(os.path.join(BASE_DIR, 'secrets.json')) as secrets_file:
+        secrets = json.load(secrets_file)
+        for secret, value in secrets.items():
+            os.environ[secret] = value
 
 
-def get_secret(setting, secrets=secrets):
-    try:
-        return secrets[setting]
-    except KeyError:
-        raise ImproperlyConfigured("Set the {} setting".format(setting))
+def get_secret(setting):
+    value = os.environ.get(setting, None)
+    if value is None:
+        raise ImproperlyConfigured(f"Set the {setting} setting")
+    return value
 
 
 # Quick-start development settings - unsuitable for production
@@ -53,7 +56,8 @@ INSTALLED_APPS = [
     'celery_progress',
     'excel_importer',
     'pdf_generator',
-    'webapp'
+    'webapp',
+    'storages'
 ]
 
 MIDDLEWARE = [
@@ -137,7 +141,25 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
+
+USE_S3 = get_secret('USE_S3') == 'TRUE'
+
+if USE_S3:
+    AWS_ACCESS_KEY_ID = get_secret('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = get_secret('AWS_SECRET_ACCESS_KEY')
+    AWS_STORAGE_BUCKET_NAME = get_secret('AWS_STORAGE_BUCKET_NAME')
+    AWS_S3_REGION_NAME = get_secret('AWS_S3_REGION_NAME')
+    AWS_S3_FILE_OVERWRITE = False
+    AWS_DEFAULT_ACL = None
+    STATIC_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/static/'
+    STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+    STATICFILES_LOCATION = 'static'
+    GENERATED_FILES_LOCATION = 'generated'
+    GENERATED_FILES_STORAGE = 'custom_storages.GeneratedStorage'
+    # DEFAULT_FILE_STORAGE = 'custom_storages.GeneratedStorage'
+else:
+    STATIC_URL = '/staticfiles/'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 CELERY_BROKER_URL = get_secret('CELERY_BROKER_URL')
