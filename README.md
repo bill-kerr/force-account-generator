@@ -6,7 +6,7 @@ The Force Account Generator was born out of a desire to quickly fill in propriet
 
 ## :bookmark_tabs: How to use it
 
-Visit [the application's website](http://example.com). Then, download the Excel template. The template should be familiar to anyone who has created a PennDOT force account before. Simply fill in the required information on each tab and save the file on your computer. Come back here to the generator, click the checkbox if you'd like to generate daily sign-off sheets, and drop your Excel file in the file dropzone on the main page. We will do the rest of the work!
+Visit [the application's website](http://example.com). Then, download the Excel template. The template should be familiar to anyone who has created a PennDOT force account before. Simply fill in the required information on each tab and save the file on your computer. Go back to the generator, click the checkbox if you'd like to generate daily sign-off sheets, and drop your Excel file in the file dropzone on the main page. We will do the rest of the work!
 
 ## :hammer: How it's built
 
