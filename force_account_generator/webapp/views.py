@@ -1,4 +1,3 @@
-import os
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from .forms import GenerateForceAccountForm
@@ -28,9 +27,8 @@ def generate(request):
 
 def packages(request, task_id):
     package = get_object_or_404(ForceAccountPackage, task_id=task_id)
-    filename = os.path.basename(package.docfile.name)
     response = HttpResponse(package.docfile, content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename={filename}'
+    response['Content-Disposition'] = f'attachment; filename={package.docfile}'
     return response
 
 

@@ -1,3 +1,5 @@
+import uuid
+from django.core.files.base import ContentFile
 from celery import shared_task
 from celery_progress.backend import ProgressRecorder
 from pdf_generator import generate_pdf
@@ -10,9 +12,9 @@ from .models import UploadedFile, ForceAccountPackage
 def generate_force_account(self, input_file_path, file_object_id, daily_sheets=False):
     callback = make_callback(ProgressRecorder(self))
     data = load_data(input_file_path, callback=callback)
-    pdf_file = generate_pdf(data, daily_sheets=daily_sheets, callback=callback)
-    package = ForceAccountPackage(docfile=pdf_file, task_id=self.request.id)
-    package.save()
+    file_result = generate_pdf(data, daily_sheets=daily_sheets, callback=callback)
+    package = ForceAccountPackage(task_id=self.request.id)
+    package.docfile.save(gen_filename('pdf'), ContentFile(file_result.getvalue()))
     UploadedFile.objects.get(id=file_object_id).delete()
 
 
@@ -32,3 +34,7 @@ def make_callback(progress_recorder):
         progress = (stage - 1) * 100 if stage != 0 else 0
         progress_recorder.set_progress(progress, 100, description=status)
     return progress_callback
+
+
+def gen_filename(extension, prefix=''):
+    return f'{prefix}{uuid.uuid4().hex}.{extension}'

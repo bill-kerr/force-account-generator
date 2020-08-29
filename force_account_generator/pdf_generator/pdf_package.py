@@ -57,4 +57,4 @@ class PdfPackage:
         if self.__make_daily_sheets:
             self.__pages += self.__daily_sheets.pages
 
-        make_pdf(self.__pages, callback=self.__callback)
+        return make_pdf(self.__pages, callback=self.__callback)

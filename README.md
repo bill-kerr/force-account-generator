@@ -2,7 +2,7 @@
 
 Tired of filling out PDF forms? The Force Account Generator is a Python program that processes an Excel template and produces a valid PennDOT force account PDF package.
 
-The Force Account Generator was born out of a desire to quickly fill in proprietary PDF forms with Excel data. As it stands, the PennDOT force account package PDF is cumbersome and inadequate for large datasets. Furthermore, filling in individual form fields on a PDF is tiresome and prone to error. The Force Account Generator fixes all of that. It allows users to easily enter their data into Excel and generate a valid PDF form for submission. It saves time and reduces human error.
+The Force Account Generator was born out of a desire to quickly fill in proprietary PDF forms with Excel data. As it stands, the PennDOT force account package PDF is cumbersome, requires duplicate efforts, and is inadequate for large datasets. Furthermore, filling in individual form fields on a PDF is tiresome and prone to error. The Force Account Generator fixes all of that. It allows users to easily enter their data into Excel and generate a valid PDF form for submission. It saves time and reduces human error.
 
 ## :bookmark_tabs: How to use it
 

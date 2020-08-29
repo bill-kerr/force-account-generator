@@ -26,10 +26,10 @@ if (os.path.exists('secrets.json')):
 
 
 def get_secret(setting):
-    value = os.environ.get(setting, None)
-    if value is None:
+    val = os.environ.get(setting, None)
+    if val is None:
         raise ImproperlyConfigured(f"Set the {setting} setting")
-    return value
+    return val
 
 
 # Quick-start development settings - unsuitable for production
@@ -156,10 +156,10 @@ if USE_S3:
     STATICFILES_LOCATION = 'static'
     GENERATED_FILES_LOCATION = 'generated'
     GENERATED_FILES_STORAGE = 'custom_storages.GeneratedStorage'
-    # DEFAULT_FILE_STORAGE = 'custom_storages.GeneratedStorage'
 else:
     STATIC_URL = '/staticfiles/'
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    GENERATED_FILES_STORAGE = 'django.core.files.storage.FileSystemStorage'
 
 
 CELERY_BROKER_URL = get_secret('CELERY_BROKER_URL')
