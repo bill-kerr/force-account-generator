@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 import json
 from pathlib import Path
+import django_heroku
 from django.core.exceptions import ImproperlyConfigured
 
 

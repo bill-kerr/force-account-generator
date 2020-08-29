@@ -19,6 +19,7 @@ django-celery-results = "*"
 django-storages = "*"
 boto3 = "*"
 gunicorn = "*"
+django-heroku = "*"
 
 [requires]
 python_version = "3.8"
