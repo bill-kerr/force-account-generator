@@ -107,6 +107,10 @@ h1 {
   font-weight: 700;
 }
 
+.button-primary-inverse > svg {
+  margin-right: 0.5rem;
+}
+
 .button-primary:hover {
   background-color: #4299e1;
 }

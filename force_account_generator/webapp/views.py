@@ -1,10 +1,9 @@
 import os
-from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, get_object_or_404
-from .forms import UploadFileForm, GenerateForceAccountForm
+from .forms import GenerateForceAccountForm
 from .tasks import generate_force_account
 from .models import UploadedFile, ForceAccountPackage
-from .util import get_pdf_destination
 
 
 def index(request):
@@ -20,8 +19,7 @@ def generate(request):
             uploaded_file.save()
             docfile = uploaded_file.docfile
             daily_sheets = form.cleaned_data['daily_sheets']
-            result = generate_force_account.delay(docfile.path, uploaded_file.id,
-                                                  get_pdf_destination(), daily_sheets=daily_sheets)
+            result = generate_force_account.delay(docfile.path, uploaded_file.id, daily_sheets=daily_sheets)
             return JsonResponse({'task_id': result.task_id})
     response = JsonResponse({'error': 'Bad request'})
     response.status_code = 400

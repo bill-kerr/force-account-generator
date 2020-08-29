@@ -5,7 +5,7 @@ from .workbook import Workbook
 
 
 class Importer:
-    def __init__(self, source_file, delay_processing=False, save_json=True, callback=None):
+    def __init__(self, source_file, delay_processing=False, callback=None):
         self.__data_loaded = False
         self.__cb = callback
         self.__callback('Loading workbook')
