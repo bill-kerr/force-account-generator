@@ -168,4 +168,4 @@ CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_BACKEND = 'django-db'
 
-django_heroku.settings(locals())
+django_heroku.settings(locals(), staticfiles=False)
