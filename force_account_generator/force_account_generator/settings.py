@@ -167,3 +167,5 @@ CELERY_BROKER_URL = get_secret('CELERY_BROKER_URL')
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_BACKEND = 'django-db'
+
+django_heroku.settings(locals())
