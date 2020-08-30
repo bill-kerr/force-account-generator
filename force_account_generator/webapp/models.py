@@ -1,11 +1,11 @@
 import os
 from django.db import models
 from django.dispatch import receiver
-from custom_storages import GeneratedStorage
+from custom_storages import GeneratedStorage, UploadedStorage
 
 
 class UploadedFile(models.Model):
-    docfile = models.FileField(upload_to='uploads')
+    docfile = models.FileField(storage=UploadedStorage())
 
     def __str__(self):
         return self.docfile.name

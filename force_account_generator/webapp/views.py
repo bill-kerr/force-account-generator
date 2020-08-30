@@ -1,5 +1,6 @@
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, get_object_or_404
+from django.core.files.base import ContentFile
 from .forms import GenerateForceAccountForm
 from .tasks import generate_force_account
 from .models import UploadedFile, ForceAccountPackage
@@ -14,11 +15,10 @@ def generate(request):
     if request.method == 'POST':
         form = GenerateForceAccountForm(request.POST, request.FILES)
         if form.is_valid():
-            uploaded_file = UploadedFile(docfile=request.FILES['docfile'])
-            uploaded_file.save()
-            docfile = uploaded_file.docfile
+            uploaded_file = UploadedFile()
+            uploaded_file.docfile.save(request.FILES['docfile'].name, request.FILES['docfile'])
             daily_sheets = form.cleaned_data['daily_sheets']
-            result = generate_force_account.delay(docfile.path, uploaded_file.id, daily_sheets=daily_sheets)
+            result = generate_force_account.delay(uploaded_file.id, daily_sheets=daily_sheets)
             return JsonResponse({'task_id': result.task_id})
     response = JsonResponse({'error': 'Bad request'})
     response.status_code = 400

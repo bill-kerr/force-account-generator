@@ -157,6 +157,8 @@ if USE_S3:
     STATICFILES_LOCATION = 'static'
     GENERATED_FILES_LOCATION = 'generated'
     GENERATED_FILES_STORAGE = 'custom_storages.GeneratedStorage'
+    UPLOADED_FILES_LOCATION = 'uploads'
+    UPLOADED_FILES_STORAGE = 'custom_storages.UploadedStorage'
 else:
     STATIC_URL = '/staticfiles/'
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
