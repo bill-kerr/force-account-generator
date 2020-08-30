@@ -143,26 +143,26 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 
-USE_S3 = get_secret('USE_S3') == 'TRUE'
+AWS_ACCESS_KEY_ID = get_secret('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = get_secret('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = get_secret('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_REGION_NAME = get_secret('AWS_S3_REGION_NAME')
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+GENERATED_FILES_LOCATION = 'generated'
+GENERATED_FILES_STORAGE = 'custom_storages.GeneratedStorage'
+UPLOADED_FILES_LOCATION = 'uploads'
+UPLOADED_FILES_STORAGE = 'custom_storages.UploadedStorage'
 
+USE_S3 = get_secret('USE_S3') == 'TRUE'
 if USE_S3:
-    AWS_ACCESS_KEY_ID = get_secret('AWS_ACCESS_KEY_ID')
-    AWS_SECRET_ACCESS_KEY = get_secret('AWS_SECRET_ACCESS_KEY')
-    AWS_STORAGE_BUCKET_NAME = get_secret('AWS_STORAGE_BUCKET_NAME')
-    AWS_S3_REGION_NAME = get_secret('AWS_S3_REGION_NAME')
-    AWS_S3_FILE_OVERWRITE = False
-    AWS_DEFAULT_ACL = None
     STATIC_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/static/'
     STATICFILES_STORAGE = 'custom_storages.StaticStorage'
     STATICFILES_LOCATION = 'static'
-    GENERATED_FILES_LOCATION = 'generated'
-    GENERATED_FILES_STORAGE = 'custom_storages.GeneratedStorage'
-    UPLOADED_FILES_LOCATION = 'uploads'
-    UPLOADED_FILES_STORAGE = 'custom_storages.UploadedStorage'
 else:
     STATIC_URL = '/staticfiles/'
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    GENERATED_FILES_STORAGE = 'django.core.files.storage.FileSystemStorage'
+    STATICFILES_LOCATION = 'staticfiles'
 
 
 CELERY_BROKER_URL = get_secret('CELERY_BROKER_URL')

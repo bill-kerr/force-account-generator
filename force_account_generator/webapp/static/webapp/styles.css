@@ -26,7 +26,12 @@ h1 {
   justify-content: space-between;
 }
 
-.navbar > a {
+.nav-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.nav-item {
   display: inline-flex;
   align-items: center;
   background-color: white;
@@ -37,20 +42,31 @@ h1 {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }
 
-.navbar > a:hover {
+.nav-item:hover {
   color: inherit;
 }
 
-.navbar > a:hover svg {
+.nav-item:hover svg {
   color: #2d3748;
 }
 
-.navbar > a svg {
+.nav-item svg {
   height: 1.5rem;
   width: 1.5rem;
   margin-right: 0.25rem;
   margin-left: -0.25rem;
   color: #718096;
+}
+
+.demo-button {
+  margin-right: 1rem;
+  background-color: #3182ce;
+  color: white;
+}
+
+.demo-button:hover {
+  background-color: #4299e1;
+  color: white;
 }
 
 .container {
@@ -175,7 +191,7 @@ h1 {
   margin-left: 0.25rem;
 }
 
-.dropzone {
+.mydropzone {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -187,7 +203,7 @@ h1 {
   transition: height 1s;
 }
 
-.dropzone:hover {
+.mydropzone:hover {
   background-color: #ebf8ff;
   cursor: pointer;
 }

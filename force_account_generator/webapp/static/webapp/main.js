@@ -1,28 +1,25 @@
-function initDropzone() {
-  const previewNode = document.getElementById("dropzone-template");
-  previewNode.id = "";
-  const previewTemplate = previewNode.parentNode.innerHTML;
-  previewNode.parentNode.removeChild(previewNode);
+const previewNode = document.getElementById("dropzone-template");
+previewNode.id = "";
+const previewTemplate = previewNode.parentNode.innerHTML;
+previewNode.parentNode.removeChild(previewNode);
 
-  Dropzone.options.dropzone = {
-    maxFiles: 1,
-    init: function () {
-      this.hiddenFileInput.removeAttribute("multiple");
-      this.on("processing", onProcessing);
-      this.on("uploadprogress", onUploadProgress);
-      this.on("maxfilesexceeded", onMaxFilesExceeded);
-      this.on("success", onUploadSuccess);
-      this.on("sending", onSending);
-      this.on("error", onUploadError);
-    },
-    paramName: "docfile",
-    createImageThumbnails: false,
-    acceptedFiles: ".xlsx",
-    previewTemplate: previewTemplate,
-    previewsContainer: "#upload-status",
-  };
-}
-initDropzone();
+const dropzone = new Dropzone("#mydropzone", {
+  maxFiles: 1,
+  init: function () {
+    this.hiddenFileInput.removeAttribute("multiple");
+    this.on("processing", onProcessing);
+    this.on("uploadprogress", onUploadProgress);
+    this.on("maxfilesexceeded", onMaxFilesExceeded);
+    this.on("success", onUploadSuccess);
+    this.on("sending", onSending);
+    this.on("error", onUploadError);
+  },
+  paramName: "docfile",
+  createImageThumbnails: false,
+  acceptedFiles: ".xlsx",
+  previewTemplate: previewTemplate,
+  previewsContainer: "#upload-status",
+});
 
 const appData = {
   fileAdded: false,
@@ -82,6 +79,13 @@ const appData = {
     if (this.stage >= 3 && this.currentPage !== this.totalPages) {
       this.currentPage = this.totalPages;
     }
+  },
+
+  runDemo() {
+    this.reset();
+    // const mockFile = { name: "test", size: 1234 };
+    // dropzone.displayExistingFile(mockFile, "http://localhost:8000/staticfiles/webapp/test.xlsx");
+    console.log("run demo");
   },
 };
 
