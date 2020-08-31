@@ -23,7 +23,7 @@ if (os.path.exists('secrets.json')):
     with open(os.path.join(BASE_DIR, 'secrets.json')) as secrets_file:
         secrets = json.load(secrets_file)
         for secret, value in secrets.items():
-            os.environ[secret] = value
+            os.environ[secret] = str(value)
 
 
 def get_secret(setting):

@@ -18,7 +18,7 @@ class Workbook:
 
     def __load_workbook(self, source_file):
         try:
-            self._workbook = load_wb(source_file, read_only=True, data_only=True)
+            self.__workbook = load_wb(source_file, read_only=True, data_only=True)
         except Exception:
             raise Exception('Error loading workbook from ' + source_file)
 
@@ -27,7 +27,7 @@ class Workbook:
         self.defined_cells = {name: {} for name in Config.worksheet_names}
         for cell_name in cell_names:
             for worksheet_name, cell_coordinates in self.__workbook.defined_names[cell_name].destinations:
-                sheet_name = self._sheet_map[worksheet_name]
+                sheet_name = self.__sheet_map[worksheet_name]
                 defined_cell = self.__defined_cell_map[cell_name]
                 self.defined_cells[sheet_name][defined_cell] = self.__workbook[worksheet_name][cell_coordinates].value
 

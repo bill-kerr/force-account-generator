@@ -12,7 +12,7 @@ class Worksheet:
     def __repr__(self):
         return 'Worksheet(' + self.name + ')'
 
-    def _set_name(self):
+    def __set_name(self):
         org_name = self.__worksheet.title
         for name, org in Config.worksheet_names.items():
             if org_name == org:

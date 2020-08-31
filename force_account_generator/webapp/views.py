@@ -1,3 +1,4 @@
+import os
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from .forms import GenerateForceAccountForm
@@ -36,6 +37,7 @@ def about(request):
 
 
 def demo(request):
-    uploaded_file = UploadedFile.objects.get(pk=7)
-    result = generate_force_account.delay(uploaded_file.id)
+    file_id = os.environ.get('DEMO_FILE_ID')
+    print(file_id)
+    result = generate_force_account.delay(file_id)
     return JsonResponse({'task_id': result.task_id})

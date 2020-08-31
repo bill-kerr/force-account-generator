@@ -1,0 +1,27 @@
+{
+  "name": "force-account-generator",
+  "version": "1.0.0",
+  "description": "Tired of filling out PDF forms? The Force Account Generator is a Python program that processes an Excel template and produces a valid PennDOT force account PDF package.",
+  "private": "true",
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.11.4",
+    "@babel/preset-env": "^7.11.0",
+    "babel-loader": "^8.1.0",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bk7987/force-account-generator.git"
+  },
+  "author": "Bill Kerr",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bk7987/force-account-generator/issues"
+  },
+  "homepage": "https://github.com/bk7987/force-account-generator#readme"
+}

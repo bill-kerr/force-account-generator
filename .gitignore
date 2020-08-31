@@ -6,3 +6,4 @@ secrets.json
 **/uploads
 **/generated
 .env
+node_modules
