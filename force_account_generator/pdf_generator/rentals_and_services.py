@@ -6,15 +6,15 @@ from .util import currency_formatter
 
 class Rental:
     def __init__(self):
-        self.description = ""
-        self.invoice_number = ""
+        self.description = ''
+        self.invoice_number = ''
         self.amount = 0
 
 
 class Service:
     def __init__(self):
-        self.description = ""
-        self.invoice_number = ""
+        self.description = ''
+        self.invoice_number = ''
         self.amount = 0
 
 

@@ -7,9 +7,9 @@ class Page:
     def __make_field_name(self, field_name_base, row=None, column=None):
         field = field_name_base
         if row is not None:
-            field += "_0" + str(row) if row < 10 else "_" + str(row)
+            field += '_0' + str(row) if row < 10 else '_' + str(row)
         if column is not None:
-            field += "_0" + str(column) if column < 10 else "_" + str(column)
+            field += '_0' + str(column) if column < 10 else '_' + str(column)
         return field
 
     def make_field(self, field_name_base, value, row=None, column=None, formatter=lambda val: str(val)):
@@ -18,7 +18,7 @@ class Page:
         key = self.__make_field_name(field_name_base, row=row, column=column)
         self.values.update({key: formatter(value)})
 
-    def fill_blanks(self, field_name_base, row_count, value="", formatter=lambda val: str(val)):
+    def fill_blanks(self, field_name_base, row_count, value='', formatter=lambda val: str(val)):
         for i in range(row_count):
             field_name = self.__make_field_name(field_name_base, row=i + 1)
             if field_name not in self.values:

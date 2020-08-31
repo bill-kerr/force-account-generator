@@ -1,7 +1,3 @@
-"""
-Program that creates a PDF force account package from JSON data.
-JSON input data must be in the same format as input.example.json.
-"""
 from .config import PdfFieldConfig
 from .data_loader import DataLoader
 from .pdf_package import PdfPackage

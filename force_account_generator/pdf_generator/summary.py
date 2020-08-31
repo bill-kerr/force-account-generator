@@ -4,12 +4,12 @@ from .util import rnd, currency_formatter
 
 class SummaryData():
     def __init__(self):
-        self.county = ""
-        self.state_route = ""
-        self.section = ""
-        self.work_order_number = ""
-        self.contract = ""
-        self.item_number = ""
+        self.county = ''
+        self.state_route = ''
+        self.section = ''
+        self.work_order_number = ''
+        self.contract = ''
+        self.item_number = ''
         self.material_cost = 0
         self.direct_labor_cost = 0
         self.indirect_labor_cost = 0
@@ -18,8 +18,8 @@ class SummaryData():
         self.consumables_cost = 0
         self.subcontractor_cost = 0
         self.services_cost = 0
-        self.prime_contractor = ""
-        self.statement_of_cost = ""
+        self.prime_contractor = ''
+        self.statement_of_cost = ''
 
     @property
     def material_markup(self):

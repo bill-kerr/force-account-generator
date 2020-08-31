@@ -30,7 +30,7 @@ def progress_callback(callback, message, num_pages=1, completed=1):
 
 def add_page(pdf_writer, page, root_dir):
     file_path = os.path.join(root_dir, page.template)
-    input_stream = open(file_path, "rb")
+    input_stream = open(file_path, 'rb')
     pdf_reader = get_pdf_reader(input_stream)
     pdf_writer.addPage(pdf_reader.getPage(0))
     pdf_writer.updatePageFormFieldValues(pdf_writer.getPage(-1), page.values)
@@ -39,20 +39,20 @@ def add_page(pdf_writer, page, root_dir):
 
 def get_pdf_reader(input_stream):
     pdf_reader = PdfFileReader(input_stream, strict=False)
-    if "/AcroForm" in pdf_reader.trailer["/Root"]:
-        pdf_reader.trailer["/Root"]["/AcroForm"].update({NameObject("/NeedAppearances"): BooleanObject(True)})
+    if '/AcroForm' in pdf_reader.trailer['/Root']:
+        pdf_reader.trailer['/Root']['/AcroForm'].update({NameObject('/NeedAppearances'): BooleanObject(True)})
     return pdf_reader
 
 
 def set_need_appearances_writer(writer):
     try:
         catalog = writer._root_object
-        if "/AcroForm" not in catalog:
+        if '/AcroForm' not in catalog:
             writer._root_object.update({
-                NameObject("/AcroForm"): IndirectObject(len(writer._objects), 0, writer)})
+                NameObject('/AcroForm'): IndirectObject(len(writer._objects), 0, writer)})
 
-        need_appearances = NameObject("/NeedAppearances")
-        writer._root_object["/AcroForm"][need_appearances] = BooleanObject(True)
+        need_appearances = NameObject('/NeedAppearances')
+        writer._root_object['/AcroForm'][need_appearances] = BooleanObject(True)
         return writer
 
     except Exception as e:

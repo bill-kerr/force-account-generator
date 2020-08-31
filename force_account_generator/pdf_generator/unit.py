@@ -5,7 +5,7 @@ class Hours:
         self.secondary_hours = secondary_hours
 
     def __repr__(self):
-        return "Hours(" + self.date + ", " + str(self.primary_hours or 0) + "/" + str(self.secondary_hours or 0) + ")"
+        return 'Hours(' + self.date + ', ' + str(self.primary_hours or 0) + '/' + str(self.secondary_hours or 0) + ')'
 
 
 class Unit:

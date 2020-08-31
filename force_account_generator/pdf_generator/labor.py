@@ -1,5 +1,3 @@
-""" The labor file includes the Labor model and requisite page classes for constructing the labor
-portion of a force account. """
 from .util import format_date, rnd, decimal_comma_formatter, currency_formatter, percent_formatter
 from .paginator import paginate_by_date, simple_paginate
 from .page import PageCollection, Page
@@ -7,19 +5,17 @@ from .unit import Unit
 
 
 class Labor(Unit):
-    """ The Labor class represents a single labor resource. """
-
     def __init__(self):
         super().__init__()
-        self.classification = ""
-        self.name = ""
+        self.classification = ''
+        self.name = ''
         self.base_rate_st = 0
         self.base_rate_ot = 0
         self.hw_pension_rate_st = 0
         self.hw_pension_rate_ot = 0
 
     def __repr__(self):
-        return "Labor(" + self.classification + " - " + self.name + ")"
+        return 'Labor(' + self.classification + ' - ' + self.name + ')'
 
     @property
     def base_labor_cost_st(self):
@@ -49,8 +45,6 @@ class Labor(Unit):
 
 
 class DailyLaborPage(Page):
-    """ DailyLaborPage represents a single daily labor page. """
-
     def __init__(self, dates, units, field_config):
         super().__init__(field_config, field_config.template())
         self.__dates = dates
@@ -63,11 +57,11 @@ class DailyLaborPage(Page):
             self.__set_date(i + 1, date)
 
         for i, unit in enumerate(self.__units):
-            self.__set_classification(i + 1, unit["classification"])
-            self.__set_name(i + 1, unit["name"])
+            self.__set_classification(i + 1, unit['classification'])
+            self.__set_name(i + 1, unit['name'])
             total_st_hours = 0
             total_ot_hours = 0
-            for hours in unit["daily_hours"]:
+            for hours in unit['daily_hours']:
                 column = self.__dates.index(hours.date) + 1
                 total_st_hours += self.__set_st_hours(i + 1, column, hours.primary_hours)
                 total_ot_hours += self.__set_ot_hours(i + 1, column, hours.secondary_hours)
@@ -88,7 +82,7 @@ class DailyLaborPage(Page):
         )
 
     def __set_date(self, column, date):
-        formatted_date = format_date(date, "%m/%d")
+        formatted_date = format_date(date, '%m/%d')
         self.make_field(self._field_config.day(), formatted_date, column=column)
 
     def __set_classification(self, row, classification):
@@ -311,14 +305,12 @@ class LaborBreakdownPage(Page):
 
 
 class LaborCollection(PageCollection):
-    """ LaborCollection represents all of the labor pages in the current force account. """
-
     def __init__(self, data_loader, field_config):
         super().__init__(data_loader, field_config)
         self.__labor = data_loader.labor
         self.__paginated_daily_labor = paginate_by_date(
             self.__labor,
-            picked_attrs=["classification", "name"],
+            picked_attrs=['classification', 'name'],
             date_limit=self._field_config.daily_labor.column_count(),
             unit_limit=self._field_config.daily_labor.row_count())
         self.__taxes_and_insurance = TaxesAndInsurance(
@@ -350,9 +342,9 @@ class LaborCollection(PageCollection):
     def __create_daily_pages(self):
         daily_pages = []
         for data_set in self.__paginated_daily_labor:
-            for unit_set in data_set["unit_sets"]:
+            for unit_set in data_set['unit_sets']:
                 page = DailyLaborPage(
-                    data_set["dates"],
+                    data_set['dates'],
                     unit_set,
                     self._field_config.daily_labor)
                 daily_pages.append(page)

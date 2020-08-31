@@ -14,22 +14,22 @@ from .page import Page, PageCollection
 class Equipment(Unit):
     def __init__(self):
         super().__init__()
-        self.description = ""
-        self.year = ""
-        self.type = ""
-        self.configuration = ""
-        self.make = ""
-        self.model = ""
-        self.equipment_number = ""
-        self.h_yr = ""
-        self.sec_pg = ""
+        self.description = ''
+        self.year = ''
+        self.type = ''
+        self.configuration = ''
+        self.make = ''
+        self.model = ''
+        self.equipment_number = ''
+        self.h_yr = ''
+        self.sec_pg = ''
         self.monthly_rate = 0
         self.equipment_adjustment = 0
         self.area_adjustment = 0
         self.operating_cost = 0
 
     def __repr__(self):
-        return "Equipment(" + self.description + " - " + self.equipment_number + ")"
+        return 'Equipment(' + self.description + ' - ' + self.equipment_number + ')'
 
     @property
     def adjusted_hourly_rate(self):
@@ -68,10 +68,10 @@ class DailyEquipmentPage(Page):
             self.__set_date(i + 1, date)
 
         for i, unit in enumerate(self.__units):
-            self.__set_description(i + 1, unit["description"])
+            self.__set_description(i + 1, unit['description'])
             total_op_hours = 0
             total_sb_hours = 0
-            for hours in unit["daily_hours"]:
+            for hours in unit['daily_hours']:
                 column = self.__dates.index(hours.date) + 1
                 total_op_hours += self.__set_op_hours(i + 1, column, hours.primary_hours)
                 total_sb_hours += self.__set_sb_hours(i + 1, column, hours.secondary_hours)
@@ -92,7 +92,7 @@ class DailyEquipmentPage(Page):
         )
 
     def __set_date(self, column, date):
-        formatted_date = format_date(date, "%m/%d")
+        formatted_date = format_date(date, '%m/%d')
         self.make_field(self._field_config.day(), formatted_date, column=column)
 
     def __set_description(self, row, description):
@@ -263,7 +263,7 @@ class EquipmentCollection(PageCollection):
         self.__equipment = data_loader.equipment
         self.__paginated_daily_equipment = paginate_by_date(
             self.__equipment,
-            picked_attrs=["description"],
+            picked_attrs=['description'],
             date_limit=self._field_config.daily_equipment.column_count(),
             unit_limit=self._field_config.daily_equipment.row_count()
         )
@@ -285,9 +285,9 @@ class EquipmentCollection(PageCollection):
     def __create_daily_pages(self):
         daily_pages = []
         for data_set in self.__paginated_daily_equipment:
-            for unit_set in data_set["unit_sets"]:
+            for unit_set in data_set['unit_sets']:
                 page = DailyEquipmentPage(
-                    data_set["dates"],
+                    data_set['dates'],
                     unit_set,
                     self._field_config.daily_equipment
                 )

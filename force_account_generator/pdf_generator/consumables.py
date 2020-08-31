@@ -6,10 +6,10 @@ from .util import currency_formatter, decimal_comma_formatter, three_decimal_for
 
 class PurchasedConsumable:
     def __init__(self):
-        self.description = ""
+        self.description = ''
         self.quantity = 0
         self.unit_price = 0
-        self.invoice_number = ""
+        self.invoice_number = ''
 
     @property
     def amount(self):
@@ -18,10 +18,10 @@ class PurchasedConsumable:
 
 class StockConsumable:
     def __init__(self):
-        self.description = ""
+        self.description = ''
         self.invoice_value = 0
         self.percent_reimbursed = 0
-        self.invoice_number = ""
+        self.invoice_number = ''
 
     @property
     def amount(self):

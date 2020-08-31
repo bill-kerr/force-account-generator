@@ -37,7 +37,7 @@ def paginate_by_date(units, picked_attrs=[], date_limit=12, unit_limit=10, sort=
     # 5. Bundle dates and units and paginate unit sets
     paginated_data = []
     for date_set, unit_set in zip(date_sets, unit_sets):
-        data = {"dates": date_set, "unit_sets": simple_paginate(unit_set, unit_limit)}
+        data = {'dates': date_set, 'unit_sets': simple_paginate(unit_set, unit_limit)}
         paginated_data.append(data)
 
     return paginated_data
@@ -56,9 +56,9 @@ def reduce_unit(unit, date_set, picked_attrs):
     for attr in picked_attrs:
         reduced_unit[attr] = getattr(unit, attr)
 
-    reduced_unit["daily_hours"] = []
+    reduced_unit['daily_hours'] = []
     for hours in unit.daily_hours.values():
         if hours.date in date_set:
-            reduced_unit["daily_hours"].append(hours)
+            reduced_unit['daily_hours'].append(hours)
 
     return reduced_unit
