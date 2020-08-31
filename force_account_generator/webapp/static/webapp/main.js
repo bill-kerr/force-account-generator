@@ -54,6 +54,7 @@ const appData = {
   },
 
   reset() {
+    dropzone.removeAllFiles();
     this.error = null;
     this.fileAdded = false;
     this.uploading = false;
