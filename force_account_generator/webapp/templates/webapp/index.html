@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     {% block imports %}
     <link rel="stylesheet" href="https://unpkg.com/tailwindcss@1.7.5/dist/base.css" />
-    <link rel="stylesheet" type="text/css" href="{% static 'webapp/styles.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'webapp/styles.min.css' %}" />
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;700&display=swap" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     {% endblock imports %}
@@ -127,7 +127,7 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/min/dropzone.min.js"></script>
     <script src="{% static 'celery_progress/celery_progress.js' %}"></script>
-    <script src="{% static 'webapp/main.js' %}"></script>
+    <script src="{% static 'webapp/main.min.js' %}"></script>
 
     {% endblock content %}
   </body>
