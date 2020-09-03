@@ -20,28 +20,28 @@ class Labor(Unit):
     @property
     def base_labor_cost_st(self):
         total_hours = self.get_total_hours()
-        return rnd(total_hours * self.base_rate_st)
+        return rnd(total_hours * (self.base_rate_st or 0))
 
     @property
     def base_labor_cost_ot(self):
         total_hours = self.get_total_hours(secondary=True)
-        return rnd(total_hours * self.base_rate_ot)
+        return rnd(total_hours * (self.base_rate_ot or 0))
 
     @property
     def direct_labor_rate_st(self):
-        return rnd(self.base_rate_st + self.hw_pension_rate_st)
+        return rnd((self.base_rate_st or 0) + (self.hw_pension_rate_st or 0))
 
     @property
     def direct_labor_rate_ot(self):
-        return self.base_rate_ot + self.hw_pension_rate_ot
+        return (self.base_rate_ot or 0) + (self.hw_pension_rate_ot or 0)
 
     @property
     def direct_labor_cost_st(self):
-        return rnd(self.direct_labor_rate_st * self.get_total_hours())
+        return rnd((self.direct_labor_rate_st or 0) * self.get_total_hours())
 
     @property
     def direct_labor_cost_ot(self):
-        return rnd(self.direct_labor_rate_ot * self.get_total_hours(secondary=True))
+        return rnd((self.direct_labor_rate_ot or 0) * self.get_total_hours(secondary=True))
 
 
 class DailyLaborPage(Page):

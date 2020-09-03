@@ -40,19 +40,19 @@ class Equipment(Unit):
 
     @property
     def total_hourly_rate_op(self):
-        return self.adjusted_hourly_rate + self.operating_cost
+        return (self.adjusted_hourly_rate or 0) + (self.operating_cost or 0)
 
     @property
     def total_hourly_rate_sb(self):
-        return rnd(self.adjusted_hourly_rate * 0.5)
+        return rnd((self.adjusted_hourly_rate or 0) * 0.5)
 
     @property
     def total_cost_op(self):
-        return self.get_total_hours() * self.total_hourly_rate_op
+        return self.get_total_hours() * (self.total_hourly_rate_op or 0)
 
     @property
     def total_cost_sb(self):
-        return self.get_total_hours(secondary=True) * self.total_hourly_rate_sb
+        return self.get_total_hours(secondary=True) * (self.total_hourly_rate_sb or 0)
 
 
 class DailyEquipmentPage(Page):
