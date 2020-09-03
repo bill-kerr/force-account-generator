@@ -264,42 +264,62 @@ class LaborBreakdownPage(Page):
         self.make_field(field, hours, row=row, formatter=decimal_comma_formatter)
 
     def __set_base_rate_st(self, row, rate):
+        if rate is None:
+            return
         field = self._field_config.base_rate_st(is_supp=not self.__is_first_page)
         self.make_field(field, rate, row=row, formatter=decimal_comma_formatter)
 
     def __set_base_rate_ot(self, row, rate):
+        if rate is None:
+            return
         field = self._field_config.base_rate_ot(is_supp=not self.__is_first_page)
         self.make_field(field, rate, row=row, formatter=decimal_comma_formatter)
 
     def __set_hw_pension_rate_st(self, row, rate):
+        if rate is None:
+            return
         field = self._field_config.hw_pension_rate_st(is_supp=not self.__is_first_page)
         self.make_field(field, rate, row=row, formatter=decimal_comma_formatter)
 
     def __set_hw_pension_rate_ot(self, row, rate):
+        if rate is None:
+            return
         field = self._field_config.hw_pension_rate_ot(is_supp=not self.__is_first_page)
         self.make_field(field, rate, row=row, formatter=decimal_comma_formatter)
 
     def __set_base_labor_cost_st(self, row, cost):
+        if cost is None:
+            return
         field = self._field_config.base_labor_cost_st(is_supp=not self.__is_first_page)
         self.make_field(field, cost, row=row, formatter=currency_formatter)
 
     def __set_base_labor_cost_ot(self, row, cost):
+        if cost is None:
+            return
         field = self._field_config.base_labor_cost_ot(is_supp=not self.__is_first_page)
         self.make_field(field, cost, row=row, formatter=currency_formatter)
 
     def __set_direct_labor_rate_st(self, row, rate):
+        if rate is None:
+            return
         field = self._field_config.direct_labor_rate_st(is_supp=not self.__is_first_page)
         self.make_field(field, rate, row=row, formatter=decimal_comma_formatter)
 
     def __set_direct_labor_rate_ot(self, row, rate):
+        if rate is None:
+            return
         field = self._field_config.direct_labor_rate_ot(is_supp=not self.__is_first_page)
         self.make_field(field, rate, row=row, formatter=decimal_comma_formatter)
 
     def __set_direct_labor_cost_st(self, row, cost):
+        if cost is None:
+            return
         field = self._field_config.direct_labor_cost_st(is_supp=not self.__is_first_page)
         self.make_field(field, cost, row=row, formatter=currency_formatter)
 
     def __set_direct_labor_cost_ot(self, row, cost):
+        if cost is None:
+            return
         field = self._field_config.direct_labor_cost_ot(is_supp=not self.__is_first_page)
         self.make_field(field, cost, row=row, formatter=currency_formatter)
 

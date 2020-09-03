@@ -2,6 +2,8 @@ from datetime import datetime
 
 
 def rnd(num):
+    if num is None:
+        return 0
     return round((num + 0.00000001) * 100) / 100
 
 

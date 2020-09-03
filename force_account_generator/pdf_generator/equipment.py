@@ -177,30 +177,44 @@ class EquipmentBreakdownPage(Page):
         self.make_field(field, sec_pg, row=row)
 
     def __set_monthly_rate(self, row, monthly_rate):
+        if monthly_rate is None:
+            return
         field = self._field_config.monthly_rate(is_supp=not self.__is_first_page)
         self.make_field(field, monthly_rate, row=row, formatter=whole_number_formatter)
 
     def __set_equipment_adjustment(self, row, equipment_adjustment):
+        if equipment_adjustment is None:
+            return
         field = self._field_config.equipment_adjustment(is_supp=not self.__is_first_page)
         self.make_field(field, equipment_adjustment, row=row, formatter=three_decimal_formatter)
 
     def __set_area_adjustment(self, row, area_adjustment):
+        if area_adjustment is None:
+            return
         field = self._field_config.area_adjustment(is_supp=not self.__is_first_page)
         self.make_field(field, area_adjustment, row=row, formatter=three_decimal_formatter)
 
     def __set_adjusted_hourly_rate(self, row, rate):
+        if rate is None:
+            return
         field = self._field_config.adjusted_hourly_rate(is_supp=not self.__is_first_page)
         self.make_field(field, rate, row=row, formatter=decimal_comma_formatter)
 
     def __set_operating_cost(self, row, operating_cost):
+        if operating_cost is None:
+            return
         field = self._field_config.operating_cost(is_supp=not self.__is_first_page)
         self.make_field(field, operating_cost, row=row, formatter=decimal_comma_formatter)
 
     def __set_total_hourly_rate_op(self, row, rate):
+        if rate is None:
+            return
         field = self._field_config.total_hourly_rate_op(is_supp=not self.__is_first_page)
         self.make_field(field, rate, row=row, formatter=decimal_comma_formatter)
 
     def __set_total_hourly_rate_sb(self, row, rate):
+        if rate is None:
+            return
         field = self._field_config.total_hourly_rate_sb(is_supp=not self.__is_first_page)
         self.make_field(field, rate, row=row, formatter=decimal_comma_formatter)
 
