@@ -7,3 +7,4 @@ secrets.json
 **/generated
 .env
 node_modules
+celery.logs

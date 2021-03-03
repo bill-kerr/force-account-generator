@@ -1,3 +1,4 @@
+from PyPDF2.generic import NameObject, createStringObject
 from .material import MaterialCollection
 from .labor import LaborCollection
 from .equipment import EquipmentCollection

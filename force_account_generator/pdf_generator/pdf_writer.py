@@ -1,6 +1,6 @@
 import os
 from io import BytesIO
-from PyPDF2.generic import BooleanObject, NameObject, IndirectObject
+from PyPDF2.generic import BooleanObject, NameObject, IndirectObject, createStringObject
 from PyPDF2 import PdfFileReader, PdfFileWriter
 
 
@@ -11,7 +11,7 @@ def make_pdf(pages, callback=None):
     streams = []
     num_pages = len(pages)
     for i, page in enumerate(pages):
-        streams.append(add_page(pdf_writer, page, dir_path))
+        streams.append(add_page(pdf_writer, page, dir_path, i))
         message = f'Creating PDF page {i+1} of {num_pages}.'
         progress_callback(callback, message, num_pages=num_pages, completed=i + 1)
     file_path = save_pdf(pdf_writer, callback=callback)
@@ -28,13 +28,23 @@ def progress_callback(callback, message, num_pages=1, completed=1):
     callback(status)
 
 
-def add_page(pdf_writer, page, root_dir):
+def add_page(pdf_writer, page, root_dir, suffix):
     file_path = os.path.join(root_dir, page.template)
     input_stream = open(file_path, 'rb')
     pdf_reader = get_pdf_reader(input_stream)
     pdf_writer.addPage(pdf_reader.getPage(0))
     pdf_writer.updatePageFormFieldValues(pdf_writer.getPage(-1), page.values)
+    rename_fields(pdf_writer.getPage(-1), suffix)
     return input_stream
+
+
+def rename_fields(page, suffix):
+    for i in range(0, len(page['/Annots'])):
+        writer_annot = page['/Annots'][i].getObject()
+        str_object = writer_annot.get('/T') if writer_annot.get('/T') is not None else ''
+        writer_annot.update({
+            NameObject("/T"): createStringObject(str_object+str(suffix))
+        })
 
 
 def get_pdf_reader(input_stream):

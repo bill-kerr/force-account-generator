@@ -1,0 +1,2 @@
+web-dev: python force_account_generator/manage.py runserver
+worker-dev: cd force_account_generator && celery worker --app=force_account_generator --pool=solo -l info -f celery.logs
