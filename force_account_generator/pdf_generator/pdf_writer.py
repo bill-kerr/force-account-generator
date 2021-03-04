@@ -11,7 +11,7 @@ def make_pdf(pages, callback=None):
     streams = []
     num_pages = len(pages)
     for i, page in enumerate(pages):
-        streams.append(add_page(pdf_writer, page, dir_path, i))
+        streams.append(add_page(pdf_writer, page, dir_path, f'_{i}'))
         message = f'Creating PDF page {i+1} of {num_pages}.'
         progress_callback(callback, message, num_pages=num_pages, completed=i + 1)
     file_path = save_pdf(pdf_writer, callback=callback)
@@ -43,7 +43,7 @@ def rename_fields(page, suffix):
         writer_annot = page['/Annots'][i].getObject()
         str_object = writer_annot.get('/T') if writer_annot.get('/T') is not None else ''
         writer_annot.update({
-            NameObject("/T"): createStringObject(str_object+str(suffix))
+            NameObject("/T"): createStringObject(str_object+suffix)
         })
 
 
